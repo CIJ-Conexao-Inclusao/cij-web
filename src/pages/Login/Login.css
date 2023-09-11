@@ -1,11 +1,7 @@
-.box {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.box{
+.body{
     display: flex;
+    height: 100vh;
+    width: 100vw;
 }
 
 h1 {
@@ -107,7 +103,7 @@ input{
 }
 
 .footer{
-    height: 10%;
+    height: 6%;
     display: grid; 
     justify-items: center; 
     align-items: center; 
@@ -130,16 +126,18 @@ input{
 
 .left {
     width: 40%;
+    height: 100%;
 }
 
 .right{
     width: 60%; 
     background-color: #1DB954;
+    height: 100%;
 }
-
+/* 
 .phrases {
     height: 30%;
-}
+} */
 
 .container{
     margin-top: 5vh;

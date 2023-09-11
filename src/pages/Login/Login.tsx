@@ -34,35 +34,42 @@ const Login = () => {
   // };
 
   return (
-    <div className="box">
+    <div className="body">
       <div className="left">
         <div className="phrases">
           <div>
             <h1>Bem Vindo</h1>
           </div>
+
           <div>
             <h3>Faça seu login abaixo</h3>
           </div>
         </div>
+
         <div className="container">
           <div className="center">
             <div className="label">
               <label htmlFor="CPF">CPF</label>
             </div>
+
             <input type="text"/>
           </div>
+
           <div className="center-top">
             <div className="label">
               <label htmlFor="Senha">Senha</label>
             </div>
+
             <input type="password"/>
           </div>
+
           <div className="top-5">
             <div className="center-top">
               <button className="button-login">
                 Login
               </button>
             </div>
+
             <div className="center-top-2">
               <button className="button-register">
                 Cadastrar
@@ -70,27 +77,33 @@ const Login = () => {
             </div>
           </div>
         </div>
+
         <div className="footer">
           <div className="post-footer">
             <div className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
             </div>
+
             <div className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
             </div>
+
             <div className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
             </div>
+
             <div className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
             </div>
           </div>
         </div>
       </div>
+
       <div className="right">
         <div className="img-logo">
           <img className="logo" src={cij} />
         </div>
+
         <div className="image-login">
           <img className="family-inclusive" src={logo} />
         </div>
