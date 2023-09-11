@@ -25,8 +25,6 @@ const App = () => {
 
   return (
     <TemaProvider>
-      <div className="text-red-500">tesets</div>
-      <p className="text-3xl font-bold underline">Hello world!</p>
       <Router>
         <Routes>
           <Route path="/signin" element={<Login />} />

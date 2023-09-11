@@ -1,0 +1,170 @@
+.box {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.box{
+    display: flex;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #323031;
+    display: flex;
+    justify-content: center;
+    padding-top: 25%;
+    margin-bottom: 1vh !important;
+    margin-top: 0px !important;
+}
+
+.center{
+    display: grid; 
+    justify-items: center; 
+    align-items: center;
+}
+
+.center-top{
+    display: grid; 
+    justify-items: center; 
+    align-items: center;
+    margin-top: 1vh;
+}
+
+.center-top-2{
+    display: grid; 
+    justify-items: center; 
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.top-5{
+    margin-top: 5vh;
+}
+
+h3 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 800;
+    color: #323031;
+    display: flex;
+    justify-content: center;
+    margin-top: 1vh !important;
+}
+
+label{
+    font-size: 0.9rem;
+    font-family: 'Lato', sans-serif;
+    font-weight: 800;
+    color: #323031;
+}
+
+.label {
+    width: 75%;
+}
+
+input{
+    width: 75%;
+    height: 4vh;
+    background-color: #e2e2e2;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.button-login {
+    width: 75%;
+    height: 5vh;
+    background-color: #1DB954;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.button-register {
+    width: 75%;
+    height: 5vh;
+    background-color: #E2E2E2;
+    border: none;
+    border-radius: 5px;
+    color: #323031;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.patrocinio{
+    width: 50px;
+}
+
+.circle-logo {
+    width: 50px;
+    height: 50px; 
+    background-color: #fff; 
+    border-radius: 50%; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.footer{
+    height: 10%;
+    display: grid; 
+    justify-items: center; 
+    align-items: center; 
+    margin-top: 5vh;
+}
+
+.post-footer{
+    width: 70%; 
+    display: flex; 
+    justify-content: space-around;
+}
+
+.family-inclusive {
+    height: 65%;
+}
+
+.logo {
+    height: 150%;
+}
+
+.left {
+    width: 40%;
+}
+
+.right{
+    width: 60%; 
+    background-color: #1DB954;
+}
+
+.phrases {
+    height: 30%;
+}
+
+.container{
+    margin-top: 5vh;
+}
+
+.img-logo{
+    height: 10%; 
+    width: 100%; 
+    display: flex; 
+    justify-content: end;
+}
+
+.image-login{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 90%;
+}
+
+@media (max-width: 768px) {
+    .family-inclusive {
+        height: 35%;
+    }
+
+    .logo {
+        height: 80%;
+    }
+}
