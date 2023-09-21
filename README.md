@@ -8,7 +8,7 @@
 
 ## ✍ Autores
 
-* !(Camilly de Souza Pessotti)[https://github.com/pessotticamilly]
-* !(Camilly Vitória da Rocha Goltz)[https://github.com/VitoriaCamilly]
-* !(Cauã Kath)[https://github.com/CauaKath]
-* !(Kenzo Hideaky Ferreira Sato)[https://github.com/Kenzohfs]
+* <a href='https://github.com/pessotticamilly'>Camilly de Souza Pessotti<a/>
+* <a href='https://github.com/VitoriaCamilly'>Camilly Vitória da Rocha Goltz<a/>
+* <a href='https://github.com/CauaKath'>Cauã Kath<a/>
+* <a href='https://github.com/Kenzohfs'>Kenzo Hideaky Ferreira Sato<a/>
