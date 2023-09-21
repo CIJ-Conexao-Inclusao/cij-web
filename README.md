@@ -1,6 +1,6 @@
 # ♿ Conexão Inclusão Jaraguá - WEB
 
-Olá, bem-vindo(a) ao Frontend do CIJ! Aqui você encontrará informações importantes sobre a estrutura do projeto, os pré-requisitos necessários para executá-lo, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
+Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações importantes sobre a estrutura do projeto, os pré-requisitos necessários para executá-lo, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
 
 ## 🧱 Estrutura
 
