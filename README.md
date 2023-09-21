@@ -1,1 +1,7 @@
-# ♿ Conexão Inclusão Jaraguá - WEB
+# Conexão Inclusão Jaraguá - WEB
+
+## 🧱 Estrutura
+
+## ✅ Pré-requisitos
+
+## 🛠 Instalação
