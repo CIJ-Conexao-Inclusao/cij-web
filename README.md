@@ -4,8 +4,6 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 ## 🧱 Estrutura
 
-<!--Preencher as versões-->
-
 * NodeJS: 
 * Vite + React:
 * TypeScript:
