@@ -1,12 +1,12 @@
 # ♿ Conexão Inclusão Jaraguá - WEB
 
-### 🧱 Estrutura
+## 🧱 Estrutura
 
-### ✅ Pré-requisitos
+## ✅ Pré-requisitos
 
-### 🛠 Instalação
+## 🛠 Instalação
 
-### ✍ Autores
+## ✍ Autores
 
 * <a href='https://github.com/pessotticamilly'>Camilly de Souza Pessotti<a/>
 * <a href='https://github.com/VitoriaCamilly'>Camilly Vitória da Rocha Goltz<a/>
