@@ -4,7 +4,6 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 ## 🧱 Estrutura
 
-- Node.js: 18.18.0
 - Vite: 4.4.5
 - React: 18.2.0
 - TypeScript: 5.0.2
@@ -25,7 +24,7 @@ Antes de prosseguir, certifique-se de ter os seguintes pré-requisitos instalado
 ```
 npm install 
 ```
-3. **Iniciar a aplicação:** Se a instalação das dependências for sucedida, a aplicação está pronta para ser iniciada. Para isso, execute este outro comando
+3. **Iniciar a aplicação:** Se a instalação das dependências for bem sucedida, a aplicação está pronta para ser iniciada. Para isso, execute este outro comando
 ```
 npm run dev
 ``` 
