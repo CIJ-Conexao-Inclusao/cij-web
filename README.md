@@ -36,7 +36,7 @@
   <h2>✍ Autores</h2>
   <div>
     <ul>
-      <li><a href='https://github.com/pessotticamilly'>Camilly de Souza Pessotti<a/></li>
+      <li>[Camilly de Souza Pessotti](https://github.com/pessotticamilly)</li>
       <li><a href='https://github.com/VitoriaCamilly'>Camilly Vitória da Rocha Goltz<a/></li>
       <li><a href='https://github.com/CauaKath'>Cauã Kath<a/></li>
       <li><a href='https://github.com/Kenzohfs'>Kenzo Hideaky Ferreira Sato<a/></li>
