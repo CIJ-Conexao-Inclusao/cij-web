@@ -5,7 +5,7 @@ import { Box, Button, TextField } from "@mui/material";
 
 import { ILogin } from "../../interfaces";
 
-import LoginService from "../../services/LoginService";
+// import LoginService from "../../services/LoginService";
 
 const Login = () => {
   const [user, setUser] = useState<ILogin>({
@@ -14,7 +14,7 @@ const Login = () => {
   });
 
   const login = async () => {
-    const res = await LoginService.login(user);
+    // const res = await LoginService.login(user);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

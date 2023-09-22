@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 class CookieService {
   /** Função para buscar o cookie salvo no navegador e chamar "decriptarToken" ou "decriptarUser" para decriptá-lo */
   getCookie(nome: string) {
-    const cookieEncriptado = Cookies.get(nome);
+    const cookieEncriptado = Cookies.get(nome) || "";
     if (nome == "jwt") {
       return this.decriptarToken(cookieEncriptado);
     } else {

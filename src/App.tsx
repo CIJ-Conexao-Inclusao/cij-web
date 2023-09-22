@@ -1,27 +1,28 @@
 import "./App.css";
-import { useContext } from "react";
+// import { useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
-  Outlet,
+  // Navigate,
+  // Outlet,
 } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 
-import TemaProvider, { ColorModeContext } from "./providers/TemaProvider";
+import TemaProvider from // , { ColorModeContext }
+"./providers/TemaProvider";
 
-import CookieService from "./services/CookieService";
+// import CookieService from "./services/CookieService";
 
 const App = () => {
-  const { toggleColorMode, mode } = useContext(ColorModeContext);
+  // const { toggleColorMode, mode } = useContext(ColorModeContext);
 
-  const handleToggleMode = () => {
-    console.log("clicou!");
-    toggleColorMode();
-  };
+  // const handleToggleMode = () => {
+  //   console.log("clicou!");
+  //   toggleColorMode();
+  // };
 
   return (
     <TemaProvider>
@@ -35,30 +36,30 @@ const App = () => {
   );
 };
 
-type ProtectedRouteProps = {
-  tiposUsuarioAllowed: string;
-  children: any;
-  redirectPath: string;
-};
+// type ProtectedRouteProps = {
+//   tiposUsuarioAllowed: string;
+//   children: any;
+//   redirectPath: string;
+// };
 
-const ProtectedRoute = ({
-  tiposUsuarioAllowed = "",
-  children,
-  redirectPath = "/signin",
-}: ProtectedRouteProps) => {
-  const cookie = CookieService.getCookie("jwt");
-  const userJpa = CookieService.getCookie("user");
+// const ProtectedRoute = ({
+//   tiposUsuarioAllowed = "",
+//   children,
+//   redirectPath = "/signin",
+// }: ProtectedRouteProps) => {
+//   const cookie = CookieService.getCookie("jwt");
+//   const userJpa = CookieService.getCookie("user");
 
-  if (
-    cookie != null &&
-    cookie.exp > Math.floor(Date.now() / 1000) &&
-    (tiposUsuarioAllowed.includes(userJpa.authorities[0].authority) ||
-      tiposUsuarioAllowed == "")
-  ) {
-    return children ? children : <Outlet />;
-  } else {
-    return <Navigate to={redirectPath} replace />;
-  }
-};
+//   if (
+//     cookie != null &&
+//     cookie.exp > Math.floor(Date.now() / 1000) &&
+//     (tiposUsuarioAllowed.includes(userJpa.authorities[0].authority) ||
+//       tiposUsuarioAllowed == "")
+//   ) {
+//     return children ? children : <Outlet />;
+//   } else {
+//     return <Navigate to={redirectPath} replace />;
+//   }
+// };
 
 export default App;
