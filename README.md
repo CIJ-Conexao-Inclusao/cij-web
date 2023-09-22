@@ -21,10 +21,14 @@ Antes de prosseguir, certifique-se de ter os seguintes pré-requisitos instalado
 ## 🛠 Instalação
 
 1. **Clonar o repositório:** Clone o repositório [WEB](https://github.com/conexao-inclusao-jaragua/web.git) do Github para sua máquina local
-2. **Instalar as dependências:** Navegue até o diretório do porjeto clonado e execute o seguinte comando no terminal para instalar todas as dependências:
+2. **Instalar as dependências:** Navegue até o diretório do porjeto clonado e execute o seguinte comando no terminal para instalar todas as dependências
 ```
 npm install 
 ```
+3. **Iniciar a aplicação:** Se a instalação das depêndencias não gerar nenhum erro, a aplicação está pronta para ser iniciada. Para isso, execute este outro comando no terminal
+```
+npm run dev
+``` 
 
 ## ✍ Autores
 
