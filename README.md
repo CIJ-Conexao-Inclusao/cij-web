@@ -1,6 +1,7 @@
 # Conexão Inclusão Jaraguá - WEB
 
-Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações importantes sobre a estrutura do projeto, os pré-requisitos necessários para executá-lo, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
+Olá, bem-vindo(a) ao WEB do CIJ! 👋
+Aqui você encontrará informações importantes sobre a estrutura do projeto, os pré-requisitos necessários para executá-lo, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
 
 ## 🧱 Estrutura
 
@@ -15,8 +16,8 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 Antes de prosseguir, certifique-se de ter os seguintes pré-requisitos instalados:
 
-- [Node.js](https://nodejs.org/)
-- [npm](https://www.npmjs.com/)
+- Node.js
+- npm
 
 ## 🛠 Instalação
 
