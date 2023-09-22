@@ -1,6 +1,6 @@
 # Conexão Inclusão Jaraguá - WEB
 
-Olá, bem-vindo(a) ao WEB do CIJ! 👋
+Olá, bem-vindo(a) ao WEB do CIJ! 👋  
 Aqui você encontrará informações importantes sobre a estrutura da aplicação, os pré-requisitos necessários para executá-la, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
 
 ## 🧱 Estrutura
