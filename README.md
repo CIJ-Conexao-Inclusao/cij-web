@@ -12,7 +12,7 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 ## ✅ Pré-requisitos
 
-Antes de prosseguir, certifique-se de ter os seguintes pré-requisitos instalados:
+Antes de prosseguir, certifique-se de ter os seguintes componentes instalados:
 
 - Node.js
 - npm
