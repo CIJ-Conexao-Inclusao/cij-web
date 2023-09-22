@@ -11,8 +11,8 @@ import {
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 
-import TemaProvider from // , { ColorModeContext }
-"./providers/TemaProvider";
+import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
+import ComponentTest from "./components/ComponentTest/ComponentTest";
 
 // import CookieService from "./services/CookieService";
 
@@ -28,6 +28,7 @@ const App = () => {
     <TemaProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<ComponentTest />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
