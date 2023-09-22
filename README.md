@@ -13,7 +13,18 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 ## ✅ Pré-requisitos
 
+Antes de prosseguir, certifique-se de ter os seguintes pré-requisitos instalados:
+
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+
 ## 🛠 Instalação
+
+1. **Clonar o repositório:** Clone o repositório [WEB](https://github.com/conexao-inclusao-jaragua/web.git) do Github para sua máquina local
+2. **Instalar as dependências:** Navegue até o diretório do porjeto clonado e execute o seguinte comando no terminal para instalar todas as dependências:
+```JavaScript
+npm install 
+```
 
 ## ✍ Autores
 
