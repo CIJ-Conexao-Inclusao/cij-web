@@ -5,7 +5,7 @@ import { Box, Button, TextField } from "@mui/material";
 
 import "./Login.css";
 
-import  logo  from "./assets/logo.png";
+import logo from "./assets/logo.png";
 
 import patrocinio from "./assets/patrocinio.png";
 
@@ -38,10 +38,12 @@ const Login = () => {
 
   return (
     <Box className="flex h-screen w-screen">
-      <Box className="left">
-        <Box className="phrases">
+      <Box className="w-2/5 h-full">
+        <Box>
           <Box>
-            <h1>Bem Vindo</h1>
+            <h1 className="text-3xl font-bold text-gray-700 flex justify-center pt-1/4 mb-1vh">
+              Bem Vindo
+            </h1>
           </Box>
 
           <Box>
@@ -54,7 +56,7 @@ const Login = () => {
             <Box className="label">
               <label htmlFor="CPF">CPF</label>
             </Box>
-            <TextField type="text"/>
+            <TextField type="text" />
           </Box>
 
           <Box className="center-top">
@@ -62,7 +64,7 @@ const Login = () => {
               <label htmlFor="Senha">Senha</label>
             </Box>
 
-            <TextField type="password"/>
+            <TextField type="password" />
           </Box>
 
           <Box className="top-5">
