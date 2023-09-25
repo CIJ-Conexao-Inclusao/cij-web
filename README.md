@@ -14,8 +14,8 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 
 Antes de prosseguir, certifique-se de ter os seguintes componentes instalados:
 
-- Node.js
-- npm
+- Node.js: ^16.13.1
+- npm: ^8.1.2
 
 ## 🛠 Instalação
 
