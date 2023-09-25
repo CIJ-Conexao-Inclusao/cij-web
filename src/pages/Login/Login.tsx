@@ -12,18 +12,21 @@ import patrocinio from "./assets/patrocinio.png";
 import cij from "./assets/cij.png";
 
 import { ILogin } from "../../interfaces";
+import { useNavigate } from "react-router-dom";
 
 // import LoginService from "../../services/LoginService";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<ILogin>({
     email: "",
     password: "",
   });
 
-  // const login = async () => {
-  //   const res = await LoginService.login(user);
-  // };
+  const login = async () => {
+    // const res = await LoginService.login(user);
+    navigate("/signup");
+  };
 
   // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setUser({ ...user, email: e.target.value });
