@@ -28,90 +28,89 @@ const Login = () => {
     navigate("/signup");
   };
 
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setUser({ ...user, email: e.target.value });
-  // };
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, email: e.target.value });
+  };
 
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setUser({ ...user, password: e.target.value });
-  // };
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, password: e.target.value });
+  };
 
   return (
-    <div className="body">
-      <div className="left">
-        <div className="phrases">
-          <div>
+    <Box className="flex h-screen w-screen">
+      <Box className="left">
+        <Box className="phrases">
+          <Box>
             <h1>Bem Vindo</h1>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <h3>Faça seu login abaixo</h3>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <div className="container">
-          <div className="center">
-            <div className="label">
+        <Box className="container">
+          <Box className="center">
+            <Box className="label">
               <label htmlFor="CPF">CPF</label>
-            </div>
+            </Box>
+            <TextField type="text"/>
+          </Box>
 
-            <input type="text"/>
-          </div>
-
-          <div className="center-top">
-            <div className="label">
+          <Box className="center-top">
+            <Box className="label">
               <label htmlFor="Senha">Senha</label>
-            </div>
+            </Box>
 
-            <input type="password"/>
-          </div>
+            <TextField type="password"/>
+          </Box>
 
-          <div className="top-5">
-            <div className="center-top">
+          <Box className="top-5">
+            <Box className="center-top">
               <button className="button-login">
                 Login
               </button>
-            </div>
+            </Box>
 
-            <div className="center-top-2">
+            <Box className="center-top-2">
               <button className="button-register">
                 Cadastrar
               </button>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
 
-        <div className="footer">
-          <div className="post-footer">
-            <div className="circle-logo">
+        <Box className="footer">
+          <Box className="post-footer">
+            <Box className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
-            </div>
+            </Box>
 
-            <div className="circle-logo">
+            <Box className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
-            </div>
+            </Box>
 
-            <div className="circle-logo">
+            <Box className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
-            </div>
+            </Box>
 
-            <div className="circle-logo">
+            <Box className="circle-logo">
               <img className="patrocinio" src={patrocinio} />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
 
-      <div className="right">
-        <div className="img-logo">
+      <Box className="right">
+        <Box className="img-logo">
           <img className="logo" src={cij} />
-        </div>
+        </Box>
 
-        <div className="image-login">
+        <Box className="image-login">
           <img className="family-inclusive" src={logo} />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
