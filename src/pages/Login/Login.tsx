@@ -4,10 +4,12 @@ import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 
 import { ILogin } from "../../interfaces";
+import { useNavigate } from "react-router-dom";
 
 // import LoginService from "../../services/LoginService";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<ILogin>({
     email: "",
     password: "",
@@ -15,6 +17,7 @@ const Login = () => {
 
   const login = async () => {
     // const res = await LoginService.login(user);
+    navigate("/signup");
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
