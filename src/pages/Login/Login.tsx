@@ -13,7 +13,7 @@ import cij from "./assets/cij.png";
 
 import { ILogin } from "../../interfaces";
 
-import LoginService from "../../services/LoginService";
+// import LoginService from "../../services/LoginService";
 
 const Login = () => {
   const [user, setUser] = useState<ILogin>({

@@ -1,27 +1,37 @@
-# React + TypeScript + Vite
+# Conexão Inclusão Jaraguá - WEB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações importantes sobre a estrutura da aplicação, os pré-requisitos necessários para executá-la, as instruções de instalação e os autores responsáveis pelo desenvolvimento.
 
-Currently, two official plugins are available:
+## 🧱 Estrutura
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Vite: 4.4.5
+- React: 18.2.0
+- TypeScript: 5.0.2
+- Tailwind: 3.3.3
+- Material UI: 5.14.6
 
-## Expanding the ESLint configuration
+## ✅ Pré-requisitos
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Antes de prosseguir, certifique-se de ter os seguintes componentes instalados:
 
-- Configure the top-level `parserOptions` property like this:
+- Node.js
+- npm
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## 🛠 Instalação
+
+1. **Clonar o repositório:** Clone o repositório [WEB](https://github.com/conexao-inclusao-jaragua/web.git) do Github para sua máquina local
+2. **Instalar as dependências:** Navegue até o diretório do projeto clonado e execute o seguinte comando para instalar todas as dependências
 ```
+npm install 
+```
+3. **Iniciar a aplicação:** Se a instalação das dependências for bem sucedida, a aplicação está pronta para ser iniciada. Para isso, execute este outro comando
+```
+npm run dev
+``` 
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## ✍ Autores
+
+- [Camilly de Souza Pessotti](https://github.com/pessotticamilly)
+- [Camilly Vitória da Rocha Goltz](https://github.com/VitoriaCamilly)
+- [Cauã Kath](https://github.com/CauaKath)
+- [Kenzo Hideaky Ferreira Sato](https://github.com/Kenzohfs)
