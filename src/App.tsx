@@ -8,11 +8,13 @@ import {
   // Outlet,
 } from "react-router-dom";
 
+import PageLayout from "./layout/PageLayout";
+
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Home from "./pages/Home/Home";
 
 import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
-import ComponentTest from "./components/ComponentTest/ComponentTest";
 
 // import CookieService from "./services/CookieService";
 
@@ -28,7 +30,9 @@ const App = () => {
     <TemaProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<ComponentTest />} />
+          <Route element={<PageLayout />}>
+            <Route path="/" element={<Home />} />
+          </Route>
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

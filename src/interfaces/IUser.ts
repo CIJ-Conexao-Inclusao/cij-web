@@ -10,6 +10,6 @@ export interface IUser {
   cpf: string;
   phone?: string;
   email: string;
-  password: string;
+  password?: string;
   gender: Gender;
 }

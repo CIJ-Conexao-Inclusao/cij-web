@@ -2,11 +2,13 @@ import axios from "../api";
 
 import { ILogin } from "../interfaces";
 
-const basePath = "/login";
+const basePath = "/users/login";
 
 class Login {
   async login(user: ILogin) {
-    return await axios.post(basePath, user);
+    return await axios.post(basePath, user, {
+      withCredentials: false,
+    });
   }
 }
 

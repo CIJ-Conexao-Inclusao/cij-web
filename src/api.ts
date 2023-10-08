@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://15.228.164.199:3040/cij/api/v1/",
-    withCredentials: true
-})
+  baseURL: "http://ec2-15-228-164-199.sa-east-1.compute.amazonaws.com:3040",
+  withCredentials: false,
+});
 
 export default api;
