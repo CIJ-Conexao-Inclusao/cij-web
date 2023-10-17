@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 
-import { IUser } from "../../interfaces";
+import { IUser } from "../../types";
 
 import CookieService from "../../services/CookieService";
 

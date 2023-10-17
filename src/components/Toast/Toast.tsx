@@ -1,10 +1,10 @@
 import { Snackbar, IconButton, Alert } from "@mui/material";
 
-import { IToast } from "../../interfaces/IToast";
+import { TToast } from "../../types";
 
 import CloseIcon from "@mui/icons-material/Close";
 
-const Toast = (props: IToast) => {
+const Toast = (props: TToast) => {
   const actionFeedback = (
     <IconButton
       size="small"
@@ -21,6 +21,7 @@ const Toast = (props: IToast) => {
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       open={props.open}
       onClose={props.onClose}
+      autoHideDuration={6000}
     >
       <Alert
         severity={props.severity}

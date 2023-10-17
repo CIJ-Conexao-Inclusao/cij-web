@@ -5,20 +5,19 @@ import Cookies from "js-cookie";
 
 import Toast from "../../components/Toast/Toast";
 
-import { ILogin } from "../../interfaces";
-import { IToast } from "../../interfaces/IToast";
+import { TLogin, TToast } from "../../types";
 
 import LoginService from "../../services/LoginService";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState<ILogin>({
+  const [user, setUser] = useState<TLogin>({
     email: "cauakathdev@gmail.com",
     password: "1234",
   });
 
-  const [feedback, setFeedback] = useState<IToast>({
+  const [feedback, setFeedback] = useState<TToast>({
     open: false,
     message: "",
     severity: "success",
@@ -35,11 +34,17 @@ const Login = () => {
       Cookies.set("user", JSON.stringify(res.data.user_info));
 
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      let message: string = "Email ou senha incorretos";
+
+      if (error.response.data.message != "email/password incorrects") {
+        message = "Internal Server Error";
+      }
+
       setFeedback({
         ...feedback,
         open: true,
-        message: "Email ou senha incorretos",
+        message: message,
         severity: "error",
       });
 
@@ -51,12 +56,8 @@ const Login = () => {
 
   // ************************************ Handlers ************************************ //
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, email: e.target.value });
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, password: e.target.value });
+  const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleOnFeedbackClose = () => {
@@ -77,12 +78,16 @@ const Login = () => {
         <TextField
           variant="standard"
           placeholder="Email"
-          onChange={handleEmailChange}
+          name="email" // !Important
+          value={user.email} // !Important
+          onChange={handledChange} // !Important
         />
         <TextField
           variant="standard"
           placeholder="Senha"
-          onChange={handlePasswordChange}
+          name="password" // !Important
+          value={user.password} // !Important
+          onChange={handledChange} // !Important
         />
         <Button variant="contained" disableElevation onClick={login}>
           Login

@@ -1,6 +1,6 @@
 import axios from "../api";
 
-import { ILogin } from "../interfaces";
+import { ILogin } from "../types";
 
 const basePath = "/users/login";
 

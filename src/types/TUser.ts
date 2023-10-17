@@ -4,12 +4,14 @@ enum Gender {
   Other = "other",
 }
 
-export interface IUser {
-  id?: string;
+type TUser = {
+  id: string;
   name: string;
   cpf: string;
   phone?: string;
   email: string;
-  password?: string;
+  password: string;
   gender: Gender;
-}
+};
+
+export default TUser;
