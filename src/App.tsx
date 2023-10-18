@@ -8,7 +8,7 @@ import {
   // Outlet,
 } from "react-router-dom";
 
-import PageLayout from "./layout/PageLayout";
+import PageLayout from "./layout";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";

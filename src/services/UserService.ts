@@ -3,7 +3,7 @@ import axios from "../api";
 
 const basePath = "/users";
 
-class User {
+class UserService {
   config = {
     headers: {
       Authorization: Cookies.get("token"),
@@ -16,4 +16,4 @@ class User {
   }
 }
 
-export default new User();
+export default new UserService();

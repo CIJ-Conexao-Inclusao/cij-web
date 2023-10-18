@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, TextField } from "@mui/material";
 import Cookies from "js-cookie";
 
-import Toast from "../../components/Toast/Toast";
+import Toast from "../../components/Toast";
 
 import { TLogin, TToast } from "../../types";
 

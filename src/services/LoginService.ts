@@ -1,15 +1,21 @@
 import axios from "../api";
 
-import { ILogin } from "../types";
+import { TLogin } from "../types";
 
 const basePath = "/users/login";
 
-class Login {
-  async login(user: ILogin) {
+class LoginService {
+  async login(user: TLogin) {
     return await axios.post(basePath, user, {
       withCredentials: false,
     });
   }
+
+  async logout() {
+    return await axios.post(`${basePath}/logout`, null, {
+      withCredentials: true,
+    });
+  }
 }
 
-export default new Login();
+export default new LoginService();

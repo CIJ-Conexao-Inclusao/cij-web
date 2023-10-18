@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 
-import { IUser } from "../../types";
+import { TUser } from "../../types";
 
 import CookieService from "../../services/CookieService";
 
@@ -24,7 +24,7 @@ import LogoBranca from "../../assets/conexao-inclusao-jaragua-icone-branco.png";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [user] = useState<IUser | null>(CookieService.getUser());
+  const [user] = useState<TUser | null>(CookieService.getUser());
 
   const goHome = () => {
     navigate("/");
