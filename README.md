@@ -7,7 +7,6 @@ Olá, bem-vindo(a) ao WEB do CIJ! Aqui você encontrará informações important
 - Vite: 4.4.5
 - React: 18.2.0
 - TypeScript: 5.0.2
-- Tailwind: 3.3.3
 - Material UI: 5.14.6
 
 ## ✅ Pré-requisitos
