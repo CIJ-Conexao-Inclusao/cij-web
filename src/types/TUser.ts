@@ -1,11 +1,11 @@
-enum Gender {
+export enum Gender {
   Male = "male",
   Female = "female",
   Other = "other",
 }
 
 type TUser = {
-  id: string;
+  id: number;
   name: string;
   cpf: string;
   phone?: string;
