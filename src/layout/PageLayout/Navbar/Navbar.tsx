@@ -10,16 +10,16 @@ import {
   Tooltip,
 } from "@mui/material";
 
-import { TUser } from "../../types";
+import { TUser } from "../../../types";
 
-import CookieService from "../../services/CookieService";
+import CookieService from "../../../services/CookieService";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonIcon from "@mui/icons-material/Person";
 
-import LogoBranca from "../../assets/conexao-inclusao-jaragua-icone-branco.png";
+import LogoBranca from "../../../assets/conexao-inclusao-jaragua-icone-branco.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
