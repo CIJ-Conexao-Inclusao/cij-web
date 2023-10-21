@@ -12,8 +12,7 @@ class UserService {
   };
 
   async getAll() {
-    // return await axios.get(basePath + "/list", this.config);
-    return await axios.get(basePath);
+    return await axios.get(basePath + "/list", this.config);
   }
 }
 

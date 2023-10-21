@@ -1,5 +1,5 @@
 import "./App.css";
-// import { useContext } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,16 +7,17 @@ import {
   // Navigate,
   // Outlet,
 } from "react-router-dom";
+import { useAppDispatch } from "./redux/hooks";
 
-import PageLayout from "./layout";
+import { PageLayout } from "./layout";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 
-import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
-
-// import CookieService from "./services/CookieService";
+import { CookieService } from "./services";
+import TemaProvider from "./providers/TemaProvider";
+import { defineUser } from "./redux/user/userSlice";
 
 const App = () => {
   // const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -25,6 +26,15 @@ const App = () => {
   //   console.log("clicou!");
   //   toggleColorMode();
   // };
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const userCookiesData = CookieService.getUser();
+    if (userCookiesData != null) {
+      dispatch(defineUser({ user: userCookiesData }));
+    }
+  }, []);
 
   return (
     <TemaProvider>

@@ -1,4 +1,4 @@
-export enum Gender {
+export enum GENDER {
   Male = "male",
   Female = "female",
   Other = "other",
@@ -11,7 +11,7 @@ type TUser = {
   phone?: string;
   email: string;
   password: string;
-  gender: Gender;
+  gender: GENDER;
 };
 
 export default TUser;

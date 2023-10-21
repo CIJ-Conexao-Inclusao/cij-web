@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -9,10 +9,7 @@ import {
   Toolbar,
   Tooltip,
 } from "@mui/material";
-
-import { TUser } from "../../../types";
-
-import CookieService from "../../../services/CookieService";
+import { useAppSelector } from "../../../redux/hooks";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -20,11 +17,21 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonIcon from "@mui/icons-material/Person";
 
 import LogoBranca from "../../../assets/conexao-inclusao-jaragua-icone-branco.png";
+import ModalUser from "./ModalUser";
+
+type TModalUser = {
+  open: boolean;
+  anchorEl: null | HTMLElement;
+};
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
-  const [user] = useState<TUser | null>(CookieService.getUser());
+  const [modalUser, setModalUser] = useState<TModalUser>({
+    open: false,
+    anchorEl: null,
+  });
 
   const goHome = () => {
     navigate("/");
@@ -45,45 +52,61 @@ const Navbar = () => {
     return user.name;
   };
 
-  useEffect(() => {
-    console.log("user", user);
-  }, []);
+  const handleCloseModalUser = () => {
+    setModalUser({ ...modalUser, open: false });
+  };
+
+  const openModalUser = (e: React.MouseEvent<HTMLElement>) => {
+    setModalUser({ ...modalUser, open: true, anchorEl: e.currentTarget });
+  };
 
   return (
-    <AppBar position="static" id="navbar">
-      <Toolbar className="justify-between h-16" id="container-items">
-        <Box className="h-full flex items-center gap-2">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
+    <>
+      <ModalUser
+        anchorEl={modalUser.anchorEl}
+        open={modalUser.open}
+        handleClose={handleCloseModalUser}
+      />
 
-          <Tooltip title="Home" className="cursor-pointer" onClick={goHome}>
-            <img className="h-2/3" src={LogoBranca} alt="Logo" />
-          </Tooltip>
-        </Box>
-
-        <Box className="flex gap-6">
-          <IconButton sx={{ color: "primary.contrast" }}>
-            <NotificationsIcon />
-          </IconButton>
-          <Box className="flex">
-            <Tooltip title={getUserTip()}>
-              <Avatar sx={{ bgcolor: "primary.light" }}>
-                {user ? getNameDisplay() : <PersonIcon />}
-              </Avatar>
-            </Tooltip>
-            <IconButton size="small" sx={{ color: "primary.contrast" }}>
-              <ArrowDropDownIcon />
+      <AppBar position="static" id="navbar">
+        <Toolbar className="justify-between h-16" id="container-items">
+          <Box className="h-full flex items-center gap-2">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
             </IconButton>
+
+            <Tooltip title="Home" className="cursor-pointer" onClick={goHome}>
+              <img className="h-2/3" src={LogoBranca} alt="Logo" />
+            </Tooltip>
           </Box>
-        </Box>
-      </Toolbar>
-    </AppBar>
+
+          <Box className="flex gap-6">
+            <IconButton sx={{ color: "primary.contrast" }}>
+              <NotificationsIcon />
+            </IconButton>
+            <Box className="flex">
+              <Tooltip title={getUserTip()}>
+                <Avatar sx={{ bgcolor: "primary.light" }}>
+                  {user ? getNameDisplay() : <PersonIcon />}
+                </Avatar>
+              </Tooltip>
+              <IconButton
+                size="small"
+                sx={{ color: "primary.contrast" }}
+                onClick={openModalUser}
+              >
+                <ArrowDropDownIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

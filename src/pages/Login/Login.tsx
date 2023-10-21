@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, TextField } from "@mui/material";
 import Cookies from "js-cookie";
+import { useAppDispatch } from "../../redux/hooks";
 
 import Toast from "../../components/Toast";
 
 import { TLogin, TToast } from "../../types";
 
 import LoginService from "../../services/LoginService";
+import { defineUser } from "../../redux/user/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [user, setUser] = useState<TLogin>({
     email: "cauakathdev@gmail.com",
@@ -32,6 +35,8 @@ const Login = () => {
 
       Cookies.set("token", res.data.token);
       Cookies.set("user", JSON.stringify(res.data.user_info));
+
+      dispatch(defineUser({ user: res.data.user_info }));
 
       navigate("/");
     } catch (error: any) {
@@ -85,6 +90,7 @@ const Login = () => {
         <TextField
           variant="standard"
           placeholder="Senha"
+          type="password"
           name="password" // !Important
           value={user.password} // !Important
           onChange={handledChange} // !Important
