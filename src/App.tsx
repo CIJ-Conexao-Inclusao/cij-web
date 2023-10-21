@@ -1,5 +1,5 @@
 import "./App.css";
-// import { useContext } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,14 +7,17 @@ import {
   // Navigate,
   // Outlet,
 } from "react-router-dom";
+import { useAppDispatch } from "./redux/hooks";
 
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
+import { PageLayout } from "./layout";
 
-import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
-import ComponentTest from "./components/ComponentTest/ComponentTest";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
 
-// import CookieService from "./services/CookieService";
+import { CookieService } from "./services";
+import TemaProvider from "./providers/TemaProvider";
+import { defineUser } from "./redux/user/userSlice";
 
 const App = () => {
   // const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -24,11 +27,22 @@ const App = () => {
   //   toggleColorMode();
   // };
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const userCookiesData = CookieService.getUser();
+    if (userCookiesData != null) {
+      dispatch(defineUser({ user: userCookiesData }));
+    }
+  }, []);
+
   return (
     <TemaProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<ComponentTest />} />
+          <Route element={<PageLayout />}>
+            <Route path="/" element={<Home />} />
+          </Route>
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

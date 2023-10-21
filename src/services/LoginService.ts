@@ -1,13 +1,30 @@
 import axios from "../api";
+import Cookies from "js-cookie";
 
-import { ILogin } from "../interfaces";
+import { TLogin } from "../types";
 
-const basePath = "/login";
+const basePath = "/users/login";
 
-class Login {
-  async login(user: ILogin) {
-    return await axios.post(basePath, user);
+class LoginService {
+  private config = {
+    headers: {
+      Authorization: Cookies.get("token"),
+    },
+    withCredentials: false,
+  };
+
+  async login(user: TLogin) {
+    return await axios.post(basePath, user, {
+      withCredentials: false,
+    });
+  }
+
+  async logout() {
+    // Cookies.remove("token");
+    // Cookies.remove("user");
+
+    return await axios.patch(`${basePath}/logout`, null, this.config);
   }
 }
 
-export default new Login();
+export default new LoginService();

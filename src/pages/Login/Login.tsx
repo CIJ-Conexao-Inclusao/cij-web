@@ -1,45 +1,99 @@
-import * as React from "react";
 import { useState } from "react";
-
-import { Box, Button, TextField } from "@mui/material";
-
-import { ILogin } from "../../interfaces";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, TextField } from "@mui/material";
+import Cookies from "js-cookie";
+import { useAppDispatch } from "../../redux/hooks";
 
-// import LoginService from "../../services/LoginService";
+import Toast from "../../components/Toast";
+
+import { TLogin, TToast } from "../../types";
+
+import LoginService from "../../services/LoginService";
+import { defineUser } from "../../redux/user/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<ILogin>({
-    email: "",
-    password: "",
+  const dispatch = useAppDispatch();
+
+  const [user, setUser] = useState<TLogin>({
+    email: "cauakathdev@gmail.com",
+    password: "1234",
   });
 
+  const [feedback, setFeedback] = useState<TToast>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  // ************************************ Functions ************************************ //
+
   const login = async () => {
-    // const res = await LoginService.login(user);
-    navigate("/signup");
+    try {
+      const res = await LoginService.login(user);
+      delete res.data.user_info.password;
+
+      Cookies.set("token", res.data.token);
+      Cookies.set("user", JSON.stringify(res.data.user_info));
+
+      dispatch(defineUser({ user: res.data.user_info }));
+
+      navigate("/");
+    } catch (error: any) {
+      let message: string = "Email ou senha incorretos";
+
+      if (error.response.data.message != "email/password incorrects") {
+        message = "Internal Server Error";
+      }
+
+      setFeedback({
+        ...feedback,
+        open: true,
+        message: message,
+        severity: "error",
+      });
+
+      console.log(error);
+    }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, email: e.target.value });
+  // ************************************ End Functions ************************************ //
+
+  // ************************************ Handlers ************************************ //
+
+  const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, password: e.target.value });
+  const handleOnFeedbackClose = () => {
+    setFeedback({ ...feedback, open: false });
   };
+
+  // ************************************ End Handlers ************************************ //
 
   return (
     <Box className="flex flex-col">
+      <Toast
+        open={feedback.open}
+        message={feedback.message}
+        severity={feedback.severity}
+        onClose={handleOnFeedbackClose}
+      />
       <div className="flex flex-col">
         <TextField
           variant="standard"
           placeholder="Email"
-          onChange={handleEmailChange}
+          name="email" // !Important
+          value={user.email} // !Important
+          onChange={handledChange} // !Important
         />
         <TextField
           variant="standard"
           placeholder="Senha"
-          onChange={handlePasswordChange}
+          type="password"
+          name="password" // !Important
+          value={user.password} // !Important
+          onChange={handledChange} // !Important
         />
         <Button variant="contained" disableElevation onClick={login}>
           Login
