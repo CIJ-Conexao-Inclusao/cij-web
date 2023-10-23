@@ -3,7 +3,12 @@ import Cookies from "js-cookie";
 class CookieService {
   /** Retorna user logado ou null */
   getUser() {
-    const cookie = JSON.parse(Cookies.get("user") || "");
+    let cookie;
+    try {
+      cookie = JSON.parse(Cookies.get("user") || "");
+    } catch (error) {
+      cookie = "";
+    }
     return cookie;
   }
 }
