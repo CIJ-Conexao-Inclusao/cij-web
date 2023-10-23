@@ -3,6 +3,7 @@ import { Menu, MenuItem } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { removeUser } from "../../../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 // import { LoginService } from "../../../../services";
 
 type TModalUserProps = {
@@ -19,6 +20,8 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
   const logout = () => {
     // LoginService.logout();
     dispatch(removeUser());
+    Cookies.remove("token");
+    Cookies.remove("user");
     console.log("logout");
     navigate("/signin");
   };
