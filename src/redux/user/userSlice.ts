@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 import { TUser } from "../../types";
 
@@ -19,6 +20,8 @@ export const userSlice = createSlice({
       state.user = action.payload.user;
     },
     removeUser: (state) => {
+      Cookies.remove("token");
+      Cookies.remove("user");
       state.user = undefined;
     },
   },
