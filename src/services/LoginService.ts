@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 import { TLogin } from "../types";
 
-const basePath = "/users/login";
+const basePath = "/login";
 
 class LoginService {
   private config = {
@@ -14,7 +14,7 @@ class LoginService {
   };
 
   async login(user: TLogin) {
-    return await axios.post(basePath, user, {
+    return await axios.post(`${basePath}/user`, user, {
       withCredentials: false,
     });
   }

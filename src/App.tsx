@@ -15,7 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 
-import { CookieService } from "./services";
+import { CookieService, UserService } from "./services";
 import TemaProvider from "./providers/TemaProvider";
 import { defineUser } from "./redux/user/userSlice";
 
@@ -30,9 +30,13 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const userCookiesData = CookieService.getUser();
-    if (userCookiesData != null) {
-      dispatch(defineUser({ user: userCookiesData }));
+    const tokenCookies = CookieService.getCookie("token");
+
+    if (tokenCookies != null) {
+      UserService.getUserByToken(tokenCookies).then((res) => {
+        const user = res.data.user_info;
+        dispatch(defineUser({ user }));
+      });
     }
   }, []);
 
