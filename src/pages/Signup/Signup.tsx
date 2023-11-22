@@ -20,7 +20,10 @@ import { UserService } from "../../services";
 const userSchema = yup.object().shape({
   cpf: yup.string().required("O CPF é obrigatório"),
   name: yup.string().required("O nome é obrigatório"),
-  email: yup.string().required("O email é obrigatório"),
+  email: yup
+    .string()
+    .email("Email precisa ser válido")
+    .required("O email é obrigatório"),
   password: yup.string().required("A senha é obrigatória"),
   gender: yup.string().required("O gênero é obrigatório"),
 });
@@ -64,7 +67,14 @@ const Signup = () => {
           return;
         }
 
-        UserService.create(user);
+        UserService.create(user).then(() => {
+          setFeedback({
+            ...feedback,
+            open: true,
+            message: "Usuário criado com sucesso",
+            severity: "success",
+          });
+        });
       })
       .catch((err) => {
         setFeedback({
