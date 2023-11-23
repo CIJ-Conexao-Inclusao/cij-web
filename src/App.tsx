@@ -38,7 +38,13 @@ const App = () => {
           const user = res.data.user_info;
           dispatch(defineUser({ user }));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+
+          if (err.response.data.message == "invalid token") {
+            CookieService.removeCookie("token");
+          }
+        });
     }
   }, []);
 

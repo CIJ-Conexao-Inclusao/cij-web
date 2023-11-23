@@ -11,6 +11,10 @@ class CookieService {
     }
     return cookie;
   }
+
+  removeCookie(cookieName: string) {
+    Cookies.remove(cookieName);
+  }
 }
 
 export default new CookieService();
