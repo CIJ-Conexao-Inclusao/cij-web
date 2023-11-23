@@ -20,10 +20,10 @@ import JobIcon from '@mui/icons-material/Work';
 import ChartIcon from '@mui/icons-material/BarChart';
 import PartnerIcon from '@mui/icons-material/PeopleAlt';
 
-import cadeirante from "../assets/cadeirante.png";
-import prefeitura from "../assets/prefeitura.png";
-import trabalho from "../assets/trabalho.png";
-import filmagens from "../assets/filmagens.png";
+import cadeirante from "./assets/cadeirante.png";
+import prefeitura from "./assets/prefeitura.png";
+import trabalho from "./assets/trabalho.png";
+import filmagens from "./assets/filmagens.png";
 
 const imagens = [
   prefeitura,
