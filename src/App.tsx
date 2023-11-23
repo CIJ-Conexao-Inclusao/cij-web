@@ -33,10 +33,12 @@ const App = () => {
     const tokenCookies = CookieService.getCookie("token");
 
     if (tokenCookies != null) {
-      UserService.getUserByToken(tokenCookies).then((res) => {
-        const user = res.data.user_info;
-        dispatch(defineUser({ user }));
-      });
+      UserService.getUserByToken(tokenCookies)
+        .then((res) => {
+          const user = res.data.user_info;
+          dispatch(defineUser({ user }));
+        })
+        .catch((err) => console.log(err));
     }
   }, []);
 

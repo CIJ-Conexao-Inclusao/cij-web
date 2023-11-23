@@ -1,45 +1,33 @@
-import { Button } from "@mui/material";
-
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { defineUser, removeUser } from "../../redux/user/userSlice";
-import TUser, { GENDER } from "../../types/TUser";
+import { useEffect, useState } from "react";
+import NewsService from "../../services/NewsService";
+import { CircularProgress } from "@mui/material";
 
 const Home = () => {
-  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
-  const dispatch = useAppDispatch();
+  const [news, setNews] = useState<[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const user2: TUser = {
-    name: "kenzo222",
-    email: "t2",
-    cpf: "12",
-    gender: GENDER.Male,
-    id: 12,
-    password: "sd2f",
-    phone: "1232",
-  };
+  useEffect(() => {
+    NewsService.list()
+      .then((res) => {
+        setNews(res.data);
 
-  const teste = () => {
-    console.log("teste");
-    dispatch(defineUser({ user: user2 }));
-  };
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
 
-  const teste2 = () => {
-    console.log("teste");
-    dispatch(removeUser());
-  };
-
-  return (
-    <div className="mt-2">
-      <Button variant="contained" onClick={teste}>
-        Add user
-      </Button>
-      <Button variant="contained" onClick={teste2}>
-        Remove user
-      </Button>
-      Home
-      <p>{user?.name}</p>
-    </div>
-  );
+  if (isLoading) {
+    return (
+      <div className="w-full mt-4 flex gap-2 items-center justify-center">
+        <CircularProgress />
+        Carregando...
+      </div>
+    );
+  }
+  return <div className="mt-2">Home</div>;
 };
 
 export default Home;

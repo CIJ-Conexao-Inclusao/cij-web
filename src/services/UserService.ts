@@ -17,8 +17,7 @@ class UserService {
   }
 
   async getUserByToken(token: string) {
-    console.log("token: ", token);
-    return await axios.get("/get-user-data", { data: { token } });
+    return await axios.post("/get-user-data", { token });
   }
 
   async create(user: Omit<TUser, "id">) {
