@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import { Box, Button } from '@mui/material';
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton } from "./Login.styled";
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, TypographyH3 } from "./Login.styled";
 
 import InputAdornment from '@mui/material/InputAdornment';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
@@ -130,22 +130,25 @@ const Login = () => {
     <Box sx={{ display: "flex" }}>
       <BoxRightColumn>
         <BoxLogoImage>
-          <img src="" alt="Logo" />
+          <img src={cij} alt="Logo" />
         </BoxLogoImage>
 
         <BoxBackgroundImage>
-          <img src="" alt="Background" />
+          <img src={logo} alt="Background" />
         </BoxBackgroundImage>
       </BoxRightColumn>
 
       <BoxLeftColumn>
         <BoxTitle>
-          <p id="title">Bem-vindo(a)!</p>
-          <p>Insera suas credencias para acessar sua conta</p>
+        <TypographyH3 id="title" variant="h3">
+            Bem vindo(a)!
+          </TypographyH3>
+          <p>Insira suas credencias para acessar sua conta</p>
         </BoxTitle>
 
         <BoxInputs>
           <Inputs
+            sx={{ margin: 1.5}}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -161,6 +164,7 @@ const Login = () => {
           />
 
           <Inputs
+            sx={{ margin: 1.5}}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -31,6 +31,7 @@ const App = () => {
           <Route path="/" element={<ComponentTest />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/register" element={<ComponentTest />} />
         </Routes>
       </Router>
     </TemaProvider>
