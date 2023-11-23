@@ -41,10 +41,6 @@ const Login = () => {
     } catch (error: any) {
       let message: string = "Email ou senha incorretos";
 
-      if (error.response.data.message != "email/password incorrects") {
-        message = "Internal Server Error";
-      }
-
       setFeedback({
         ...feedback,
         open: true,

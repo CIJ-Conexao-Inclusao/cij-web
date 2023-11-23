@@ -14,7 +14,7 @@ class CompanyService {
   };
 
   async create(company: Omit<TCompany, "id">) {
-    return await axios.post(`${basePath}/create`, company, this.config);
+    return await axios.post(`${basePath}/create`, company);
   }
 }
 

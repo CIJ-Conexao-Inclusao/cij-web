@@ -25,7 +25,7 @@ export const companySchema = yup.object().shape({
   cnpj: yup
     .string()
     .required("O CNPJ é obrigatório")
-    .length(14, "O CNPJ deve ter 14 dígitos"),
+    .length(11, "O CNPJ deve ter 11 dígitos"),
   phone: yup.string(),
   email: yup
     .string()
