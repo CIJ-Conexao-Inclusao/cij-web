@@ -34,7 +34,6 @@ const Login = () => {
       delete res.data.user_info.password;
 
       Cookies.set("token", res.data.token);
-      Cookies.set("user", JSON.stringify(res.data.user_info));
 
       dispatch(defineUser({ user: res.data.user_info }));
 
@@ -83,17 +82,19 @@ const Login = () => {
         <TextField
           variant="standard"
           placeholder="Email"
-          name="email" // !Important
-          value={user.email} // !Important
-          onChange={handledChange} // !Important
+          required
+          name="email"
+          value={user.email}
+          onChange={handledChange}
         />
         <TextField
           variant="standard"
           placeholder="Senha"
           type="password"
-          name="password" // !Important
-          value={user.password} // !Important
-          onChange={handledChange} // !Important
+          required
+          name="password"
+          value={user.password}
+          onChange={handledChange}
         />
         <Button variant="contained" disableElevation onClick={login}>
           Login

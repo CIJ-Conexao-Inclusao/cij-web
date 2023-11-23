@@ -2,10 +2,10 @@ import Cookies from "js-cookie";
 
 class CookieService {
   /** Retorna user logado ou null */
-  getUser() {
+  getCookie(cookieName: string) {
     let cookie;
     try {
-      cookie = JSON.parse(Cookies.get("user") || "");
+      cookie = Cookies.get(cookieName);
     } catch (error) {
       cookie = "";
     }
