@@ -10,7 +10,7 @@ const Home = () => {
     NewsService.list()
       .then((res) => {
         setNews(res.data);
-
+        console.log(news);
         setIsLoading(false);
       })
       .catch((err) => {
