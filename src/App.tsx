@@ -1,12 +1,6 @@
 import "./App.css";
 import { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  // Navigate,
-  // Outlet,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, /* Navigate, Outlet */ } from "react-router-dom";
 import { useAppDispatch } from "./redux/hooks";
 
 import { PageLayout } from "./layout";
@@ -16,7 +10,7 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 
 import { CookieService, UserService } from "./services";
-import TemaProvider from "./providers/TemaProvider";
+import TemaProvider from "./providers/ThemeProvider";
 import { defineUser } from "./redux/user/userSlice";
 
 const App = () => {
