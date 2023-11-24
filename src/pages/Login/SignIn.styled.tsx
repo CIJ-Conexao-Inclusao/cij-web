@@ -32,6 +32,7 @@ export const BoxLogoImage = styled(Box)({
 export const BoxBackgroundImage = styled(Box)({
     alignItems: "center",
     display: "flex",
+    height: "100%",
     justifyContent: "center",
     width: "100%"
 });
@@ -41,14 +42,14 @@ export const BoxTitle = styled(Box)({
     display: "flex",
     flexDirection: "column",
     marginBottom: "4rem",
-    width: "100%",
+    width: "100%"
 });
 
 export const BoxInputs = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    width: "100%",
+    width: "100%"
 });
 
 export const Inputs = styled(TextField)({
@@ -60,13 +61,12 @@ export const Inputs = styled(TextField)({
     width: "20vw"
 });
 
-
 export const BoxButtons = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
     marginTop: "2rem",
-    width: "100%",
+    width: "100%"
 });
 
 export const PrimaryButton = styled(Button)({
