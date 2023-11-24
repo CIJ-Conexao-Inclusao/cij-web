@@ -1,60 +1,69 @@
-import "./App.css";
-import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, /* Navigate, Outlet */ } from "react-router-dom";
-import { useAppDispatch } from "./redux/hooks";
+import "./App.scss";
+import React, { useEffect } from "react";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	// Navigate,
+	// Outlet,
+} from "react-router-dom";
 
 import { PageLayout } from "./layout";
 
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import SignIn from "./pages/Login/SignIn";
+import SignUp from "./pages/Signup/Signup";
 import Home from "./pages/Home";
 
+import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
+import ComponentTest from "./components/ComponentTest/ComponentTest";
+
 import { CookieService, UserService } from "./services";
-import TemaProvider from "./providers/ThemeProvider";
 import { defineUser } from "./redux/user/userSlice";
+import { useAppDispatch } from "./redux/hooks";
+import Login from "./pages/Login";
 
 const App = () => {
-  // const { toggleColorMode, mode } = useContext(ColorModeContext);
+	// const { toggleColorMode, mode } = useContext(ColorModeContext);
 
-  // const handleToggleMode = () => {
-  //   console.log("clicou!");
-  //   toggleColorMode();
-  // };
+	// const handleToggleMode = () => {
+	//   console.log("clicou!");
+	//   toggleColorMode();
+	// };
 
-  const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const tokenCookies = CookieService.getCookie("token");
+	useEffect(() => {
+		const tokenCookies = CookieService.getCookie("token");
 
-    if (tokenCookies != null) {
-      UserService.getUserByToken(tokenCookies)
-        .then((res) => {
-          const user = res.data.user_info;
-          dispatch(defineUser({ user }));
-        })
-        .catch((err) => {
-          console.log(err);
+		if (tokenCookies != null) {
+			UserService.getUserByToken(tokenCookies)
+				.then((res) => {
+					const user = res.data.user_info;
+					dispatch(defineUser({ user }));
+				})
+				.catch((err) => {
+					console.log(err);
 
-          if (err.response.data.message == "invalid token") {
-            CookieService.removeCookie("token");
-          }
-        });
-    }
-  }, []);
+					if (err.response.data.message == "invalid token") {
+						CookieService.removeCookie("token");
+					}
+				});
+		}
+	}, []);
 
-  return (
-    <TemaProvider>
-      <Router>
-        <Routes>
-          <Route element={<PageLayout />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route path="/signin" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </Router>
-    </TemaProvider>
-  );
+	return (
+		<TemaProvider>
+			<Router>
+				<Routes>
+					<Route element={<PageLayout />}>
+						<Route path="/" element={<Home />} />
+					</Route>
+					<Route path="/signin" element={<Login />} />
+					<Route path="/signup" element={<SignUp />} />
+				</Routes>
+			</Router>
+		</TemaProvider>
+	);
 };
 
 // type ProtectedRouteProps = {
