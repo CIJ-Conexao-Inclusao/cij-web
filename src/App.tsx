@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 // import { useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -13,6 +13,7 @@ import Signup from "./pages/Signup/Signup";
 
 import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
 import ComponentTest from "./components/ComponentTest/ComponentTest";
+import React from "react";
 
 // import CookieService from "./services/CookieService";
 
