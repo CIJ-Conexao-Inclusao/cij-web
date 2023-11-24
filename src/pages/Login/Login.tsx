@@ -1,8 +1,13 @@
 import * as React from "react";
+// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { Box, Button } from '@mui/material';
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, TypographyH3 } from "./Login.styled";
+// import { ILogin } from "../../interfaces";
+
+// import LoginService from "../../services/LoginService";
+
+import { Box } from '@mui/material';
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, BoxCompanies } from "./Login.styled";
 
 import InputAdornment from '@mui/material/InputAdornment';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
@@ -11,37 +16,39 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
-import "./Login.css";
+import "./Login.scss";
+import "../../App.scss"
 
-import logo from "./assets/logo.png";
-import patrocinio from "./assets/patrocinio.png";
-import cij from "./assets/cij.png";
+import logoWhiteFull from "../../assets/logo-white-full.png";
+import loginBackground from "./assets/sign-in-background.png";
+import duasRodas from "./assets/companies/duas-rodas.png";
+import grupoMalwee from "./assets/companies/grupo-malwee.png";
+import marisol from "./assets/companies/marisol.png";
+import prefeitura from "./assets/companies/prefeitura.png";
+import urbano from "./assets/companies/urbano.png";
+import weg from "./assets/companies/weg.png";
 
-import { ILogin } from "../../interfaces";
-import { useNavigate } from "react-router-dom";
-
-// import LoginService from "../../services/LoginService";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [tipo, setTipo] = useState("password");
-  const [user, setUser] = useState<ILogin>({
-    email: "",
-    password: "",
-  });
+  // const [user, setUser] = useState<ILogin>({
+  //   email: "",
+  //   password: "",
+  // });
 
-  const login = async () => {
-    // const res = await LoginService.login(user);
-    navigate("/signup");
-  };
+  // const login = async () => {
+  //   // const res = await LoginService.login(user);
+  //   navigate("/signup");
+  // };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, email: e.target.value });
-  };
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setUser({ ...user, email: e.target.value });
+  // };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, password: e.target.value });
-  };
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setUser({ ...user, password: e.target.value });
+  // };
 
   function mostrarSenha() {
     if (tipo == "text") {
@@ -50,138 +57,78 @@ const Login = () => {
       setTipo("text");
     }
   }
-
+  
   return (
-    // <Box display="flex" height="100%">
-    //   <Box width="65%" bgcolor="#004AAD">
-    //     <Box height="10%" display="flex" justifyContent="center" alignItems="center">
-    //       <img src={cij} alt="Logo" style={{ height: '75%' }} />
-    //     </Box>
-    //     <Box height="90%" display="flex" justifyContent="center" alignItems="center">
-    //       <img src={logo} alt="Family Inclusive" style={{ height: '65%' }} />
-    //     </Box>
-    //   </Box>
-    //   <Box width="35%" display="grid" alignItems="center">
-    //     <Container>
-    //       <Box>
-    //         <Box>
-    //           <Typography variant="h2" textAlign="center">
-    //             Bem-Vindo(a)!
-    //           </Typography>
-    //           <Box display="flex" justifyContent="center" alignItems="center">
-    //             <Typography variant="subtitle1">
-    //               Insira suas credenciais para acessar sua conta
-    //             </Typography>
-    //           </Box>
-    //         </Box>
-    //         <Box>
-    //           <Container>
-    //             <Grid container spacing={2}>
-    //               <Grid item xs={12}>
-    //                 <Box className="center">
-    //                   <Input type="text" />
-    //                 </Box>
-    //               </Grid>
-    //               <Grid item xs={12}>
-    //                 <Box className="center-top">
-    //                   <Input type="password" />
-    //                 </Box>
-    //               </Grid>
-    //               <Grid item xs={12}>
-    //                 <Box className="top-5">
-    //                   <Box className="center-top">
-    //                     <Box className="button-login">
-    //                       <img
-    //                         style={{ width: '2vw', height: '3vh' }}
-    //                         src=""
-    //                         alt="Login"
-    //                       />
-    //                       <Button variant="contained" color="primary">
-    //                         Entrar
-    //                       </Button>
-    //                     </Box>
-    //                   </Box>
-    //                   <Box className="center-top-2">
-    //                     <Box display="flex" justifyContent="center" alignItems="center" columnGap="5px">
-    //                       <Typography>
-    //                         Não possui uma conta?
-    //                       </Typography>
-    //                       <a href="">Cadastre-se</a>
-    //                     </Box>
-    //                   </Box>
-    //                 </Box>
-    //               </Grid>
-    //             </Grid>
-    //           </Container>
-    //         </Box>
-    //         <Box className="footer">
-    //           <Box className="post-footer">
-    //             {[1, 2, 3, 4, 5, 6].map((index) => (
-    //               <Box key={index} className="circle-logo">
-    //                 <img src={patrocinio} alt={`Patrocinio ${index}`} className="patrocinio" />
-    //               </Box>
-    //             ))}
-    //           </Box>
-    //         </Box>
-    //       </Box>
-    //     </Container>
-    //   </Box>
-    // </Box>
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
       <BoxRightColumn>
         <BoxLogoImage>
-          <img src={cij} alt="Logo" />
+          <img src={logoWhiteFull} alt="Logo" />
         </BoxLogoImage>
 
         <BoxBackgroundImage>
-          <img src={logo} alt="Background" />
+          <img src={loginBackground} alt="Background" />
         </BoxBackgroundImage>
       </BoxRightColumn>
 
       <BoxLeftColumn>
         <BoxTitle>
-        <TypographyH3 id="title" variant="h3">
-            Bem vindo(a)!
-          </TypographyH3>
-          <p>Insira suas credencias para acessar sua conta</p>
+          <p className="big-title">Bem vindo(a)!</p>
+          <p className="little-text">Insira suas credencias para acessar sua conta</p>
         </BoxTitle>
 
         <BoxInputs>
           <Inputs
-            sx={{ margin: 1.5}}
+            variant="outlined" 
+            placeholder="Email"
+            name="email"
+            /* onChange={handledChange} */
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <AlternateEmailRoundedIcon sx={{ color: "#999999" }} />
-                </InputAdornment>)
-            }} 
-            variant="outlined" 
-            placeholder="Email"
+                </InputAdornment>
+                )
+            }}
+            size="small"
             required
-            name="email"
-            value={user.email}
-            /* onChange={handledChange} */
-          />
+            />
 
           <Inputs
-            sx={{ margin: 1.5}}
+            variant="outlined"
+            placeholder="Senha" 
+            name="senha" 
+            type={tipo}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <LockRoundedIcon sx={{ color: "#999999" }} />
-                </InputAdornment>),
+                </InputAdornment>
+              ),
               endAdornment: (
-                tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#999999", cursor: "pointer" }} /> : <VisibilityRoundedIcon onClick={mostrarSenha} sx={{ color: "#999999", cursor: "pointer" }} />)
-              }} variant="outlined" placeholder="Senha" 
-              name="senha" 
-              type={tipo}
+                tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#999999", cursor: "pointer" }} /> 
+                : <VisibilityRoundedIcon onClick={mostrarSenha} sx={{ color: "#999999", cursor: "pointer" }} />
+                )
+              }}
+            size="small"
+            required
           />
         </BoxInputs>
 
         <BoxButtons>
-          <PrimaryButton variant="contained" startIcon={<LoginRoundedIcon />}>Entrar</PrimaryButton>
-          <p>Não possui uma conta? <a href="/signup">Cadastrar-se</a></p>
+          <PrimaryButton variant="contained" startIcon={<LoginRoundedIcon />}>
+              Entrar
+          </PrimaryButton>
+            <p className="little-text">Não possui uma conta? <a href="/signup" className="link">Cadastrar-se</a></p>
         </BoxButtons>
+
+        <BoxCompanies>
+            <img className="companies" src={duasRodas} alt="Duas Rodas" />
+            <img className="companies" src={grupoMalwee} alt="Grupo Malwee" />
+            <img className="companies" src={marisol} alt="Marisol" />
+            <img className="companies" src={prefeitura} alt="Prefeitura de Jaraguá do Sul" />
+            <img className="companies" src={urbano} alt="Urbano" />
+            <img className="companies" src={weg} alt="WEG" />
+        </BoxCompanies>
       </BoxLeftColumn>
     </Box>
   );
