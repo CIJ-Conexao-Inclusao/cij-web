@@ -5,8 +5,8 @@ import { useState } from "react";
 
 // import { ILogin } from "../../interfaces";
 
-import { Box, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, BoxRadios} from "./Signup.styled";
+import { Box, MenuItem, SelectChangeEvent } from '@mui/material';
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, Selects } from "./Signup.styled";
 
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -26,12 +26,25 @@ import signUpBackground from "./assets/sign-up-background.png";
 const SignUp = () => {
   const [tipoSenha, setTipoSenha] = useState("password");
   const [tipoConfirmarSenha, setTipoConfirmarSenha] = useState("password");
+  const [genero, setGenero] = useState('male');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setGenero(event.target.value);
+  };
 
   function mostrarSenha() {
     if (tipoSenha == "text") {
       setTipoSenha("password");
     } else {
       setTipoSenha("text");
+    }
+  }
+
+  function mostrarConfirmarSenha() {
+    if (tipoSenha == "text") {
+      setTipoConfirmarSenha("password");
+    } else {
+      setTipoConfirmarSenha("text");
     }
   }
 
@@ -69,54 +82,62 @@ const SignUp = () => {
               )
             }}
           />
-          <BoxRadios>
-            <FormLabel id="demo-radio-buttons-group-label">Gênero</FormLabel>
-            <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
-              <FormControlLabel value="masculino" control={<Radio />} label="Masculino" />
-              <FormControlLabel value="feminino" control={<Radio />} label="Feminino" />
-              <FormControlLabel value="outro" control={<Radio />} label="Outro" />
-            </RadioGroup>
-          </BoxRadios>
-          <Inputs variant="outlined" placeholder="Celular" name="celular" size="small" required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PhoneIphoneOutlinedIcon sx={{ color: "#999" }} />
-                </InputAdornment>
-              )
-            }}
-          />
-          <Inputs variant="outlined" placeholder="Email" name="email" size="small" required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AlternateEmailOutlinedIcon sx={{ color: "#999" }} />
-                </InputAdornment>
-              )
-            }}
-          />
-          <Inputs variant="outlined" placeholder="Senha" name="senha" size="small" required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockOutlinedIcon sx={{ color: "#999" }} />
-                </InputAdornment>
-              )
-            }}
-          />
-          <Inputs variant="outlined" placeholder="Senha" name="senha" type={tipoSenha} size="small" required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockOutlinedIcon sx={{ color: "#999" }} />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                tipoSenha == "text" ? <VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
-                  : <VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
-              )
-            }}
-          />
+          <Selects
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={genero}
+            label="Gênero"
+            onChange={handleChange}
+            size="small"
+          >
+            <MenuItem value={"male"}>Masculino</MenuItem>
+            <MenuItem value={"female"}>Feminino</MenuItem>
+            <MenuItem value={"other"}>Outro</MenuItem>
+          </Selects>
+            <Inputs variant="outlined" placeholder="Celular" name="celular" size="small" required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIphoneOutlinedIcon sx={{ color: "#999" }} />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <Inputs variant="outlined" placeholder="Email" name="email" size="small" required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AlternateEmailOutlinedIcon sx={{ color: "#999" }} />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <Inputs variant="outlined" placeholder="Senha" name="senha" type={tipoSenha} size="small" required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOutlinedIcon sx={{ color: "#999" }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  tipoSenha == "text" ? <VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
+                    : <VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
+                )
+              }}
+            />
+            <Inputs variant="outlined" placeholder="Confirmar senha" name="confirmar-senha" type={tipoSenha} size="small" required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOutlinedIcon sx={{ color: "#999" }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  tipoConfirmarSenha == "text" ? <VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
+                    : <VisibilityOutlinedIcon onClick={mostrarConfirmarSenha} sx={{ color: "#999", cursor: "pointer" }} />
+                )
+              }}
+            />
         </BoxInputs>
         <BoxButtons>
           <PrimaryButton variant="contained" >Cadastrar</PrimaryButton>

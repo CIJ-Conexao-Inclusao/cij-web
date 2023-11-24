@@ -1,4 +1,4 @@
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Select } from "@mui/material";
 import styled from "@emotion/styled";
 
 export const BoxRightColumn = styled(Box)({
@@ -84,6 +84,15 @@ export const BoxRadios = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    marginBottom: "2rem",
+    width: "20vw"
+});
+
+export const Selects = styled(Select<string>)({
+    backgroundColor: "#EEEEEE",
+    borderRadius: "10px",
+    boxShadow: "5px 5px 10px 0 #00000025",
+    "& fieldset": { border: "none" },
     marginBottom: "2rem",
     width: "20vw"
 });
