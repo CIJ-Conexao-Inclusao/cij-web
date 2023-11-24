@@ -8,8 +8,8 @@ import {
   // Outlet,
 } from "react-router-dom";
 
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
+import SignIn from "./pages/Login/SignIn";
+import SignUp from "./pages/Signup/Signup";
 
 import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
 import ComponentTest from "./components/ComponentTest/ComponentTest";
@@ -30,8 +30,8 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<ComponentTest />} />
-          <Route path="/signin" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/register" element={<ComponentTest />} />
         </Routes>
       </Router>

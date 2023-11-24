@@ -1,171 +1,130 @@
 // import React from "react";
 import * as React from "react";
+// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+// import { ILogin } from "../../interfaces";
 
-import { Box, Button } from '@mui/material';
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, TypographyH3 } from "./Signup.styled";
+import { Box, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, BoxRadios} from "./Signup.styled";
 
 import InputAdornment from '@mui/material/InputAdornment';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
+import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
+import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-import logo from "./assets/logo.png";
-import cij from "./assets/cij.png";
+// import "../../App.scss"
 
+import logoWhiteFull from "../../assets/logo-white-full.png";
+import signUpBackground from "./assets/sign-up-background.png";
 
-// import { ILogin } from "../../interfaces";
-// import { useNavigate } from "react-router-dom";
+const SignUp = () => {
+  const [tipoSenha, setTipoSenha] = useState("password");
+  const [tipoConfirmarSenha, setTipoConfirmarSenha] = useState("password");
 
-const Signup = () => {
+  function mostrarSenha() {
+    if (tipoSenha == "text") {
+      setTipoSenha("password");
+    } else {
+      setTipoSenha("text");
+    }
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <BoxRightColumn>
         <BoxLogoImage>
-          <img src={cij} alt="Logo" />
+          <img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
         </BoxLogoImage>
-
         <BoxBackgroundImage>
-          <img src={logo} alt="Background" />
+          <img id="sign-up-background" src={signUpBackground} alt="Background" />
         </BoxBackgroundImage>
       </BoxRightColumn>
-
       <BoxLeftColumn>
         <BoxTitle>
-          <TypographyH3 id="title" variant="h3">
-            Crie sua conta
-          </TypographyH3>
-          <p>Forneça alguns dados para criar sua conta no CIJ</p>
+          <p className="big-title">Crie sua conta</p>
+          <p className="little-text">Forneça alguns dados para criar sua conta no CIJ</p>
         </BoxTitle>
-
         <BoxInputs>
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <Inputs variant="outlined" placeholder="Nome completo" name="nome-completo" size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <Checkbox checked={true} sx={{ color: "#999999" }} /> */}
+                  <PersonOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
               )
             }}
-            variant="outlined"
-            placeholder="Cadastro de empresa"
-            required
-            name="empresa"
           />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <Inputs variant="outlined" placeholder="CPF" name="cpf" size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <PersonCircleIcon sx={{ color: "#999999" }} /> */}
+                  <BadgeOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
               )
             }}
-            variant="outlined"
-            placeholder="Nome completo"
-            required
-            name="nome_completo"
           />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <BoxRadios>
+            <FormLabel id="demo-radio-buttons-group-label">Gênero</FormLabel>
+            <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
+              <FormControlLabel value="masculino" control={<Radio />} label="Masculino" />
+              <FormControlLabel value="feminino" control={<Radio />} label="Feminino" />
+              <FormControlLabel value="outro" control={<Radio />} label="Outro" />
+            </RadioGroup>
+          </BoxRadios>
+          <Inputs variant="outlined" placeholder="Celular" name="celular" size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <CpfCircleIcon sx={{ color: "#999999" }} /> */}
+                  <PhoneIphoneOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
               )
             }}
-            variant="outlined"
-            placeholder="CPF"
-            required
-            name="cpf"
           />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <Inputs variant="outlined" placeholder="Email" name="email" size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <GenderCircleIcon sx={{ color: "#999999" }} /> */}
+                  <AlternateEmailOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
               )
             }}
-            variant="outlined"
-            placeholder="Gênero"
-            required
-            name="genero"
           />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <Inputs variant="outlined" placeholder="Senha" name="senha" size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <PhoneCircleIcon sx={{ color: "#999999" }} /> */}
+                  <LockOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
               )
             }}
-            variant="outlined"
-            placeholder="Celular"
-            required
-            name="celular"
           />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
+          <Inputs variant="outlined" placeholder="Senha" name="senha" type={tipoSenha} size="small" required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* <EmailCircleIcon sx={{ color: "#999999" }} /> */}
+                  <LockOutlinedIcon sx={{ color: "#999" }} />
                 </InputAdornment>
+              ),
+              endAdornment: (
+                tipoSenha == "text" ? <VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
+                  : <VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
               )
             }}
-            variant="outlined"
-            placeholder="Email"
-            required
-            name="email"
-          />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  {/* <LockCircleIcon sx={{ color: "#999999" }} /> */}
-                </InputAdornment>
-              )
-            }}
-            variant="outlined"
-            placeholder="Senha"
-            required
-            name="senha"
-          />
-
-          <Inputs
-            sx={{ margin: 1.5 }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  {/* <LockCircleIcon sx={{ color: "#999999" }} /> */}
-                </InputAdornment>
-              )
-            }}
-            variant="outlined"
-            placeholder="Confirmar senha"
-            required
-            name="confirmar_senha"
           />
         </BoxInputs>
         <BoxButtons>
           <PrimaryButton variant="contained" >Cadastrar</PrimaryButton>
-          <p>Já possui uma conta? <a href="/signin">Login</a></p>
+          <p className="little-text">Já possui uma conta? <a href="/signin" className="link">Login</a></p>
         </BoxButtons>
       </BoxLeftColumn>
     </Box>
   );
 };
 
-export default Signup;
+export default SignUp;
