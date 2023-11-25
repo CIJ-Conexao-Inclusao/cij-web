@@ -120,10 +120,12 @@ const SignIn = () => {
 				severity={feedback.severity}
 				onClose={handleOnFeedbackClose}
 			/>
-			<BoxRightColumn>
+
+			<BoxLeftColumn>
 				<BoxLogoImage>
 					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
 				</BoxLogoImage>
+
 				<BoxBackgroundImage>
 					<img
 						id="sign-in-background"
@@ -131,14 +133,17 @@ const SignIn = () => {
 						alt="Background"
 					/>
 				</BoxBackgroundImage>
-			</BoxRightColumn>
-			<BoxLeftColumn>
+			</BoxLeftColumn>
+
+			<BoxRightColumn>
 				<BoxTitle>
 					<p className="big-title">Bem vindo(a)!</p>
+
 					<p className="little-text">
 						Insira suas credencias para acessar sua conta
 					</p>
 				</BoxTitle>
+
 				<BoxInputs>
 					<Inputs
 						variant="outlined"
@@ -158,6 +163,7 @@ const SignIn = () => {
 							),
 						}}
 					/>
+
 					<Inputs
 						variant="outlined"
 						placeholder="Senha"
@@ -194,6 +200,7 @@ const SignIn = () => {
 						}}
 					/>
 				</BoxInputs>
+
 				<BoxButtons>
 					<PrimaryButton
 						variant="contained"
@@ -202,6 +209,7 @@ const SignIn = () => {
 					>
 						Entrar
 					</PrimaryButton>
+
 					<p className="little-text">
 						Não possui uma conta?{" "}
 						<a href="/signup" className="link">
@@ -209,27 +217,33 @@ const SignIn = () => {
 						</a>
 					</p>
 				</BoxButtons>
+
 				<BoxCompanies>
 					<img
 						className="companies"
 						src={duasRodas}
 						alt="Duas Rodas"
 					/>
+
 					<img
 						className="companies"
 						src={grupoMalwee}
 						alt="Grupo Malwee"
 					/>
+
 					<img className="companies" src={marisol} alt="Marisol" />
+
 					<img
 						className="companies"
 						src={prefeitura}
 						alt="Prefeitura de Jaraguá do Sul"
 					/>
+
 					<img className="companies" src={urbano} alt="Urbano" />
+
 					<img className="companies" src={weg} alt="WEG" />
 				</BoxCompanies>
-			</BoxLeftColumn>
+			</BoxRightColumn>
 		</Box>
 	);
 };

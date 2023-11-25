@@ -3,22 +3,22 @@ import styled from "@emotion/styled";
 
 export const BoxRightColumn = styled(Box)({
     alignItems: "center",
-    backgroundColor: "#004AAD",
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    padding: "1rem",
-    width: "65vw"
-});
-
-export const BoxLeftColumn = styled(Box)({
-    alignItems: "center",
     display: "flex",
     flexDirection: "column",
     height: "100vh",
     justifyContent: "center",
     padding: "1rem",
     width: "35vw"
+});
+
+export const BoxLeftColumn = styled(Box)({
+    alignItems: "center",
+    backgroundColor: "#004AAD",
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
+    padding: "1rem",
+    width: "65vw"
 });
 
 export const BoxLogoImage = styled(Box)({

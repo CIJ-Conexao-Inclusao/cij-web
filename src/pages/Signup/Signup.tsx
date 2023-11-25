@@ -65,6 +65,7 @@ const SignUp = () => {
 				<BoxLogoImage>
 					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
 				</BoxLogoImage>
+
 				<BoxBackgroundImage>
 					<img
 						id="sign-up-background"
@@ -73,13 +74,16 @@ const SignUp = () => {
 					/>
 				</BoxBackgroundImage>
 			</BoxRightColumn>
+
 			<BoxLeftColumn>
 				<BoxTitle>
 					<p className="big-title">Crie sua conta</p>
+
 					<p className="little-text">
 						Forneça alguns dados para criar sua conta no CIJ
 					</p>
 				</BoxTitle>
+
 				<BoxInputs>
 					<Inputs
 						variant="outlined"
@@ -97,6 +101,7 @@ const SignUp = () => {
 							),
 						}}
 					/>
+
 					<Inputs
 						variant="outlined"
 						placeholder="CPF"
@@ -111,6 +116,7 @@ const SignUp = () => {
 							),
 						}}
 					/>
+
 					<Selects
 						labelId="demo-simple-select-label"
 						id="demo-simple-select"
@@ -123,6 +129,7 @@ const SignUp = () => {
 						<MenuItem value={"female"}>Feminino</MenuItem>
 						<MenuItem value={"other"}>Outro</MenuItem>
 					</Selects>
+
 					<Inputs
 						variant="outlined"
 						placeholder="Celular"
@@ -139,6 +146,7 @@ const SignUp = () => {
 							),
 						}}
 					/>
+
 					<Inputs
 						variant="outlined"
 						placeholder="Email"
@@ -155,6 +163,7 @@ const SignUp = () => {
 							),
 						}}
 					/>
+
 					<Inputs
 						variant="outlined"
 						placeholder="Senha"
@@ -188,6 +197,7 @@ const SignUp = () => {
 								),
 						}}
 					/>
+
 					<Inputs
 						variant="outlined"
 						placeholder="Confirmar senha"
@@ -222,8 +232,10 @@ const SignUp = () => {
 						}}
 					/>
 				</BoxInputs>
+
 				<BoxButtons>
 					<PrimaryButton variant="contained">Cadastrar</PrimaryButton>
+					
 					<p className="little-text">
 						Já possui uma conta?{" "}
 						<a href="/signin" className="link">
