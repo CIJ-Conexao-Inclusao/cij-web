@@ -70,7 +70,7 @@ export const BoxButtons = styled(Box)({
 });
 
 export const PrimaryButton = styled(Button)({
-    backgroundColor: "#00579d",
+    backgroundColor: "#004AAD",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     margin: "0 4rem",
