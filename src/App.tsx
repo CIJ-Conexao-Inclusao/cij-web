@@ -11,7 +11,7 @@ import {
 import { PageLayout } from "./layout";
 
 import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/Signup/Signup";
+import SignUp from "./pages/Signup/SignUp";
 import Home from "./pages/Home";
 
 import TemaProvider from "./providers/ThemeProvider"; // , { ColorModeContext }

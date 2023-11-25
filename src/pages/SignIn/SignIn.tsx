@@ -30,7 +30,7 @@ import signInBackground from "./assets/sign-in-background.png";
 import duasRodas from "./assets/companies/duas-rodas.png";
 import grupoMalwee from "./assets/companies/grupo-malwee.png";
 import marisol from "./assets/companies/marisol.png";
-import prefeitura from "./assets/companies/prefeitura.png";
+import prefeitura from "./assets/companies/prefeitura-jaragua-do-sul.png"
 import urbano from "./assets/companies/urbano.png";
 import weg from "./assets/companies/weg.png";
 
