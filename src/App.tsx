@@ -1,12 +1,6 @@
 import "./App.scss";
 import React, { useEffect } from "react";
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	// Navigate,
-	// Outlet,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, /*Navigate, Outlet*/ } from "react-router-dom";
 
 import { PageLayout } from "./layout";
 

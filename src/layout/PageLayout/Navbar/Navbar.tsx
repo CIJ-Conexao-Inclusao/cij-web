@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AppBar, Avatar, Box, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { useAppSelector } from "../../../redux/hooks";
 
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -55,40 +55,29 @@ const Navbar = () => {
 
 	return (
 		<>
-			<ModalUser
-				anchorEl={modalUser.anchorEl}
-				open={modalUser.open}
-				handleClose={handleCloseModalUser}
-			/>
+			<ModalUser anchorEl={modalUser.anchorEl} open={modalUser.open} handleClose={handleCloseModalUser}/>
 
 			<AppBar position="static" id="navbar">
-				<Toolbar className="justify-between h-16" id="container-items">
-					<Box className="h-full flex items-center gap-2">
+				<Toolbar id="container-items">
+					<Box>
 						<IconButton size="large" edge="start" color="inherit" aria-label="menu" >
-							<MenuIcon />
+							<MenuOutlinedIcon />
 						</IconButton>
 
-						<Tooltip title="Home" className="cursor-pointer" onClick={goHome}>
-							<img className="h-2/3" src={logoWhiteIcon} alt="Logo"/>
-						</Tooltip>
+						<img className="h-2/3" src={logoWhiteIcon} alt="Logo" />
 					</Box>
 
-					<Box className="flex gap-6">
+					<Box>
 						<IconButton sx={{ color: "primary.contrast" }}>
-							<NotificationsIcon />
+							<NotificationsOutlinedIcon />
 						</IconButton>
 
-						<Box className="flex">
-							<Tooltip title={getUserTip()}>
-								<Avatar sx={{ bgcolor: "primary.light" }}>
-									{user ? getNameDisplay() : <PersonIcon />}
-								</Avatar>
-							</Tooltip>
+						<Box>
+							<Avatar sx={{ bgcolor: "primary.light" }}>
+								{user ? getNameDisplay() : <PersonIcon />}
+							</Avatar>
 
-							<IconButton size="small"
-								sx={{ color: "primary.contrast" }}
-								onClick={openModalUser}
-							>
+							<IconButton size="small" sx={{ color: "primary.contrast" }} onClick={openModalUser}>
 								<ArrowDropDownIcon />
 							</IconButton>
 						</Box>

@@ -56,6 +56,7 @@ const SignIn = () => {
 		message: "",
 		severity: "success",
 	});
+
 	const [tipoSenha, setTipoSenha] = useState("password");
 
 	// ************************************ Functions ************************************ //
@@ -107,19 +108,8 @@ const SignIn = () => {
 	// ************************************ End Handlers ************************************ //
 
 	return (
-		<Box
-			sx={{
-				alignItems: "center",
-				display: "flex",
-				justifyContent: "center",
-			}}
-		>
-			<Toast
-				open={feedback.open}
-				message={feedback.message}
-				severity={feedback.severity}
-				onClose={handleOnFeedbackClose}
-			/>
+		<Box sx={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+			<Toast open={feedback.open} message={feedback.message} severity={feedback.severity} onClose={handleOnFeedbackClose} />
 
 			<BoxLeftColumn>
 				<BoxLogoImage>
@@ -127,11 +117,7 @@ const SignIn = () => {
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img
-						id="sign-in-background"
-						src={signInBackground}
-						alt="Background"
-					/>
+					<img id="sign-in-background" src={signInBackground} alt="Background" />
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -139,20 +125,11 @@ const SignIn = () => {
 				<BoxTitle>
 					<p className="big-title">Bem vindo(a)!</p>
 
-					<p className="little-text">
-						Insira suas credencias para acessar sua conta
-					</p>
+					<p className="little-text">Insira suas credencias para acessar sua conta</p>
 				</BoxTitle>
 
 				<BoxInputs>
-					<Inputs
-						variant="outlined"
-						placeholder="Email"
-						name="email"
-						value={user.email}
-						onChange={handledChange}
-						size="small"
-						required
+					<Inputs variant="outlined" placeholder="Email" name="email" value={user.email} onChange={handledChange} size="small" required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -164,15 +141,7 @@ const SignIn = () => {
 						}}
 					/>
 
-					<Inputs
-						variant="outlined"
-						placeholder="Senha"
-						name="password"
-						value={user.password}
-						onChange={handledChange}
-						type={tipoSenha}
-						size="small"
-						required
+					<Inputs variant="outlined" placeholder="Senha" name="password" value={user.password} onChange={handledChange} type={tipoSenha} size="small" required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -181,63 +150,28 @@ const SignIn = () => {
 							),
 							endAdornment:
 								tipoSenha == "text" ? (
-									<VisibilityOffOutlinedIcon
-										onClick={showPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								) : (
-									<VisibilityOutlinedIcon
-										onClick={showPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								),
+									<VisibilityOffOutlinedIcon onClick={showPassword} sx={{ color: "#999", cursor: "pointer" }} />) : (<VisibilityOutlinedIcon onClick={showPassword} sx={{ color: "#999", cursor: "pointer" }} />
+								)
 						}}
 					/>
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton
-						variant="contained"
-						onClick={login}
-						startIcon={<LoginOutlinedIcon />}
-					>
+					<PrimaryButton variant="contained" onClick={login} startIcon={<LoginOutlinedIcon />}>
 						Entrar
 					</PrimaryButton>
 
-					<p className="little-text">
-						Não possui uma conta?{" "}
-						<a href="/signup" className="link">
-							Cadastrar-se
-						</a>
-					</p>
+					<p className="little-text">Não possui uma conta?{" "}<a href="/signup" className="link">Cadastrar-se</a></p>
 				</BoxButtons>
 
 				<BoxCompanies>
-					<img
-						className="companies"
-						src={duasRodas}
-						alt="Duas Rodas"
-					/>
+					<img className="companies" src={duasRodas} alt="Duas Rodas"/>
 
-					<img
-						className="companies"
-						src={grupoMalwee}
-						alt="Grupo Malwee"
-					/>
+					<img className="companies" src={grupoMalwee} alt="Grupo Malwee"/>
 
 					<img className="companies" src={marisol} alt="Marisol" />
 
-					<img
-						className="companies"
-						src={prefeitura}
-						alt="Prefeitura de Jaraguá do Sul"
-					/>
+					<img className="companies" src={prefeitura} alt="Prefeitura de Jaraguá do Sul"/>
 
 					<img className="companies" src={urbano} alt="Urbano" />
 

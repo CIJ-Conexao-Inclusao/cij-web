@@ -71,70 +71,36 @@ const Home = () => {
 	return (
 		<Box>
 			<Container>
-				{/* Large News Card */}
 				<Card sx={{ marginTop: 4 }}>
 					<CardContent sx={{ display: "flex", alignItems: "center" }}>
-						{/* Image on the left */}
-						<img
-							src={trabalho} // Example image URL
-							alt="News"
-						/>
-						{/* News content on the right */}
+						<img src={trabalho} alt="News"/>
+
 						<Box sx={{ display: "grid" }}>
 							<Typography variant="h6">
-								WEG Equipamentos assina acordo para contratar
-								mais de 200 pessoas com deficiência
+								WEG Equipamentos assina acordo para contratar mais de 200 pessoas com deficiência
 							</Typography>
+
 							<Typography variant="body2" sx={{ marginTop: 5 }}>
-								A WEG Equipamentos Elétricos S/A, com sede em
-								Jaraguá do Sul/SC, assinou um acordo com a
-								Justiça do Trabalho comprometendo-se a contratar
-								trabalhadores com deficiência ou reabilitados
-								pelo INSS, no importe de, no mínimo 5%, da
-								totalidade de seus empregados.
+								A WEG Equipamentos Elétricos S/A, com sede em Jaraguá do Sul/SC, assinou um acordo com a Justiça do Trabalho comprometendo-se a contratar trabalhadores com deficiência ou reabilitados pelo INSS, no importe de, no mínimo 5%, da totalidade de seus empregados.
 							</Typography>
-							<Typography
-								sx={{
-									color: "grey",
-									fontSize: 12,
-									marginTop: 5,
-								}}
-							>
+
+							<Typography sx={{ color: "grey", fontSize: 12, marginTop: 5 }}>
 								CUT-SC | 22/11/2023
 							</Typography>
 						</Box>
 					</CardContent>
 				</Card>
 
-				{/* Small News Cards */}
-				<Box
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						marginTop: "16px",
-					}}
-				>
+				<Box style={{ display: "flex", justifyContent: "space-between", marginTop: "16px" }}>
 					{imagens.map((imagem, index) => (
 						<Card key={index} sx={{ width: "30%", boxShadow: 3 }}>
 							<CardContent>
-								<img
-									src={imagem}
-									alt={`News ${index}`}
-									style={{ objectFit: "cover" }}
-								/>
-								<Typography
-									variant="body2"
-									sx={{ fontWeight: 600 }}
-								>
+								<img src={imagem} alt={`News ${index}`} style={{ objectFit: "cover" }}/>
+								<Typography variant="body2" sx={{ fontWeight: 600 }}>
 									{Titles[index].title}
 								</Typography>
-								<Typography
-									sx={{
-										color: "grey",
-										fontSize: 12,
-										marginTop: 5,
-									}}
-								>
+
+								<Typography sx={{ color: "grey", fontSize: 12, marginTop: 5 }}>
 									{Company[index].company}
 								</Typography>
 							</CardContent>

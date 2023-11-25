@@ -31,17 +31,8 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 	};
 
 	return (
-		<Menu
-			open={open}
-			anchorEl={anchorEl}
-			onClose={handleClose}
-			onClick={handleClose}
-		>
-			{user ? (
-				<MenuItem onClick={logout}>Logout</MenuItem>
-			) : (
-				<MenuItem onClick={login}>Login</MenuItem>
-			)}
+		<Menu open={open} anchorEl={anchorEl} onClose={handleClose} onClick={handleClose}>
+			{user ? (<MenuItem onClick={logout}>Logout</MenuItem>) : (<MenuItem onClick={login}>Login</MenuItem>)}
 		</Menu>
 	);
 };

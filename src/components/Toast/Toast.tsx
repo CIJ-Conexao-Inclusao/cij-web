@@ -14,17 +14,8 @@ const Toast = (props: TToast) => {
   );
 
   return (
-    <Snackbar
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      open={props.open}
-      onClose={props.onClose}
-      autoHideDuration={6000}
-    >
-      <Alert
-        severity={props.severity}
-        sx={{ width: "100%" }}
-        action={actionFeedback}
-      >
+    <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={props.open} onClose={props.onClose} autoHideDuration={6000}>
+      <Alert severity={props.severity} sx={{ width: "100%" }} action={actionFeedback}>
         {props.message}
       </Alert>
     </Snackbar>
