@@ -10,17 +10,15 @@ import {
 
 import { PageLayout } from "./layout";
 
-import SignIn from "./pages/Login/SignIn";
+import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/Signup/Signup";
 import Home from "./pages/Home";
 
-import TemaProvider from "./providers/TemaProvider"; // , { ColorModeContext }
-import ComponentTest from "./components/ComponentTest/ComponentTest";
+import TemaProvider from "./providers/ThemeProvider"; // , { ColorModeContext }
 
 import { CookieService, UserService } from "./services";
 import { defineUser } from "./redux/user/userSlice";
 import { useAppDispatch } from "./redux/hooks";
-import Login from "./pages/Login";
 
 const App = () => {
 	// const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -58,7 +56,7 @@ const App = () => {
 					<Route element={<PageLayout />}>
 						<Route path="/" element={<Home />} />
 					</Route>
-					<Route path="/signin" element={<Login />} />
+					<Route path="/signin" element={<SignIn />} />
 					<Route path="/signup" element={<SignUp />} />
 				</Routes>
 			</Router>

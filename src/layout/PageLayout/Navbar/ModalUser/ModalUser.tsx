@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { removeUser } from "../../../../redux/user/userSlice";
@@ -7,43 +7,43 @@ import Cookies from "js-cookie";
 // import { LoginService } from "../../../../services";
 
 type TModalUserProps = {
-  open: boolean;
-  handleClose: () => void;
-  anchorEl: null | HTMLElement;
+	open: boolean;
+	handleClose: () => void;
+	anchorEl: null | HTMLElement;
 };
 
 const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+	const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
-  const logout = () => {
-    // LoginService.logout();
-    dispatch(removeUser());
-    Cookies.remove("token");
-    Cookies.remove("user");
-    console.log("logout");
-    navigate("/signin");
-  };
+	const logout = () => {
+		// LoginService.logout();
+		dispatch(removeUser());
+		Cookies.remove("token");
+		Cookies.remove("user");
+		console.log("logout");
+		navigate("/signin");
+	};
 
-  const login = () => {
-    navigate("/signin");
-  };
+	const login = () => {
+		navigate("/signin");
+	};
 
-  return (
-    <Menu
-      open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      onClick={handleClose}
-    >
-      {user ? (
-        <MenuItem onClick={logout}>Logout</MenuItem>
-      ) : (
-        <MenuItem onClick={login}>Login</MenuItem>
-      )}
-    </Menu>
-  );
+	return (
+		<Menu
+			open={open}
+			anchorEl={anchorEl}
+			onClose={handleClose}
+			onClick={handleClose}
+		>
+			{user ? (
+				<MenuItem onClick={logout}>Logout</MenuItem>
+			) : (
+				<MenuItem onClick={login}>Login</MenuItem>
+			)}
+		</Menu>
+	);
 };
 
 export default ModalUser;
