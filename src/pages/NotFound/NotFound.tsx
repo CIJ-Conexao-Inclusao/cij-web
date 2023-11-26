@@ -11,6 +11,7 @@ import {
 	ImageWrapper,
 	Img,
 } from "./NotFound.styled";
+import { ROUTES } from "../../constants";
 
 const NotFound = () => {
 	return (
@@ -20,7 +21,7 @@ const NotFound = () => {
 					<Img src={NotFoundIcon} alt="Not Found" />
 				</ImageWrapper>
 				<Typography>Desculpe, página não encontrada</Typography>
-				<Link to="/">Voltar para a página inicial</Link>
+				<Link to={ROUTES.home}>Voltar para a página inicial</Link>
 			</ContentWrapper>
 		</Container>
 	);

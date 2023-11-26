@@ -41,6 +41,7 @@ import { LoginService, UserService } from "../../services";
 import Cookies from "js-cookie";
 import { defineUser } from "../../redux/user/userSlice";
 import { useToast } from "../../hooks/useToast";
+import { ROUTES } from "../../constants";
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -79,7 +80,7 @@ const SignIn = () => {
 
 			toast.showToast("success", "Login efetuado com sucesso");
 
-			navigate("/");
+			navigate(ROUTES.home);
 		} catch (error: any) {
 			let message: string = "Email ou senha incorretos";
 
@@ -198,7 +199,7 @@ const SignIn = () => {
 
 					<p className="little-text">
 						Não possui uma conta?{" "}
-						<Link to="/signup" className="link">
+						<Link to={ROUTES.signup} className="link">
 							Cadastrar-se
 						</Link>
 					</p>
