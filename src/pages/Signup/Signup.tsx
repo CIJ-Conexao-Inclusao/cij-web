@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-import { Box, MenuItem, SelectChangeEvent } from "@mui/material";
+import {
+	Box,
+	FormControl,
+	FormControlLabel,
+	FormLabel,
+	Radio,
+	RadioGroup,
+} from "@mui/material";
 import {
 	BoxRightColumn,
 	BoxLeftColumn,
@@ -10,9 +17,8 @@ import {
 	BoxInputs,
 	Inputs,
 	BoxButtons,
-	PrimaryButton,
-	Selects,
-} from "./SignUp.styled.tsx";
+	PrimaryButton /*Selects*/,
+} from "./SignUp.styled";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -69,10 +75,6 @@ const SignUp = () => {
 
 	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
-	};
-
-	const handleGenderChange = (event: SelectChangeEvent) => {
-		setUser({ ...user, gender: event.target.value as GENDER });
 	};
 
 	const signUp = () => {
@@ -156,16 +158,40 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Selects
-						value={user.gender}
-						label="Gênero"
-						onChange={handleGenderChange}
-						size="small"
-					>
-						<MenuItem value={GENDER.Male}>Masculino</MenuItem>
-						<MenuItem value={GENDER.Female}>Feminino</MenuItem>
-						<MenuItem value={GENDER.Other}>Outro</MenuItem>
-					</Selects>
+					{/* <Selects labelId="demo-simple-select-label" id="demo-simple-select" value={genero} label="Gênero" onChange={handleChange} size="small">
+						<MenuItem value={"male"}>Masculino</MenuItem>
+						<MenuItem value={"female"}>Feminino</MenuItem>
+						<MenuItem value={"other"}>Outro</MenuItem>
+					</Selects> */}
+
+					<FormControl>
+						<FormLabel>Gênero</FormLabel>
+
+						<RadioGroup
+							row
+							name="gender"
+							value={user.gender}
+							onChange={handledChange}
+						>
+							<FormControlLabel
+								value={GENDER.Female}
+								control={<Radio />}
+								label="Feminino"
+							/>
+
+							<FormControlLabel
+								value={GENDER.Male}
+								control={<Radio />}
+								label="Masculino"
+							/>
+
+							<FormControlLabel
+								value={GENDER.Other}
+								control={<Radio />}
+								label="Outros"
+							/>
+						</RadioGroup>
+					</FormControl>
 
 					<Inputs
 						name="phone"
@@ -285,7 +311,7 @@ const SignUp = () => {
 
 					<p className="little-text">
 						Já possui uma conta?{" "}
-						<Link to="/signin" className="link">
+						<Link to={ROUTES.login} className="link">
 							Login
 						</Link>
 					</p>
