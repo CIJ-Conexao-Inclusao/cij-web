@@ -47,7 +47,7 @@ const SignUp = () => {
 
 	return (
 		<Box sx={{ display: "flex" }}>
-			<BoxRightColumn>
+			<BoxLeftColumn>
 				<BoxLogoImage>
 					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
 				</BoxLogoImage>
@@ -55,9 +55,9 @@ const SignUp = () => {
 				<BoxBackgroundImage>
 					<img id="sign-up-background" src={signUpBackground} alt="Background"/>
 				</BoxBackgroundImage>
-			</BoxRightColumn>
+			</BoxLeftColumn>
 
-			<BoxLeftColumn>
+			<BoxRightColumn>
 				<BoxTitle>
 					<p className="big-title">Crie sua conta</p>
 
@@ -151,7 +151,7 @@ const SignUp = () => {
 					
 					<p className="little-text">Já possui uma conta?{" "}<a href="/signin" className="link">Login</a></p>
 				</BoxButtons>
-			</BoxLeftColumn>
+			</BoxRightColumn>
 		</Box>
 	);
 };

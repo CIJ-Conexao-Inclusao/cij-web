@@ -2,18 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import { Box } from "@mui/material";
-import {
-	BoxRightColumn,
-	BoxLeftColumn,
-	BoxLogoImage,
-	BoxBackgroundImage,
-	BoxTitle,
-	BoxInputs,
-	Inputs,
-	BoxButtons,
-	PrimaryButton,
-	BoxCompanies,
-} from "./SignIn.styled";
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, BoxCompanies } from "./SignIn.styled";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
