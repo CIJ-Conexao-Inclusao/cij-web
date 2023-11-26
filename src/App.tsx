@@ -1,18 +1,25 @@
 import "./App.scss";
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, /*Navigate, Outlet*/ } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route /*Navigate, Outlet*/,
+} from "react-router-dom";
 
 import { PageLayout } from "./layout";
 
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/Signup/SignUp";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 
-import TemaProvider from "./providers/ThemeProvider"; // , { ColorModeContext }
+import TemaProvider from "./providers/ThemeProvider";
 
 import { CookieService, UserService } from "./services";
 import { defineUser } from "./redux/user/userSlice";
 import { useAppDispatch } from "./redux/hooks";
+import NotFound from "./pages/NotFound";
+import { ToastProvider } from "./hooks/useToast";
+import { ROUTES } from "./constants";
 
 const App = () => {
 	// const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -45,15 +52,18 @@ const App = () => {
 
 	return (
 		<TemaProvider>
-			<Router>
-				<Routes>
-					<Route element={<PageLayout />}>
-						<Route path="/" element={<Home />} />
-					</Route>
-					<Route path="/signin" element={<SignIn />} />
-					<Route path="/signup" element={<SignUp />} />
-				</Routes>
-			</Router>
+			<ToastProvider>
+				<Router>
+					<Routes>
+						<Route element={<PageLayout />}>
+							<Route path={ROUTES.home} element={<Home />} />
+						</Route>
+						<Route path={ROUTES.login} element={<SignIn />} />
+						<Route path={ROUTES.signup} element={<SignUp />} />
+						<Route path="/*" element={<NotFound />} />
+					</Routes>
+				</Router>
+			</ToastProvider>
 		</TemaProvider>
 	);
 };

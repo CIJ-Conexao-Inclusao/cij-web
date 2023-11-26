@@ -2,7 +2,18 @@ import * as React from "react";
 import { useState } from "react";
 
 import { Box } from "@mui/material";
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, BoxCompanies } from "./SignIn.styled";
+import {
+	BoxRightColumn,
+	BoxLeftColumn,
+	BoxLogoImage,
+	BoxBackgroundImage,
+	BoxTitle,
+	BoxInputs,
+	Inputs,
+	BoxButtons,
+	PrimaryButton,
+	BoxCompanies,
+} from "./SignIn.styled";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -19,31 +30,26 @@ import signInBackground from "./assets/sign-in-background.png";
 import duasRodas from "./assets/companies/duas-rodas.png";
 import grupoMalwee from "./assets/companies/grupo-malwee.png";
 import marisol from "./assets/companies/marisol.png";
-import prefeitura from "./assets/companies/prefeitura-jaragua-do-sul.png"
+import prefeitura from "./assets/companies/prefeitura-jaragua-do-sul.png";
 import urbano from "./assets/companies/urbano.png";
 import weg from "./assets/companies/weg.png";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
-import { TLogin, TToast } from "../../types";
-import { LoginService } from "../../services";
+import { TLogin } from "../../types";
+import { LoginService, UserService } from "../../services";
 import Cookies from "js-cookie";
 import { defineUser } from "../../redux/user/userSlice";
-import Toast from "../../components/Toast";
+import { useToast } from "../../hooks/useToast";
 
 const SignIn = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const toast = useToast();
 
 	const [user, setUser] = useState<TLogin>({
 		email: "cauakathdev@gmail.com",
 		password: "1234",
-	});
-
-	const [feedback, setFeedback] = useState<TToast>({
-		open: false,
-		message: "",
-		severity: "success",
 	});
 
 	const [tipoSenha, setTipoSenha] = useState("password");
@@ -61,22 +67,23 @@ const SignIn = () => {
 	const login = async () => {
 		try {
 			const res = await LoginService.login(user);
-			delete res.data.user_info.password;
 
 			Cookies.set("token", res.data.token);
 
-			dispatch(defineUser({ user: res.data.user_info }));
+			const userInfoRes = await UserService.getUserByToken(
+				res.data.token
+			);
+			const userInfo = userInfoRes.data.user_info;
+
+			dispatch(defineUser({ user: userInfo }));
+
+			toast.showToast("success", "Login efetuado com sucesso");
 
 			navigate("/");
 		} catch (error: any) {
 			let message: string = "Email ou senha incorretos";
 
-			setFeedback({
-				...feedback,
-				open: true,
-				message: message,
-				severity: "error",
-			});
+			toast.showToast("error", message);
 
 			console.log(error);
 		}
@@ -90,23 +97,27 @@ const SignIn = () => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 
-	const handleOnFeedbackClose = () => {
-		setFeedback({ ...feedback, open: false });
-	};
-
 	// ************************************ End Handlers ************************************ //
 
 	return (
-		<Box sx={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
-			<Toast open={feedback.open} message={feedback.message} severity={feedback.severity} onClose={handleOnFeedbackClose} />
-
+		<Box
+			sx={{
+				alignItems: "center",
+				display: "flex",
+				justifyContent: "center",
+			}}
+		>
 			<BoxLeftColumn>
 				<BoxLogoImage>
 					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img id="sign-in-background" src={signInBackground} alt="Background" />
+					<img
+						id="sign-in-background"
+						src={signInBackground}
+						alt="Background"
+					/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -114,11 +125,20 @@ const SignIn = () => {
 				<BoxTitle>
 					<p className="big-title">Bem vindo(a)!</p>
 
-					<p className="little-text">Insira suas credencias para acessar sua conta</p>
+					<p className="little-text">
+						Insira suas credencias para acessar sua conta
+					</p>
 				</BoxTitle>
 
 				<BoxInputs>
-					<Inputs variant="outlined" placeholder="Email" name="email" value={user.email} onChange={handledChange} size="small" required
+					<Inputs
+						variant="outlined"
+						placeholder="Email"
+						name="email"
+						value={user.email}
+						onChange={handledChange}
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -130,7 +150,15 @@ const SignIn = () => {
 						}}
 					/>
 
-					<Inputs variant="outlined" placeholder="Senha" name="password" value={user.password} onChange={handledChange} type={tipoSenha} size="small" required
+					<Inputs
+						variant="outlined"
+						placeholder="Senha"
+						name="password"
+						value={user.password}
+						onChange={handledChange}
+						type={tipoSenha}
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -139,28 +167,63 @@ const SignIn = () => {
 							),
 							endAdornment:
 								tipoSenha == "text" ? (
-									<VisibilityOffOutlinedIcon onClick={showPassword} sx={{ color: "#999", cursor: "pointer" }} />) : (<VisibilityOutlinedIcon onClick={showPassword} sx={{ color: "#999", cursor: "pointer" }} />
-								)
+									<VisibilityOffOutlinedIcon
+										onClick={showPassword}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
+								) : (
+									<VisibilityOutlinedIcon
+										onClick={showPassword}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
+								),
 						}}
 					/>
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton variant="contained" onClick={login} startIcon={<LoginOutlinedIcon />}>
+					<PrimaryButton
+						variant="contained"
+						onClick={login}
+						startIcon={<LoginOutlinedIcon />}
+					>
 						Entrar
 					</PrimaryButton>
 
-					<p className="little-text">Não possui uma conta?{" "}<a href="/signup" className="link">Cadastrar-se</a></p>
+					<p className="little-text">
+						Não possui uma conta?{" "}
+						<Link to="/signup" className="link">
+							Cadastrar-se
+						</Link>
+					</p>
 				</BoxButtons>
 
 				<BoxCompanies>
-					<img className="companies" src={duasRodas} alt="Duas Rodas"/>
+					<img
+						className="companies"
+						src={duasRodas}
+						alt="Duas Rodas"
+					/>
 
-					<img className="companies" src={grupoMalwee} alt="Grupo Malwee"/>
+					<img
+						className="companies"
+						src={grupoMalwee}
+						alt="Grupo Malwee"
+					/>
 
 					<img className="companies" src={marisol} alt="Marisol" />
 
-					<img className="companies" src={prefeitura} alt="Prefeitura de Jaraguá do Sul"/>
+					<img
+						className="companies"
+						src={prefeitura}
+						alt="Prefeitura de Jaraguá do Sul"
+					/>
 
 					<img className="companies" src={urbano} alt="Urbano" />
 

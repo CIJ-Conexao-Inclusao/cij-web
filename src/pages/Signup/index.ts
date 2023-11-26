@@ -1,3 +1,3 @@
-import Signup from "./SignUp";
+import SignUp from "./SignUp.tsx";
 
-export default Signup;
+export default SignUp;

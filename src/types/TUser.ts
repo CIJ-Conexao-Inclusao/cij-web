@@ -1,17 +1,16 @@
-export enum GENDER {
-  Male = "male",
-  Female = "female",
-  Other = "other",
-}
+import { GENDER } from "../constants";
 
 type TUser = {
-  id: number;
-  name: string;
-  cpf: string;
-  phone?: string;
-  email: string;
-  password: string;
-  gender: GENDER;
+	id: number;
+	name: string;
+	cpf: string;
+	phone?: string;
+	gender: GENDER;
+	user: {
+		id: number;
+		email: string;
+		password: string;
+	};
 };
 
 export default TUser;

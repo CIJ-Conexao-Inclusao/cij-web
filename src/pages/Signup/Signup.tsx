@@ -1,12 +1,18 @@
-// import React from "react";
-import * as React from "react";
-// import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-// import { ILogin } from "../../interfaces";
+import React, { useState } from "react";
 
 import { Box, MenuItem, SelectChangeEvent } from "@mui/material";
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, Selects } from "./SignUp.styled";
+import {
+	BoxRightColumn,
+	BoxLeftColumn,
+	BoxLogoImage,
+	BoxBackgroundImage,
+	BoxTitle,
+	BoxInputs,
+	Inputs,
+	BoxButtons,
+	PrimaryButton,
+	Selects,
+} from "./SignUp.styled.tsx";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -20,30 +26,73 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import logoWhiteFull from "../../assets/logo-white-full.png";
 import signUpBackground from "./assets/sign-up-background.png";
 
-const SignUp = () => {
-	const [tipoSenha, setTipoSenha] = useState("password");
-	const [tipoConfirmarSenha, setTipoConfirmarSenha] = useState("password");
-	const [genero, setGenero] = useState("male");
+import { userSchema } from "../../validations";
 
-	const handleChange = (event: SelectChangeEvent) => {
-		setGenero(event.target.value);
-	};
+import { GENDER, ROUTES } from "../../constants/index.ts";
+import { TUserForm } from "../../types";
+
+import { UserService } from "../../services";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "../../hooks/useToast.tsx";
+
+const SignUp = () => {
+	const toast = useToast();
+	const navigate = useNavigate();
+
+	const [user, setUser] = useState<TUserForm>({
+		cpf: "",
+		name: "",
+		email: "",
+		password: "",
+		phone: "",
+		gender: GENDER.Male,
+	});
+	const [confirmPassword, setConfirmPassword] = useState<string>("");
+	const [passwordType, setPasswordType] = useState("password");
+	const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
 	function mostrarSenha() {
-		if (tipoSenha == "text") {
-			setTipoSenha("password");
+		if (passwordType == "text") {
+			setPasswordType("password");
 		} else {
-			setTipoSenha("text");
+			setPasswordType("text");
 		}
 	}
 
 	function mostrarConfirmarSenha() {
-		if (tipoSenha == "text") {
-			setTipoConfirmarSenha("password");
+		if (passwordType == "text") {
+			setConfirmPasswordType("password");
 		} else {
-			setTipoConfirmarSenha("text");
+			setConfirmPasswordType("text");
 		}
 	}
+
+	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUser({ ...user, [e.target.name]: e.target.value });
+	};
+
+	const handleGenderChange = (event: SelectChangeEvent) => {
+		setUser({ ...user, gender: event.target.value as GENDER });
+	};
+
+	const signUp = () => {
+		userSchema
+			.validate(user)
+			.then(() => {
+				if (user.password !== confirmPassword) {
+					toast.showToast("error", "As senhas não coincidem");
+					return;
+				}
+
+				UserService.create(user).then(() => {
+					toast.showToast("success", "Usuário criado com sucesso");
+					navigate(ROUTES.login);
+				});
+			})
+			.catch((err) => {
+				toast.showToast("error", err.errors[0]);
+			});
+	};
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -53,7 +102,11 @@ const SignUp = () => {
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img id="sign-up-background" src={signUpBackground} alt="Background"/>
+					<img
+						id="sign-up-background"
+						src={signUpBackground}
+						alt="Background"
+					/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -61,11 +114,20 @@ const SignUp = () => {
 				<BoxTitle>
 					<p className="big-title">Crie sua conta</p>
 
-					<p className="little-text">Forneça alguns dados para criar sua conta no CIJ</p>
+					<p className="little-text">
+						Forneça alguns dados para criar sua conta no CIJ
+					</p>
 				</BoxTitle>
 
 				<BoxInputs>
-					<Inputs variant="outlined" placeholder="Nome completo" name="nome-completo" size="small" required
+					<Inputs
+						name="name"
+						value={user.name}
+						onChange={handledChange}
+						variant="outlined"
+						placeholder="Nome completo"
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -77,7 +139,14 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Inputs variant="outlined" placeholder="CPF" name="cpf" size="small" required
+					<Inputs
+						name="cpf"
+						value={user.cpf}
+						onChange={handledChange}
+						variant="outlined"
+						placeholder="CPF"
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -87,13 +156,25 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Selects labelId="demo-simple-select-label" id="demo-simple-select" value={genero} label="Gênero" onChange={handleChange} size="small">
-						<MenuItem value={"male"}>Masculino</MenuItem>
-						<MenuItem value={"female"}>Feminino</MenuItem>
-						<MenuItem value={"other"}>Outro</MenuItem>
+					<Selects
+						value={user.gender}
+						label="Gênero"
+						onChange={handleGenderChange}
+						size="small"
+					>
+						<MenuItem value={GENDER.Male}>Masculino</MenuItem>
+						<MenuItem value={GENDER.Female}>Feminino</MenuItem>
+						<MenuItem value={GENDER.Other}>Outro</MenuItem>
 					</Selects>
 
-					<Inputs variant="outlined" placeholder="Celular" name="celular" size="small" required
+					<Inputs
+						name="phone"
+						value={user.phone}
+						onChange={handledChange}
+						variant="outlined"
+						placeholder="Celular"
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -105,7 +186,14 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Inputs variant="outlined" placeholder="Email" name="email" size="small" required
+					<Inputs
+						name="email"
+						value={user.email}
+						onChange={handledChange}
+						variant="outlined"
+						placeholder="Email"
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -117,7 +205,15 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Inputs variant="outlined" placeholder="Senha" name="senha" type={tipoSenha} size="small" required
+					<Inputs
+						name="password"
+						value={user.password}
+						onChange={handledChange}
+						variant="outlined"
+						placeholder="Senha"
+						type={passwordType}
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -125,13 +221,35 @@ const SignUp = () => {
 								</InputAdornment>
 							),
 							endAdornment:
-								tipoSenha == "text" ? (
-									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>) : (<VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>
-								)
+								passwordType == "text" ? (
+									<VisibilityOffOutlinedIcon
+										onClick={mostrarSenha}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
+								) : (
+									<VisibilityOutlinedIcon
+										onClick={mostrarSenha}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
+								),
 						}}
 					/>
 
-					<Inputs variant="outlined" placeholder="Confirmar senha" name="confirmar-senha" type={tipoSenha} size="small" required
+					<Inputs
+						name="confirmPassword"
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)}
+						variant="outlined"
+						placeholder="Confirmar senha"
+						type={passwordType}
+						size="small"
+						required
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -139,17 +257,38 @@ const SignUp = () => {
 								</InputAdornment>
 							),
 							endAdornment:
-								tipoConfirmarSenha == "text" ? (
-									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>) : (<VisibilityOutlinedIcon onClick={mostrarConfirmarSenha} sx={{ color: "#999", cursor: "pointer" }}/>
+								confirmPasswordType == "text" ? (
+									<VisibilityOffOutlinedIcon
+										onClick={mostrarSenha}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
+								) : (
+									<VisibilityOutlinedIcon
+										onClick={mostrarConfirmarSenha}
+										sx={{
+											color: "#999",
+											cursor: "pointer",
+										}}
+									/>
 								),
 						}}
 					/>
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton variant="contained">Cadastrar</PrimaryButton>
-					
-					<p className="little-text">Já possui uma conta?{" "}<a href="/signin" className="link">Login</a></p>
+					<PrimaryButton variant="contained" onClick={signUp}>
+						Cadastrar
+					</PrimaryButton>
+
+					<p className="little-text">
+						Já possui uma conta?{" "}
+						<Link to="/signin" className="link">
+							Login
+						</Link>
+					</p>
 				</BoxButtons>
 			</BoxRightColumn>
 		</Box>
