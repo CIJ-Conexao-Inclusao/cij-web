@@ -5,8 +5,8 @@ import { useState } from "react";
 
 // import { ILogin } from "../../interfaces";
 
-import { Box, MenuItem, SelectChangeEvent } from "@mui/material";
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, Selects } from "./SignUp.styled";
+import { Box, FormControl, FormControlLabel, FormLabel, /*MenuItem,*/ Radio, RadioGroup, /*SelectChangeEvent*/ } from "@mui/material";
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, Inputs, BoxButtons, PrimaryButton, /*Selects*/ } from "./SignUp.styled";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -20,14 +20,110 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import logoWhiteFull from "../../assets/logo-white-full.png";
 import signUpBackground from "./assets/sign-up-background.png";
 
+// const SignUp = () => {
+//   const [user, setUser] = useState<ILogin>({
+//     email: "",
+//     password: "",
+//   });
+//   const navigate = useNavigate();
+// 
+//   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setUser({ ...user, [e.target.name]: e.target.value });
+//   };
+// 
+//   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     console.log(user);
+//     navigate("/dashboard");
+//   };
+// 
+//   return (
+//     <form onSubmit={handleOnSubmit}>
+//       <input
+//         type="email"
+//         name="email"
+//         placeholder="E-mail"
+//         onChange={handleOnChange}
+//         value={user.email}
+//       />
+//       <input
+//         type="password"
+//         name="password"
+//         placeholder="Senha"
+//         onChange={handleOnChange}
+//         value={user.password}
+//       />
+//       <button type="submit">Entrar</button>
+//     </form>
+//   );
+// };
+
+// export default SignUp;
+
+// const SignUp = () => {
+//   const [user, setUser] = useState<ILogin>({
+//     email: "",
+//     password: "",
+//   });
+//   const navigate = useNavigate();
+// 
+//   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setUser({ ...user, [e.target.name]: e.target.value });
+//   };
+// 
+//   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     console.log(user);
+//     navigate("/dashboard");
+//   };
+// 
+//   return (
+//     <form onSubmit={handleOnSubmit}>
+//       <input
+//         type="email"
+//         name="email"
+//         placeholder="E-mail"
+//         onChange={handleOnChange}
+//         value={user.email}
+//       />
+//       <input
+//         type="password"
+//         name="password"
+//         placeholder="Senha"
+//         onChange={handleOnChange}
+//         value={user.password}
+//       />
+//       <button type="submit">Entrar</button>
+//     </form>
+//   );
+// };
+
+// export default SignUp;
+
+// const SignUp = () => {
+//
+import TUser, { GENDER } from "../../types/TUser";
+
 const SignUp = () => {
 	const [tipoSenha, setTipoSenha] = useState("password");
 	const [tipoConfirmarSenha, setTipoConfirmarSenha] = useState("password");
-	const [genero, setGenero] = useState("male");
+	const [user, setUser] = useState<Omit<TUser, "id">>({
+		cpf: "",
+		name: "",
+		email: "",
+		password: "",
+		phone: "",
+		gender: GENDER.Male,
+	  });
+	// const [genero, setGenero] = useState("male");
 
-	const handleChange = (event: SelectChangeEvent) => {
-		setGenero(event.target.value);
-	};
+	// const handleChange = (event: SelectChangeEvent) => {
+	// 	setGenero(event.target.value);
+	// };
+
+	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUser({ ...user, [e.target.name]: e.target.value });
+	  };
 
 	function mostrarSenha() {
 		if (tipoSenha == "text") {
@@ -53,7 +149,7 @@ const SignUp = () => {
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img id="sign-up-background" src={signUpBackground} alt="Background"/>
+					<img id="sign-up-background" src={signUpBackground} alt="Background" />
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -87,11 +183,23 @@ const SignUp = () => {
 						}}
 					/>
 
-					<Selects labelId="demo-simple-select-label" id="demo-simple-select" value={genero} label="Gênero" onChange={handleChange} size="small">
+					{/* <Selects labelId="demo-simple-select-label" id="demo-simple-select" value={genero} label="Gênero" onChange={handleChange} size="small">
 						<MenuItem value={"male"}>Masculino</MenuItem>
 						<MenuItem value={"female"}>Feminino</MenuItem>
 						<MenuItem value={"other"}>Outro</MenuItem>
-					</Selects>
+					</Selects> */}
+
+					<FormControl>
+						<FormLabel>Gênero</FormLabel>
+
+						<RadioGroup row name="gender" onChange={handledChange}>
+							<FormControlLabel value={GENDER.Female} control={<Radio />} label="Feminino" />
+
+							<FormControlLabel value={GENDER.Male} control={<Radio />} label="Masculino" />
+
+							<FormControlLabel value={GENDER.Other} control={<Radio />} label="Outros" />
+						</RadioGroup>
+					</FormControl>
 
 					<Inputs variant="outlined" placeholder="Celular" name="celular" size="small" required
 						InputProps={{
@@ -126,7 +234,7 @@ const SignUp = () => {
 							),
 							endAdornment:
 								tipoSenha == "text" ? (
-									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>) : (<VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>
+									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />) : (<VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />
 								)
 						}}
 					/>
@@ -140,7 +248,7 @@ const SignUp = () => {
 							),
 							endAdornment:
 								tipoConfirmarSenha == "text" ? (
-									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }}/>) : (<VisibilityOutlinedIcon onClick={mostrarConfirmarSenha} sx={{ color: "#999", cursor: "pointer" }}/>
+									<VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#999", cursor: "pointer" }} />) : (<VisibilityOutlinedIcon onClick={mostrarConfirmarSenha} sx={{ color: "#999", cursor: "pointer" }} />
 								),
 						}}
 					/>
@@ -148,7 +256,7 @@ const SignUp = () => {
 
 				<BoxButtons>
 					<PrimaryButton variant="contained">Cadastrar</PrimaryButton>
-					
+
 					<p className="little-text">Já possui uma conta?{" "}<a href="/signin" className="link">Login</a></p>
 				</BoxButtons>
 			</BoxRightColumn>
