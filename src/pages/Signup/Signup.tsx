@@ -54,24 +54,26 @@ const SignUp = () => {
 		gender: GENDER.Male,
 	});
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
-	const [passwordType, setPasswordType] = useState("password");
-	const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
-	function mostrarSenha() {
+	const [passwordType, setPasswordType] = useState<string>("password");
+	const [confirmPasswordType, setConfirmPasswordType] =
+		useState<string>("password");
+
+	const mostrarSenha = () => {
 		if (passwordType == "text") {
 			setPasswordType("password");
 		} else {
 			setPasswordType("text");
 		}
-	}
+	};
 
-	function mostrarConfirmarSenha() {
-		if (passwordType == "text") {
+	const mostrarConfirmarSenha = () => {
+		if (confirmPasswordType == "text") {
 			setConfirmPasswordType("password");
 		} else {
 			setConfirmPasswordType("text");
 		}
-	}
+	};
 
 	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -86,10 +88,18 @@ const SignUp = () => {
 					return;
 				}
 
-				UserService.create(user).then(() => {
-					toast.showToast("success", "Usuário criado com sucesso");
-					navigate(ROUTES.login);
-				});
+				UserService.create(user)
+					.then(() => {
+						toast.showToast(
+							"success",
+							"Usuário criado com sucesso"
+						);
+						navigate(ROUTES.login);
+					})
+					.catch((err) => {
+						console.log("err: ", err);
+						toast.showToast("error", "Erro ao criar usuário");
+					});
 			})
 			.catch((err) => {
 				toast.showToast("error", err.errors[0]);
@@ -273,7 +283,7 @@ const SignUp = () => {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						variant="outlined"
 						placeholder="Confirmar senha"
-						type={passwordType}
+						type={confirmPasswordType}
 						size="small"
 						required
 						InputProps={{
@@ -285,7 +295,7 @@ const SignUp = () => {
 							endAdornment:
 								confirmPasswordType == "text" ? (
 									<VisibilityOffOutlinedIcon
-										onClick={mostrarSenha}
+										onClick={mostrarConfirmarSenha}
 										sx={{
 											color: "#999",
 											cursor: "pointer",
