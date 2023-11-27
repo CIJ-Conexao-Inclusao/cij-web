@@ -52,7 +52,7 @@ const SignUp = () => {
 		email: "",
 		password: "",
 		phone: "",
-		gender: GENDER.Male,
+		gender: GENDER.Female,
 	});
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
 
@@ -169,14 +169,8 @@ const SignUp = () => {
 						}}
 					/>
 
-					{/* <Selects labelId="demo-simple-select-label" id="demo-simple-select" value={genero} label="Gênero" onChange={handleChange} size="small">
-						<MenuItem value={"male"}>Masculino</MenuItem>
-						<MenuItem value={"female"}>Feminino</MenuItem>
-						<MenuItem value={"other"}>Outro</MenuItem>
-					</Selects> */}
-
-					<FormControl>
-						<FormLabel>Gênero</FormLabel>
+					<FormControl sx={{ color: "#999", marginBottom: "2rem", width: "20vw" }}>
+						<FormLabel sx={{ color: "#999" }}>Gênero</FormLabel>
 
 						<RadioGroup
 							row
