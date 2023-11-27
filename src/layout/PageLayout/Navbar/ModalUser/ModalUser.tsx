@@ -1,11 +1,16 @@
 import React, { FC } from "react";
-import { Menu, MenuItem } from "@mui/material";
+import { Menu } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { removeUser } from "../../../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ROUTES } from "../../../../constants";
-// import { LoginService } from "../../../../services";
+
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+
+import { MenuItemStyled } from "./ModalUser.styled";
 
 type TModalUserProps = {
 	open: boolean;
@@ -19,10 +24,8 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 	const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
 	const logout = () => {
-		// LoginService.logout();
 		dispatch(removeUser());
 		Cookies.remove("token");
-		Cookies.remove("user");
 		console.log("logout");
 		navigate(ROUTES.login);
 	};
@@ -39,10 +42,21 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 			onClick={handleClose}
 		>
 			{user ? (
-				<MenuItem onClick={logout}>Logout</MenuItem>
+				<MenuItemStyled onClick={logout}>
+					<LogoutIcon />
+					Logout
+				</MenuItemStyled>
 			) : (
-				<MenuItem onClick={login}>Login</MenuItem>
+				<MenuItemStyled onClick={login}>
+					<LoginIcon />
+					Login
+				</MenuItemStyled>
 			)}
+
+			<MenuItemStyled>
+				<SettingsOutlinedIcon />
+				Ajustes
+			</MenuItemStyled>
 		</Menu>
 	);
 };
