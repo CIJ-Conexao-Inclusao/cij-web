@@ -65,7 +65,7 @@ const Navbar = () => {
 				handleClose={handleCloseModalUser}
 			/>
 
-			<AppBar sx={{ height: "4rem" }} position="static" id="navbar">
+			<AppBar sx={{ height: "4rem" }} position="sticky" id="navbar">
 				<Toolbar
 					sx={{
 						alignItems: "centrer",
