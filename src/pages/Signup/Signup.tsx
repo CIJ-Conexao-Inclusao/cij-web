@@ -19,8 +19,9 @@ import {
 	BoxButtons,
 	PrimaryButton /*Selects*/,
 } from "./SignUp.styled";
-import InputAdornment from "@mui/material/InputAdornment";
+import "./SignUp.scss";
 
+import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";

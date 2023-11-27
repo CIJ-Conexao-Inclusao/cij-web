@@ -10,6 +10,10 @@ export const BoxRightColumn = styled(Box)({
 	justifyContent: "center",
 	padding: "1rem",
 	width: "35vw",
+
+	"@media (max-width: 768px)": {
+		width: "100vw",
+	},
 });
 
 export const BoxLeftColumn = styled(Box)({
@@ -20,6 +24,10 @@ export const BoxLeftColumn = styled(Box)({
 	height: "100vh",
 	padding: "1rem",
 	width: "65vw",
+
+	"@media (max-width: 768px)": {
+		display: "none",
+	},
 });
 
 export const BoxLogoImage = styled(Box)({
@@ -59,7 +67,8 @@ export const Inputs = styled(TextField)({
 	boxShadow: "5px 5px 10px 0 #00000025",
 	"& fieldset": { border: "none" },
 	marginBottom: "2rem",
-	width: "20vw",
+	// width: "20vw",
+	width: "60%",
 });
 
 export const BoxButtons = styled(Box)({
