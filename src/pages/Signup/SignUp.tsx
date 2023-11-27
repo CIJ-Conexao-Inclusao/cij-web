@@ -15,10 +15,10 @@ import {
 	BoxBackgroundImage,
 	BoxTitle,
 	BoxInputs,
-	Inputs,
 	BoxButtons,
-	PrimaryButton /*Selects*/,
 } from "./SignUp.styled";
+import { Inputs, PrimaryButton } from "../../App.styled";
+
 import "./SignUp.scss";
 
 import InputAdornment from "@mui/material/InputAdornment";
@@ -169,7 +169,13 @@ const SignUp = () => {
 						}}
 					/>
 
-					<FormControl sx={{ color: "#999", marginBottom: "2rem", width: "20vw" }}>
+					<FormControl
+						sx={{
+							color: "#999",
+							marginBottom: "2rem",
+							width: "20vw",
+						}}
+					>
 						<FormLabel sx={{ color: "#999" }}>Gênero</FormLabel>
 
 						<RadioGroup

@@ -9,11 +9,10 @@ import {
 	BoxBackgroundImage,
 	BoxTitle,
 	BoxInputs,
-	Inputs,
 	BoxButtons,
-	PrimaryButton,
 	BoxCompanies,
 } from "./SignIn.styled";
+import { Inputs, PrimaryButton } from "../../App.styled";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
