@@ -11,7 +11,7 @@ import { PageLayout } from "./layout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
-import Jobs from "./pages/Jobs"
+import Jobs from "./pages/Jobs";
 // import Backing from "./pages/Backing";
 
 import TemaProvider from "./providers/ThemeProvider";
@@ -59,10 +59,10 @@ const App = () => {
 					<Routes>
 						<Route element={<PageLayout />}>
 							<Route path={ROUTES.home} element={<Home />} />
+							<Route path={ROUTES.jobs} element={<Jobs />} />
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />
-						<Route path={ROUTES.jobs} element={<Jobs />} />
 						<Route path="/*" element={<NotFound />} />
 						{/* <Route path={ROUTES.backing} element={<Backing />} /> */}
 					</Routes>
