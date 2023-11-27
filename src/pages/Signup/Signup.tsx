@@ -33,12 +33,12 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import logoWhiteFull from "../../assets/logo-white-full.png";
 import signUpBackground from "./assets/sign-up-background.png";
 
-import { userSchema } from "../../validations";
+import { userSchema } from "../../validations/index.ts";
 
 import { GENDER, ROUTES } from "../../constants/index.ts";
-import { TUserForm } from "../../types";
+import { TUserForm } from "../../types/index.ts";
 
-import { UserService } from "../../services";
+import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
 
