@@ -1,7 +1,8 @@
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
+import { ListItem } from "@mui/material";
 
-import { CONSTS } from "../../../constants/CONSTS";
+import { CONSTS } from "../../../constants";
 
 const openedMixin = (theme: Theme): CSSObject => ({
 	width: CONSTS.drawerWidth,
@@ -40,3 +41,9 @@ export const Drawer = styled(MuiDrawer, {
 		"& .MuiDrawer-paper": closedMixin(theme),
 	}),
 }));
+
+export const ListItemStyled = styled(ListItem)({
+	display: "flex",
+	alignItems: "center",
+	padding: "4px 0px",
+});

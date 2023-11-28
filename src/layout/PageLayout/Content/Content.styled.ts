@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 
-import { CONSTS } from "../../../constants/CONSTS";
+import { CONSTS } from "../../../constants";
 
 export const Main = styled("main", {
 	shouldForwardProp: (prop) => prop !== "open",

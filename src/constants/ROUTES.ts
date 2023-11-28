@@ -3,4 +3,8 @@ export const ROUTES = {
 	signup: "/signup",
 	login: "/signin",
 	test: "/test",
+	news: "/noticias",
+	charts: "/graficos",
+	jobs: "/vagas",
+	supporters: "/parceiros",
 };
