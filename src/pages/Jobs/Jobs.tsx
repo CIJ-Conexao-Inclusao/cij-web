@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { Box, TextField, Select, MenuItem, Button } from '@mui/material';
 import 'tailwindcss/tailwind.css';
+import {
+    BoxCompanies,
+} from "./Jobs.styled";
+import BlindIcon from '@mui/icons-material/Blind';
+import HearingIcon from '@mui/icons-material/Hearing';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import marisol from "./assets/companies/marisol.png";
+import duasRodas from "./assets/companies/duas-rodas.png";
+import malwee from "./assets/companies/grupo-malwee.png";
+import urbano from "./assets/companies/urbano.png";
+import weg from "./assets/companies/weg.png";
 
 interface Vaga {
     id: number;
@@ -10,6 +21,14 @@ interface Vaga {
     vaga: string;
     deficiencia: string;
 }
+
+const listImages = [
+    {image: marisol},
+    {image: duasRodas},
+    {image: malwee},
+    {image: urbano},
+    {image: weg},
+]
 
 const Jobs: React.FC = () => {
     const [vagas, setVagas] = useState<Vaga[]>([
@@ -31,63 +50,95 @@ const Jobs: React.FC = () => {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
-        <Box p={4}>
-            <h1 className="text-lg font-bold mb-2 text-blue-500">Vagas de Emprego</h1>
+        <Box p={4} sx={{ maxWidth: 'xl', margin: 'auto' }}>
 
-            <Box display="flex" gap={2} mb={2}>
-                <TextField variant="outlined" size="small" fullWidth placeholder="Nome da Vaga" />
-                <Select variant="outlined" size="small" fullWidth>
-                    <MenuItem value="opcao1">Opção 1</MenuItem>
-                    <MenuItem value="opcao2">Opção 2</MenuItem>
-                </Select>
-            </Box>
+            <h1 className="text-lg font-bold mb-2 text-blue-500" >Vagas de Emprego</h1>
+            <Box sx={{ textAlign: 'center' }}>
+                <Box display="flex" gap={2} mb={2}>
+                    <Box flex="1">
+                        <label className="flex text-xs mb-1 font-bold">Nome da Vaga:</label>
+                        <TextField variant="outlined" size="small" fullWidth placeholder="Nome da Vaga" />
+                    </Box>
 
-            <Box display="flex" gap={2} mb={2}>
-                <Select variant="outlined" size="small" fullWidth>
-                    <MenuItem value="nenhuma">Nenhuma</MenuItem>
-                    <MenuItem value="visual">Visual</MenuItem>
-                    <MenuItem value="auditiva">Auditiva</MenuItem>
-                </Select>
-                <Select variant="outlined" size="small" fullWidth>
-                    <MenuItem value="ti">TI</MenuItem>
-                    <MenuItem value="rh">RH</MenuItem>
-                    <MenuItem value="marketing">Marketing</MenuItem>
-                </Select>
-                <Select variant="outlined" size="small" fullWidth>
-                    <MenuItem value="empresaA">Empresa A</MenuItem>
-                    <MenuItem value="empresaB">Empresa B</MenuItem>
-                    <MenuItem value="empresaC">Empresa C</MenuItem>
-                </Select>
-            </Box>
+                    <Box flex="1">
+                        <label className="flex text-xs mb-1 font-bold">Tipo de Vaga:</label>
+                        <Select variant="outlined" size="small" fullWidth>
+                            <MenuItem value="opcao1">Opção 1</MenuItem>
+                            <MenuItem value="opcao2">Opção 2</MenuItem>
+                        </Select>
+                    </Box>
+                </Box>
 
-            <ul>
-                <li className="flex mb-2 border-b">
-                    <p className="w-1/5 font-bold text-sm">Cód. Empresa</p>
-                    <p className="w-1/5 font-bold text-sm">Empresa</p>
-                    <p className="w-1/5 font-bold text-sm">Área</p>
-                    <p className="w-1/5 font-bold text-sm">Vaga</p>
-                    <p className="w-1/5 font-bold text-sm">Deficiência</p>
-                </li>
-                {currentItems.map((vaga) => (
-                    <li key={vaga.id} className="flex mb-2 border-b">
-                        <p className="w-1/5 text-sm">{vaga.codigoEmpresa}</p>
-                        <p className="w-1/5 text-sm">{vaga.empresa}</p>
-                        <p className="w-1/5 text-sm">{vaga.area}</p>
-                        <p className="w-1/5 text-sm">{vaga.vaga}</p>
-                        <p className="w-1/5 text-sm">{vaga.deficiencia}</p>
+                <Box display="flex" gap={2} mb={2}>
+                    <Box flex="1">
+                        <label className="flex text-xs mb-1 font-bold">Deficiência:</label>
+                        <Select variant="outlined" size="small" fullWidth>
+                            <MenuItem value="nenhuma">Nenhuma</MenuItem>
+                            <MenuItem value="visual">Visual</MenuItem>
+                            <MenuItem value="auditiva">Auditiva</MenuItem>
+                        </Select>
+                    </Box>
+
+                    <Box flex="1">
+                        <label className="flex text-xs mb-1 font-bold">Área:</label>
+                        <Select variant="outlined" size="small" fullWidth>
+                            <MenuItem value="ti">TI</MenuItem>
+                            <MenuItem value="rh">RH</MenuItem>
+                            <MenuItem value="marketing">Marketing</MenuItem>
+                        </Select>
+                    </Box>
+
+                    <Box flex="1">
+                        <label className="flex text-xs mb-1 font-bold">Empresa:</label>
+                        <Select variant="outlined" size="small" fullWidth>
+                            <MenuItem value="empresaA">Empresa A</MenuItem>
+                            <MenuItem value="empresaB">Empresa B</MenuItem>
+                            <MenuItem value="empresaC">Empresa C</MenuItem>
+                        </Select>
+                    </Box>
+                </Box>
+
+                <ul className='mt-8'>
+                    <li className="flex mb-2 border-b">
+                        <p className="w-1/5 font-bold text-sm">Logo</p>
+                        <p className="w-1/5 font-bold text-sm">Empresa</p>
+                        <p className="w-1/5 font-bold text-sm">Área</p>
+                        <p className="w-1/5 font-bold text-sm">Vaga</p>
+                        <p className="w-1/5 font-bold text-sm">Deficiência</p>
                     </li>
-                ))}
-            </ul>
-
-            <Box mt={2} display="flex" justifyContent="space-between">
-                <p className="text-sm">{`Mostrando ${indexOfFirstItem + 1} - ${indexOfLastItem} de ${vagas.length} itens`}</p>
-                <div>
-                    {Array.from({ length: Math.ceil(vagas.length / itemsPerPage) }).map((_, index) => (
-                        <Button key={index} onClick={() => paginate(index + 1)} variant="outlined" size="small">
-                            {index + 1}
-                        </Button>
+                    {currentItems.map((vaga, index) => (
+                        <li key={vaga.id} className="flex mb-2 border-b justify-center items-center">
+                            <p className="w-1/5 justify-center items-center flex">
+                                <BoxCompanies>
+                                    <img
+                                        className="companies"
+                                        src={listImages[index].image}
+                                        alt="Marisol"
+                                    />
+                                </BoxCompanies>
+                            </p>
+                            <p className="w-1/5 text-sm font-bold">{vaga.codigoEmpresa + ' - ' + vaga.empresa}</p>
+                            <p className="w-1/5 text-sm">{vaga.area}</p>
+                            <p className="w-1/5 text-sm">{vaga.vaga}</p>
+                            <p className="w-1/5 text-sm">
+                                <i className="material-icons"><BlindIcon /></i>
+                                <i className="material-icons"><HearingIcon /></i>
+                                <i className="material-icons"><AccessibleIcon /></i>
+                            </p>
+                        </li>
                     ))}
-                </div>
+                </ul>
+
+                <Box mt={2} display="flex" justifyContent="space-between">
+                    <p className="text-sm">{`Mostrando ${indexOfFirstItem + 1} - ${indexOfLastItem} de ${vagas.length} itens`}</p>
+                    <div>
+                        {Array.from({ length: Math.ceil(vagas.length / itemsPerPage) }).map((_, index) => (
+                            <Button key={index} onClick={() => paginate(index + 1)} variant="outlined" size="small">
+                                {index + 1}
+                            </Button>
+                        ))}
+                    </div>
+                </Box>
             </Box>
         </Box>
     );
