@@ -20,6 +20,7 @@ import { useAppDispatch } from "./redux/hooks";
 import NotFound from "./pages/NotFound";
 import { ToastProvider } from "./hooks/useToast";
 import { ROUTES } from "./constants";
+import Test from "./pages/Test/Test";
 
 const App = () => {
 	// const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -57,6 +58,7 @@ const App = () => {
 					<Routes>
 						<Route element={<PageLayout />}>
 							<Route path={ROUTES.home} element={<Home />} />
+							<Route path={ROUTES.test} element={<Test />} />
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />
