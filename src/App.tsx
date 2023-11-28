@@ -12,7 +12,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
-// import Backing from "./pages/Backing";
+import Backing from "./pages/Backing";
 
 import TemaProvider from "./providers/ThemeProvider";
 
@@ -64,7 +64,7 @@ const App = () => {
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />
 						<Route path="/*" element={<NotFound />} />
-						{/* <Route path={ROUTES.backing} element={<Backing />} /> */}
+						<Route path={ROUTES.backing} element={<Backing />} />
 					</Routes>
 				</Router>
 			</ToastProvider>
