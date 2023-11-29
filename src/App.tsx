@@ -11,16 +11,16 @@ import { PageLayout } from "./layout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import Test from "./pages/Test/Test";
 
 import TemaProvider from "./providers/ThemeProvider";
 
 import { CookieService, UserService } from "./services";
 import { defineUser } from "./redux/user/userSlice";
 import { useAppDispatch } from "./redux/hooks";
-import NotFound from "./pages/NotFound";
 import { ToastProvider } from "./hooks/useToast";
 import { ROUTES } from "./constants";
-import Test from "./pages/Test/Test";
 
 const App = () => {
 	// const { toggleColorMode, mode } = useContext(ColorModeContext);
