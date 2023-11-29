@@ -9,7 +9,7 @@ import {
 import { PageLayout } from "./layout";
 
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Test from "./pages/Test/Test";
