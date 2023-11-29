@@ -3,28 +3,38 @@ import React from "react";
 import { ROUTES } from "./ROUTES";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import HandshakeIcon from "@mui/icons-material/Handshake";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
+import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
+import SupportOutlinedIcon from '@mui/icons-material/SupportOutlined';
 
 export const CONSTS = {
 	drawerWidth: 240,
 	sidebarItems: [
-		{ name: "Notícias", path: ROUTES.news, icon: <HomeOutlinedIcon /> },
+		{ 
+			name: "Notícias", 
+			path: ROUTES.news, 
+			icon: <HomeOutlinedIcon /> 
+		},
 		{
 			name: "Gráficos",
 			path: ROUTES.charts,
-			icon: <StackedLineChartIcon fontSize="medium" />,
+			icon: <BarChartOutlinedIcon fontSize="medium" />,
 		},
 		{
 			name: "Vagas de emprego",
 			path: ROUTES.jobs,
-			icon: <WorkOutlineIcon fontSize="medium" />,
+			icon: <WorkOutlineOutlinedIcon fontSize="medium" />,
 		},
 		{
 			name: "Parecerias e apoiadores",
 			path: ROUTES.supporters,
-			icon: <HandshakeIcon fontSize="medium" />,
+			icon: <HandshakeOutlinedIcon fontSize="medium" />,
 		},
+		{
+			name: "Ajuda",
+			path: ROUTES.help,
+			icon: <SupportOutlinedIcon fontSize="medium" />
+		}
 	],
 };
