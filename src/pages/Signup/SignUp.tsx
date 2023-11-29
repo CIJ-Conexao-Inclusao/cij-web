@@ -60,7 +60,7 @@ const SignUp = () => {
 	const [confirmPasswordType, setConfirmPasswordType] =
 		useState<string>("password");
 
-	const mostrarSenha = () => {
+	const showPassword = () => {
 		if (passwordType == "text") {
 			setPasswordType("password");
 		} else {
@@ -68,7 +68,7 @@ const SignUp = () => {
 		}
 	};
 
-	const mostrarConfirmarSenha = () => {
+	const showConfirmPassword = () => {
 		if (confirmPasswordType == "text") {
 			setConfirmPasswordType("password");
 		} else {
@@ -115,11 +115,7 @@ const SignUp = () => {
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img
-						id="sign-up-background"
-						src={signUpBackground}
-						alt="Background"
-					/>
+					<img id="sign-up-background" src={signUpBackground} alt="Background" />
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -127,9 +123,7 @@ const SignUp = () => {
 				<BoxTitle>
 					<p className="big-title">Crie sua conta</p>
 
-					<p className="little-text">
-						Forneça alguns dados para criar sua conta no CIJ
-					</p>
+					<p className="little-text">Forneça alguns dados para criar sua conta no CIJ</p>
 				</BoxTitle>
 
 				<BoxInputs>
@@ -260,7 +254,7 @@ const SignUp = () => {
 							endAdornment:
 								passwordType == "text" ? (
 									<VisibilityOffOutlinedIcon
-										onClick={mostrarSenha}
+										onClick={showPassword}
 										sx={{
 											color: "#999",
 											cursor: "pointer",
@@ -268,7 +262,7 @@ const SignUp = () => {
 									/>
 								) : (
 									<VisibilityOutlinedIcon
-										onClick={mostrarSenha}
+										onClick={showPassword}
 										sx={{
 											color: "#999",
 											cursor: "pointer",
@@ -296,7 +290,7 @@ const SignUp = () => {
 							endAdornment:
 								confirmPasswordType == "text" ? (
 									<VisibilityOffOutlinedIcon
-										onClick={mostrarConfirmarSenha}
+										onClick={showConfirmPassword}
 										sx={{
 											color: "#999",
 											cursor: "pointer",
@@ -304,7 +298,7 @@ const SignUp = () => {
 									/>
 								) : (
 									<VisibilityOutlinedIcon
-										onClick={mostrarConfirmarSenha}
+										onClick={showConfirmPassword}
 										sx={{
 											color: "#999",
 											cursor: "pointer",
@@ -316,16 +310,9 @@ const SignUp = () => {
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton variant="contained" onClick={signUp}>
-						Cadastrar
-					</PrimaryButton>
+					<PrimaryButton variant="contained" onClick={signUp}>Cadastrar</PrimaryButton>
 
-					<p className="little-text">
-						Já possui uma conta?{" "}
-						<Link to={ROUTES.login} className="link">
-							Login
-						</Link>
-					</p>
+					<p className="little-text">Já possui uma conta? <Link to={ROUTES.login} className="link">Login</Link></p>
 				</BoxButtons>
 			</BoxRightColumn>
 		</Box>
