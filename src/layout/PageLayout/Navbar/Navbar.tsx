@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AppBar, Avatar, IconButton, Toolbar } from "@mui/material";
-import { BoxLeft, BoxRight, BoxUser } from "./Navbar.styled";
+import { Avatar, IconButton, Toolbar } from "@mui/material";
+import { AppBar, BoxLeft, BoxRight, BoxUser } from "./Navbar.styled";
 import { useAppSelector } from "../../../redux/hooks";
 
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -21,7 +21,10 @@ type TModalUser = {
 	anchorEl: null | HTMLElement;
 };
 
-const Navbar = () => {
+const Navbar: React.FC<{ open: boolean; handleSidebarChange: () => void }> = ({
+	open,
+	handleSidebarChange,
+}) => {
 	const navigate = useNavigate();
 	const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
@@ -65,7 +68,12 @@ const Navbar = () => {
 				handleClose={handleCloseModalUser}
 			/>
 
-			<AppBar sx={{ height: "4rem" }} position="sticky" id="navbar">
+			<AppBar
+				sx={{ height: "4rem" }}
+				position="fixed"
+				open={open}
+				id="navbar"
+			>
 				<Toolbar
 					sx={{
 						alignItems: "centrer",
@@ -75,7 +83,12 @@ const Navbar = () => {
 					}}
 				>
 					<BoxLeft>
-						<IconButton size="large" edge="start" color="inherit">
+						<IconButton
+							onClick={handleSidebarChange}
+							size="large"
+							edge="start"
+							color="inherit"
+						>
 							<MenuOutlinedIcon />
 						</IconButton>
 
