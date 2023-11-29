@@ -13,7 +13,7 @@ export const CONSTS = {
 	sidebarItems: [
 		{ 
 			name: "Notícias", 
-			path: ROUTES.news, 
+			path: ROUTES.home, 
 			icon: <HomeOutlinedIcon /> 
 		},
 		{
