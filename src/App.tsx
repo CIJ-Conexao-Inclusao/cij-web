@@ -8,11 +8,12 @@ import {
 
 import { PageLayout } from "./layout";
 
+import Test from "./pages/Test/Test";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile/Profile"
 import NotFound from "./pages/NotFound";
-import Test from "./pages/Test/Test";
 
 import TemaProvider from "./providers/ThemeProvider";
 
@@ -57,8 +58,9 @@ const App = () => {
 				<Router>
 					<Routes>
 						<Route element={<PageLayout />}>
-							<Route path={ROUTES.home} element={<Home />} />
 							<Route path={ROUTES.test} element={<Test />} />
+							<Route path={ROUTES.home} element={<Home />} />
+							<Route path={ROUTES.profile} element={<Profile />} />
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />
