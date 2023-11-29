@@ -8,18 +8,20 @@ import {
 
 import { PageLayout } from "./layout";
 
+import Test from "./pages/Test/Test";
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
 import Backing from "./pages/Backing";
+import Profile from "./pages/Profile/Profile"
+import NotFound from "./pages/NotFound";
 
 import TemaProvider from "./providers/ThemeProvider";
 
 import { CookieService, UserService } from "./services";
 import { defineUser } from "./redux/user/userSlice";
 import { useAppDispatch } from "./redux/hooks";
-import NotFound from "./pages/NotFound";
 import { ToastProvider } from "./hooks/useToast";
 import { ROUTES } from "./constants";
 
@@ -58,8 +60,11 @@ const App = () => {
 				<Router>
 					<Routes>
 						<Route element={<PageLayout />}>
+							<Route path={ROUTES.test} element={<Test />} />
 							<Route path={ROUTES.home} element={<Home />} />
 							<Route path={ROUTES.jobs} element={<Jobs />} />
+							<Route path={ROUTES.profile} element={<Profile />} />
+
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />

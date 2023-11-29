@@ -3,5 +3,9 @@ export const ROUTES = {
 	signup: "/signup",
 	login: "/signin",
 	backing: "/backing",
-	jobs: "/jobs"
+	jobs: "/jobs",
+	charts: "/graficos",
+	supporters: "/parceiros",
+	profile: "/perfil",
+	help: "/ajuda"
 };
