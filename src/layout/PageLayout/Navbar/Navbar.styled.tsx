@@ -22,7 +22,6 @@ export const BoxLeft = styled(Box)({
 	alignItems: "center",
 	display: "flex",
 	justifyContent: "start",
-	gap: "1rem",
 });
 
 export const BoxRight = styled(Box)({

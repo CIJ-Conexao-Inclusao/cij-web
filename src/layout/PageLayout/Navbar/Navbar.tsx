@@ -79,11 +79,12 @@ const Navbar: React.FC<{ open: boolean; handleSidebarChange: () => void }> = ({
 						alignItems: "centrer",
 						display: "flex",
 						justifyContent: "space-between",
-						padding: "0.5rem",
+						padding: "0.5rem 1rem",
 					}}
 				>
 					<BoxLeft>
 						<IconButton
+							sx={{ marginRight: "0.5rem" }}
 							onClick={handleSidebarChange}
 							size="large"
 							edge="start"
@@ -101,7 +102,12 @@ const Navbar: React.FC<{ open: boolean; handleSidebarChange: () => void }> = ({
 					</BoxLeft>
 
 					<BoxRight>
-						<IconButton sx={{ color: "primary.contrast" }}>
+						<IconButton
+							sx={{
+								color: "primary.contrast",
+								marginRight: "1rem",
+							}}
+						>
 							<NotificationsOutlinedIcon />
 						</IconButton>
 
