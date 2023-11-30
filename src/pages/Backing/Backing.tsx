@@ -1,6 +1,6 @@
 import React from 'react';
 import { BoxCompanies, StyledTitle, StyledCard, StyledCardContent, StyledCardMedia, StyledImage, StyledCardContentTitle, StyledSubtitle } from "./Backing.styled";
-import { Typography, CardHeader, Box } from '@mui/material';
+import { Typography, CardHeader, Box, Container } from '@mui/material';
 import vetor from "./assets/vetor.png";
 
 const listCards = [
@@ -34,13 +34,12 @@ const Backing: React.FC = () => {
                 </Box>
             </Box>
 
-            {/* Seção dos 3 cards */}
             <Box className="cards-container" sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', alignItems: 'center' }}>
                 {listCards.slice(0, 3).map((item, index) => (
                     <StyledCard key={index} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <StyledCardContent>
                             <StyledTitle variant="h3">{item.title}</StyledTitle>
-                            <Box sx={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <StyledSubtitle variant="body1">
                                     {item.subtitle}
                                 </StyledSubtitle>

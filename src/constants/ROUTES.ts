@@ -5,7 +5,8 @@ export const ROUTES = {
 	backing: "/backing",
 	jobs: "/jobs",
 	charts: "/graficos",
-	supporters: "/parceiros",
+	supporters: "/backing",
 	profile: "/perfil",
-	help: "/ajuda"
+	help: "/ajuda",
+	detailsJobs: "/detailsJobs"
 };

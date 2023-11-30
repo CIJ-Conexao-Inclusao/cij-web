@@ -16,6 +16,7 @@ import Jobs from "./pages/Jobs";
 import Backing from "./pages/Backing";
 import Profile from "./pages/Profile/Profile"
 import NotFound from "./pages/NotFound";
+import DetailsJobs from "./pages/DetailsJobs";
 
 import TemaProvider from "./providers/ThemeProvider";
 
@@ -24,6 +25,7 @@ import { defineUser } from "./redux/user/userSlice";
 import { useAppDispatch } from "./redux/hooks";
 import { ToastProvider } from "./hooks/useToast";
 import { ROUTES } from "./constants";
+
 
 const App = () => {
 	// const { toggleColorMode, mode } = useContext(ColorModeContext);
@@ -64,12 +66,13 @@ const App = () => {
 							<Route path={ROUTES.home} element={<Home />} />
 							<Route path={ROUTES.jobs} element={<Jobs />} />
 							<Route path={ROUTES.profile} element={<Profile />} />
-
+							<Route path={ROUTES.backing} element={<Backing />} />
+							<Route path={ROUTES.detailsJobs} element={<DetailsJobs />} />
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
 						<Route path={ROUTES.signup} element={<SignUp />} />
 						<Route path="/*" element={<NotFound />} />
-						<Route path={ROUTES.backing} element={<Backing />} />
+						
 					</Routes>
 				</Router>
 			</ToastProvider>
