@@ -1,5 +1,9 @@
 import React from "react";
+
 import { Box, Container, Grid } from "@mui/material";
+import { BoxDeficienciesPerCity, BoxDeficiencyPerCity } from "./Charts.styled";
+
+import "./Charts.scss";
 
 import graficoPizzaDeficienciaAuditiva from "./assets/Gráfico de Pizza - Deficiência Auditiva.png";
 import graficoPizzaDeficienciaFisica from "./assets/Gráfico de Pizza - Deficiência Física.png";
@@ -11,23 +15,23 @@ const Charts = () => {
 	const deficienciesPerCity = [
 		{
 			name: "Auditiva",
-			img: graficoPizzaDeficienciaAuditiva,
+			image: graficoPizzaDeficienciaAuditiva,
 		},
 		{
 			name: "Física",
-			img: graficoPizzaDeficienciaFisica,
+			image: graficoPizzaDeficienciaFisica,
 		},
 		{
 			name: "Intelectual",
-			img: graficoPizzaDeficienciaIntelectual,
+			image: graficoPizzaDeficienciaIntelectual,
 		},
 		{
 			name: "Psicossocial",
-			img: graficoPizzaDeficienciaPsicossocial,
+			image: graficoPizzaDeficienciaPsicossocial,
 		},
 		{
 			name: "Visual",
-			img: graficoPizzaDeficienciaVisual,
+			image: graficoPizzaDeficienciaVisual,
 		},
 	];
 
@@ -36,21 +40,30 @@ const Charts = () => {
 			<Container>
 				<p className="title">Gráficos</p>
 
-				<Box sx={{ flexGrow: 1 }}>
-					<Grid container spacing={2}>
+				<BoxDeficienciesPerCity sx={{ flexGrow: 1 }}>
+					<p className="big-text">Deficiências em Jaraguá do Sul</p>
+
+					<Grid
+						container
+						direction="row"
+						justifyContent="center"
+						alignItems="center"
+						spacing={4}
+					>
 						{deficienciesPerCity.map((deficiency, index) => (
-							<Grid key={index} xs={2}>
-								<Box>
-									<p>{deficiency.name}</p>
+							<Grid key={index} item xs>
+								<BoxDeficiencyPerCity>
+									<p className="text">{deficiency.name}</p>
+
 									<img
-										src={deficiency.img}
+										src={deficiency.image}
 										alt="Gráfica de Pizza"
 									/>
-								</Box>
+								</BoxDeficiencyPerCity>
 							</Grid>
 						))}
 					</Grid>
-				</Box>
+				</BoxDeficienciesPerCity>
 			</Container>
 		</Box>
 	);
