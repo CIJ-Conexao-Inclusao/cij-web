@@ -12,6 +12,7 @@ import Test from "./pages/Test/Test";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home";
+import Charts from "./pages/Charts/Charts";
 import Profile from "./pages/Profile/Profile"
 import NotFound from "./pages/NotFound";
 
@@ -60,6 +61,7 @@ const App = () => {
 						<Route element={<PageLayout />}>
 							<Route path={ROUTES.test} element={<Test />} />
 							<Route path={ROUTES.home} element={<Home />} />
+							<Route path={ROUTES.charts} element={<Charts />} />
 							<Route path={ROUTES.profile} element={<Profile />} />
 						</Route>
 						<Route path={ROUTES.login} element={<SignIn />} />
