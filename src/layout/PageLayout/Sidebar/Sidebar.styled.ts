@@ -21,7 +21,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 	overflowX: "hidden",
 	width: `calc(${theme.spacing(7)} + 1px)`,
 	[theme.breakpoints.up("sm")]: {
-		width: `calc(${theme.spacing(8)} + 1px)`,
+		width: `calc(${theme.spacing(9)} + 1px)`,
 	},
 });
 
@@ -45,5 +45,5 @@ export const Drawer = styled(MuiDrawer, {
 export const ListItemStyled = styled(ListItem)({
 	display: "flex",
 	alignItems: "center",
-	padding: "4px 0px",
+	padding: 0,
 });
