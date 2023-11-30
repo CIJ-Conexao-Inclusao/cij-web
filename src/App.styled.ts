@@ -9,7 +9,6 @@ export const Inputs = styled(TextField)({
 	boxShadow: "5px 5px 10px 0 #00000025",
 	"& fieldset": { border: "none" },
 	marginBottom: "2rem",
-	// width: "20vw",
 	width: "60%",
 });
 
@@ -19,7 +18,7 @@ export const Selects = styled(Select<GENDER>)({
 	boxShadow: "5px 5px 10px 0 #00000025",
 	"& fieldset": { border: "none" },
 	marginBottom: "2rem",
-	width: "20vw",
+	width: "60%",
 });
 
 export const PrimaryButton = styled(Button)({
