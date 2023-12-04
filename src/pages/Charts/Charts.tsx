@@ -53,11 +53,21 @@ const Charts = () => {
 	];
 
 	const disabilitiesPerNeighborhood = [
-		barChartHearingDisability,
-		barChartIntellectualDisability,
-		barChartPhysicalDisability,
-		barChartPsychosocialDisability,
-		barChartVisualDisability,
+		{
+			image: barChartHearingDisability,
+		},
+		{
+			image: barChartIntellectualDisability,
+		},
+		{
+			image: barChartPhysicalDisability,
+		},
+		{
+			image: barChartPsychosocialDisability,
+		},
+		{
+			image: barChartVisualDisability,
+		},
 	];
 
 	return (
@@ -81,6 +91,7 @@ const Charts = () => {
 									<p className="text">{disability.name}</p>
 
 									<img
+										id="disability-per-city"
 										src={disability.image}
 										alt="Gráfico de Pizza"
 									/>
@@ -94,16 +105,41 @@ const Charts = () => {
 					<BoxDisabilitiesPerNeighborhood>
 						<p className="text">Centro</p>
 
-						<Box>
-							<Grid></Grid>
+						<Box sx={{ display: "flex", marginRight: "1rem" }}>
+							<Grid
+								container
+								direction="column"
+								justifyContent="center"
+								alignItems="center"
+								spacing={4}
+							>
+								{disabilitiesPerNeighborhood.map(
+									(disability, index) => (
+										<Grid key={index} item xs>
+											<img
+												id="disability-per-neighborhood"
+												src={disability.image}
+												alt="Gráfico de Barras"
+											/>
+										</Grid>
+									)
+								)}
+							</Grid>
+
+							<img
+								id="map-chart"
+								src={mapChart}
+								alt="Gráfico de Mapa"
+							/>
 						</Box>
 					</BoxDisabilitiesPerNeighborhood>
 
 					<Box>
-						<BoxHiring sx={{ marginBottom: "1rem" }}>
+						<BoxHiring sx={{ marginBottom: "2rem" }}>
 							<p className="text">Homens</p>
 
 							<img
+								id="hiring-chart"
 								src={barChartMenHiring}
 								alt="Gráfico de Barras"
 							/>
@@ -113,6 +149,7 @@ const Charts = () => {
 							<p className="text">Mulheres</p>
 
 							<img
+								id="hiring-chart"
 								src={barChartWomenHiring}
 								alt="Gráfico de Barras"
 							/>

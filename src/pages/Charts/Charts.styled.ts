@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 
 export const BoxTopCharts = styled(Box)({
-    marginBottom: "1rem",
+    marginBottom: "2rem",
     width: "100%"
 });
 
@@ -18,9 +18,7 @@ export const BoxDisabilityPerCity = styled(Box)({
 });
 
 export const BoxBottomCharts = styled(Box)({
-    alignItems: "center",
     display: "flex",
-    justifyContent: "center",
     width: "100%"
 });
 
@@ -32,6 +30,7 @@ export const BoxDisabilitiesPerNeighborhood = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    marginRight: "2rem",
     padding: "1rem"
 });
 
