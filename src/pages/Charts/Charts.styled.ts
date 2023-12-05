@@ -14,7 +14,8 @@ export const BoxDisabilityPerCity = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    padding: "1rem"
+    padding: "1rem",
+    width: "100%"
 });
 
 export const BoxBottomCharts = styled(Box)({
