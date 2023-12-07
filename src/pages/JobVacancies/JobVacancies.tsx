@@ -29,7 +29,7 @@ const listImages = [
 ];
 
 const Jobs: React.FC = () => {
-	const [vagas, setVagas] = useState<Vaga[]>([
+	const [vagas] = useState<Vaga[]>([
 		{
 			id: 1,
 			empresa: "Empresa A",
@@ -74,7 +74,7 @@ const Jobs: React.FC = () => {
 	]);
 
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+	const [itemsPerPage] = useState<number>(5);
 
 	const indexOfLastItem = currentPage * itemsPerPage;
 	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
