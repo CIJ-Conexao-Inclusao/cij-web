@@ -17,7 +17,7 @@ import Settings from "./Tabs/Settings/Settings";
 
 const Profile = () => {
 	const [tab, setTab] = useState(PersonalData);
-	const [clickedColor, setClickedColor] = useState(1);
+	const [clickedColor, setClickedColor] = useState(0);
 
 	return (
 		<Container>
