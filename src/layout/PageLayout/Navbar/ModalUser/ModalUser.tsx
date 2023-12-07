@@ -9,6 +9,7 @@ import { ROUTES } from "../../../../constants";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 
 import { MenuItemStyled } from "./ModalUser.styled";
 
@@ -33,6 +34,10 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 	const login = () => {
 		navigate(ROUTES.signIn);
 	};
+	
+	const profile = () => {
+		navigate(ROUTES.profile);
+	};
 
 	return (
 		<Menu
@@ -52,6 +57,11 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 					Login
 				</MenuItemStyled>
 			)}
+
+			<MenuItemStyled onClick={profile}>
+				<PersonOutlinedIcon />
+				Meu perfil
+			</MenuItemStyled>
 
 			<MenuItemStyled>
 				<SettingsOutlinedIcon />
