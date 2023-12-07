@@ -1,12 +1,12 @@
 export const ROUTES = {
+	test: "/test",
+	signup: "/cadastro",
+	signin: "/login",
 	home: "/",
-	signup: "/signup",
-	login: "/signin",
-	backing: "/backing",
-	jobs: "/jobs",
 	charts: "/graficos",
-	supporters: "/backing",
+	jobVacancies: "/vagas-emprego",
+	jobVacancyDetails: "/detalhes-vaga-emprego",
+	supporters: "/apoiadores",
 	profile: "/perfil",
 	help: "/ajuda",
-	detailsJobs: "/detailsJobs"
 };
