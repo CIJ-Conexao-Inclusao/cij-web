@@ -6,7 +6,9 @@ export const BoxRightColumn = styled(Box)({
 	display: "flex",
 	flexDirection: "column",
 	height: "100vh",
-	justifyContent: "center",
+	justifyContent: "start",
+	maxHeight: "100vh",
+	overflow: "auto",
 	padding: "1rem",
 	width: "35vw",
 
