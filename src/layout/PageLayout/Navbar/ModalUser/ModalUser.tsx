@@ -27,11 +27,11 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 		dispatch(removeUser());
 		Cookies.remove("token");
 		console.log("logout");
-		navigate(ROUTES.login);
+		navigate(ROUTES.signIn);
 	};
 
 	const login = () => {
-		navigate(ROUTES.login);
+		navigate(ROUTES.signIn);
 	};
 
 	return (

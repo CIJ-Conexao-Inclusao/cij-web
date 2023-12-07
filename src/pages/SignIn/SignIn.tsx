@@ -125,7 +125,9 @@ const SignIn = () => {
 				<BoxTitle>
 					<p className="big-title">Bem vindo(a)!</p>
 
-					<p className="little-text">Insira suas credencias para acessar sua conta</p>
+					<p className="little-text">
+						Insira suas credencias para acessar sua conta
+					</p>
 				</BoxTitle>
 
 				<BoxInputs>
@@ -186,19 +188,42 @@ const SignIn = () => {
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton variant="contained" onClick={login} startIcon={<LoginOutlinedIcon />}>Entrar</PrimaryButton>
+					<PrimaryButton
+						variant="contained"
+						onClick={login}
+						startIcon={<LoginOutlinedIcon />}
+					>
+						Entrar
+					</PrimaryButton>
 
-					<p className="little-text">Não possui uma conta? <Link to={ROUTES.signup} className="link">Cadastrar-se</Link></p>
+					<p className="little-text">
+						Não possui uma conta?{" "}
+						<Link to={ROUTES.signUp} className="link">
+							Cadastrar-se
+						</Link>
+					</p>
 				</BoxButtons>
 
 				<BoxCompanies>
-					<img className="companies" src={duasRodas} alt="Duas Rodas" />
+					<img
+						className="companies"
+						src={duasRodas}
+						alt="Duas Rodas"
+					/>
 
-					<img className="companies" src={grupoMalwee} alt="Grupo Malwee" />
+					<img
+						className="companies"
+						src={grupoMalwee}
+						alt="Grupo Malwee"
+					/>
 
 					<img className="companies" src={marisol} alt="Marisol" />
 
-					<img className="companies" src={prefeitura} alt="Prefeitura de Jaraguá do Sul" />
+					<img
+						className="companies"
+						src={prefeitura}
+						alt="Prefeitura de Jaraguá do Sul"
+					/>
 
 					<img className="companies" src={urbano} alt="Urbano" />
 

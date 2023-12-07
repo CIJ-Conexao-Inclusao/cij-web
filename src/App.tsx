@@ -101,7 +101,7 @@ const App = () => {
 // const ProtectedRoute = ({
 //   tiposUsuarioAllowed = "",
 //   children,
-//   redirectPath = "/signin",
+//   redirectPath = "/signIn",
 // }: ProtectedRouteProps) => {
 //   const cookie = CookieService.getCookie("jwt");
 //   const userJpa = CookieService.getCookie("user");

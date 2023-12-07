@@ -95,7 +95,7 @@ const SignUp = () => {
 							"success",
 							"Usuário criado com sucesso"
 						);
-						navigate(ROUTES.login);
+						navigate(ROUTES.signIn);
 					})
 					.catch((err) => {
 						console.log("err: ", err);
@@ -115,7 +115,11 @@ const SignUp = () => {
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
-					<img id="sign-up-background" src={signUpBackground} alt="Background" />
+					<img
+						id="sign-up-background"
+						src={signUpBackground}
+						alt="Background"
+					/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
@@ -123,7 +127,9 @@ const SignUp = () => {
 				<BoxTitle>
 					<p className="big-title">Crie sua conta</p>
 
-					<p className="little-text">Forneça alguns dados para criar sua conta no CIJ</p>
+					<p className="little-text">
+						Forneça alguns dados para criar sua conta no CIJ
+					</p>
 				</BoxTitle>
 
 				<BoxInputs>
@@ -310,9 +316,16 @@ const SignUp = () => {
 				</BoxInputs>
 
 				<BoxButtons>
-					<PrimaryButton variant="contained" onClick={signUp}>Cadastrar</PrimaryButton>
+					<PrimaryButton variant="contained" onClick={signUp}>
+						Cadastrar
+					</PrimaryButton>
 
-					<p className="little-text">Já possui uma conta? <Link to={ROUTES.login} className="link">Login</Link></p>
+					<p className="little-text">
+						Já possui uma conta?{" "}
+						<Link to={ROUTES.signIn} className="link">
+							Login
+						</Link>
+					</p>
 				</BoxButtons>
 			</BoxRightColumn>
 		</Box>
