@@ -17,13 +17,13 @@ import Settings from "./Tabs/Settings/Settings";
 
 const Profile = () => {
 	const [tab, setTab] = useState(PersonalData);
-	const [clickedColor, setClickedColor] = useState(0);
+	const [clickedColor, setClickedColor] = useState(1);
 
 	return (
 		<Container>
 			<p className="title">Meu perfil</p>
 
-			<Box>
+			<Box sx={{ display: "flex", width: "100%" }}>
 				<BoxLeftColumn>
 					<List>
 						<ListItemButton
@@ -45,10 +45,10 @@ const Profile = () => {
 						<ListItemButton
 							onClick={() => {
 								setTab(Disability);
-								setClickedColor(0);
+								setClickedColor(1);
 							}}
 						>
-							{clickedColor == 0 ? (
+							{clickedColor == 1 ? (
 								<ListItemText
 									primary="Deficiência"
 									sx={{ color: "#004AAD" }}
@@ -61,10 +61,10 @@ const Profile = () => {
 						<ListItemButton
 							onClick={() => {
 								setTab(Address);
-								setClickedColor(0);
+								setClickedColor(2);
 							}}
 						>
-							{clickedColor == 0 ? (
+							{clickedColor == 2 ? (
 								<ListItemText
 									primary="Endereço"
 									sx={{ color: "#004AAD" }}
@@ -77,10 +77,10 @@ const Profile = () => {
 						<ListItemButton
 							onClick={() => {
 								setTab(Curriculum);
-								setClickedColor(0);
+								setClickedColor(3);
 							}}
 						>
-							{clickedColor == 0 ? (
+							{clickedColor == 3 ? (
 								<ListItemText
 									primary="Currículo"
 									sx={{ color: "#004AAD" }}
@@ -93,10 +93,10 @@ const Profile = () => {
 						<ListItemButton
 							onClick={() => {
 								setTab(Settings);
-								setClickedColor(0);
+								setClickedColor(4);
 							}}
 						>
-							{clickedColor == 0 ? (
+							{clickedColor == 4 ? (
 								<ListItemText
 									primary="Configurações"
 									sx={{ color: "#004AAD" }}
