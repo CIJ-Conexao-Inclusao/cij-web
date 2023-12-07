@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { ROUTES } from "../../constants/ROUTES";
+
 import { Box, TextField, Select, MenuItem, Button } from "@mui/material";
-import "tailwindcss/tailwind.css";
 import { BoxCompanies } from "./JobVacancies.styled";
+
+import "tailwindcss/tailwind.css";
+
 import BlindIcon from "@mui/icons-material/Blind";
 import HearingIcon from "@mui/icons-material/Hearing";
 import AccessibleIcon from "@mui/icons-material/Accessible";
+
 import marisol from "./assets/companies/marisol.png";
 import duasRodas from "./assets/companies/duas-rodas.png";
 import malwee from "./assets/companies/grupo-malwee.png";
@@ -29,6 +36,8 @@ const listImages = [
 ];
 
 const Jobs: React.FC = () => {
+	const navigate = useNavigate();
+
 	const [vagas] = useState<Vaga[]>([
 		{
 			id: 1,
@@ -81,6 +90,10 @@ const Jobs: React.FC = () => {
 	const currentItems = vagas.slice(indexOfFirstItem, indexOfLastItem);
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+	const jobVacancyDetails = () => {
+		navigate(ROUTES.jobVacancyDetails);
+	};
 
 	return (
 		<Box p={4} sx={{ maxWidth: "xl", margin: "auto" }}>
@@ -147,7 +160,7 @@ const Jobs: React.FC = () => {
 					</Box>
 				</Box>
 
-				<ul className="mt-8">
+				<ul className="mt-8" onClick={jobVacancyDetails}>
 					<li className="flex mb-2 border-b">
 						<p className="w-1/5 font-bold text-sm">Logo</p>
 						<p className="w-1/5 font-bold text-sm">Empresa</p>
