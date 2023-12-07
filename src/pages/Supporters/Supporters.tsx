@@ -10,7 +10,7 @@ import {
 	StyledSubtitle,
 } from "./Supporters.styled";
 import { Typography, CardHeader, Box, Container } from "@mui/material";
-import vetor from "./assets/vetor.png";
+import vetor from "./assets/supporters-background.png";
 
 const listCards = [
 	{
