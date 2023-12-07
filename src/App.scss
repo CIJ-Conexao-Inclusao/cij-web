@@ -20,25 +20,25 @@
 }
 
 .title {
+    color: $azul;
     font-size: 24px;
     font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 .big-text {
     font-size: 20px;
     font-weight: 700;
-
+    margin-bottom: 1rem;
 }
 
 .little-text {
     font-size: 12px;
-    font-weight: 600;
     margin-top: 1rem;
 
     .link {
         color: $azul;
         font-size: 12px;
-        font-weight: 600;
         text-decoration: none;
         
         &:hover {

@@ -14,7 +14,7 @@ import prefeitura from "./assets/prefeitura.png";
 import trabalho from "./assets/trabalho.png";
 import filmagens from "./assets/filmagens.png";
 
-import NewsService from "../../services/NewsService";
+// import NewsService from "../../services/NewsService";
 
 const imagens = [prefeitura, cadeirante, filmagens];
 
@@ -43,20 +43,21 @@ const Company = [
 ];
 
 const Home = () => {
-	const [news, setNews] = useState<[]>([]);
+	// const [news, setNews] = useState<[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		NewsService.list()
-			.then((res) => {
-				setNews(res.data);
-				console.log(news);
-				setIsLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-				setIsLoading(false);
-			});
+		// NewsService.list()
+		// 	.then((res) => {
+		// 		setNews(res.data);
+		// 		console.log(news);
+		// 		setIsLoading(false);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 		setIsLoading(false);
+		// 	});
+		setIsLoading(false);
 	}, []);
 
 	if (isLoading) {
