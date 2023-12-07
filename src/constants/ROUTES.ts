@@ -1,7 +1,7 @@
 export const ROUTES = {
 	test: "/test",
-	signup: "/cadastro",
-	signin: "/login",
+	signUp: "/cadastro",
+	signIn: "/login",
 	home: "/",
 	charts: "/graficos",
 	jobVacancies: "/vagas-emprego",

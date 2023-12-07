@@ -11,11 +11,11 @@ import { PageLayout } from "./layout";
 import Test from "./pages/Test/Test";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Charts from "./pages/Charts/Charts";
-import Jobs from "./pages/Jobs";
-import DetailsJobs from "./pages/DetailsJobs";
-import Backing from "./pages/Backing";
+import JobVacancies from "./pages/JobVacancies/JobVacancies";
+import JobVacancyDetails from "./pages/JobVacancyDetails/JobVacancyDetails";
+import Supporters from "./pages/Supporters/Supporters";
 import Profile from "./pages/Profile/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -67,23 +67,23 @@ const App = () => {
 							<Route path={ROUTES.charts} element={<Charts />} />
 							<Route
 								path={ROUTES.jobVacancies}
-								element={<Jobs />}
+								element={<JobVacancies />}
 							/>
 							<Route
 								path={ROUTES.jobVacancyDetails}
-								element={<DetailsJobs />}
+								element={<JobVacancyDetails />}
 							/>
 							<Route
 								path={ROUTES.supporters}
-								element={<Backing />}
+								element={<Supporters />}
 							/>
 							<Route
 								path={ROUTES.profile}
 								element={<Profile />}
 							/>
 						</Route>
-						<Route path={ROUTES.signin} element={<SignIn />} />
-						<Route path={ROUTES.signup} element={<SignUp />} />
+						<Route path={ROUTES.signIn} element={<SignIn />} />
+						<Route path={ROUTES.signUp} element={<SignUp />} />
 						<Route path="/*" element={<NotFound />} />
 					</Routes>
 				</Router>
