@@ -2,7 +2,7 @@ import axios from "../api";
 
 import { TLogin } from "../types";
 
-const basePath = "/signIn";
+const basePath = "/login";
 
 class LoginService {
 	async login(user: TLogin) {

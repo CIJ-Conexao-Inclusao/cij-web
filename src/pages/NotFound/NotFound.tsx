@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { ROUTES } from "../../constants";
+
 import { Typography } from "@mui/material";
-
-import NotFoundIcon from "./assets/404.png";
-
 import {
 	Container,
 	ContentWrapper,
 	ImageWrapper,
 	Img,
 } from "./NotFound.styled";
-import { ROUTES } from "../../constants";
+
+import NotFoundIcon from "./assets/404.png";
 
 const NotFound = () => {
 	return (
