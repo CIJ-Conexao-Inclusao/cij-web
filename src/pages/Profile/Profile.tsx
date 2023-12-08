@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 
-import {
-	Box,
-	Container,
-	List,
-	ListItemButton,
-	ListItemText,
-} from "@mui/material";
-import { BoxLeftColumn, BoxRightColumn } from "./Profile.styled";
+import { Box, Container } from "@mui/material";
+import { BoxLeftColumn, BoxTab, BoxRightColumn } from "./Profile.styled";
 
 import PersonalData from "./Tabs/PersonalData/PersonalData";
 import Disability from "./Tabs/Disability/Disability";
@@ -25,87 +19,70 @@ const Profile = () => {
 
 			<Box sx={{ display: "flex", width: "100%" }}>
 				<BoxLeftColumn>
-					<List>
-						<ListItemButton
-							onClick={() => {
-								setTab(PersonalData);
-								setClickedColor(0);
-							}}
-						>
-							{clickedColor == 0 ? (
-								<ListItemText
-									primary="Dados pessoais"
-									sx={{ color: "#004AAD" }}
-								/>
-							) : (
-								<ListItemText primary="Dados pessoais" />
-							)}
-						</ListItemButton>
+					<BoxTab
+						onClick={() => {
+							setTab(PersonalData);
+							setClickedColor(0);
+						}}
+					>
+						{clickedColor == 0 ? (
+							<p style={{ color: "#004AAD" }}>Dados pessoais</p>
+						) : (
+							<p>Dados pessoais</p>
+						)}
+					</BoxTab>
 
-						<ListItemButton
-							onClick={() => {
-								setTab(Disability);
-								setClickedColor(1);
-							}}
-						>
-							{clickedColor == 1 ? (
-								<ListItemText
-									primary="Deficiência"
-									sx={{ color: "#004AAD" }}
-								/>
-							) : (
-								<ListItemText primary="Deficiência" />
-							)}
-						</ListItemButton>
+					<BoxTab
+						onClick={() => {
+							setTab(Disability);
+							setClickedColor(1);
+						}}
+					>
+						{clickedColor == 1 ? (
+							<p style={{ color: "#004AAD" }}>Deficiência</p>
+						) : (
+							<p>Deficiência</p>
+						)}
+					</BoxTab>
 
-						<ListItemButton
-							onClick={() => {
-								setTab(Address);
-								setClickedColor(2);
-							}}
-						>
-							{clickedColor == 2 ? (
-								<ListItemText
-									primary="Endereço"
-									sx={{ color: "#004AAD" }}
-								/>
-							) : (
-								<ListItemText primary="Endereço" />
-							)}
-						</ListItemButton>
+					<BoxTab
+						onClick={() => {
+							setTab(Address);
+							setClickedColor(2);
+						}}
+					>
+						{clickedColor == 2 ? (
+							<p style={{ color: "#004AAD" }}>Endereço</p>
+						) : (
+							<p>Endereço</p>
+						)}
+					</BoxTab>
 
-						<ListItemButton
-							onClick={() => {
-								setTab(Curriculum);
-								setClickedColor(3);
-							}}
-						>
-							{clickedColor == 3 ? (
-								<ListItemText
-									primary="Currículo"
-									sx={{ color: "#004AAD" }}
-								/>
-							) : (
-								<ListItemText primary="Currículo" />
-							)}
-						</ListItemButton>
+					<BoxTab
+						onClick={() => {
+							setTab(Curriculum);
+							setClickedColor(3);
+						}}
+					>
+						{clickedColor == 3 ? (
+							<p style={{ color: "#004AAD" }}>Currículo</p>
+						) : (
+							<p>Currículo</p>
+						)}
+					</BoxTab>
 
-						<ListItemButton
-							onClick={() => {
-								setTab(Settings);
-								setClickedColor(4);
-							}}
-						>
-							{clickedColor == 4 ? (
-								<ListItemText
-									primary="Configurações"
-									sx={{ color: "#004AAD" }}
-								/>
-							) : (
-								<ListItemText primary="Configurações" />
-							)}
-						</ListItemButton>
-					</List>
+					<BoxTab
+						onClick={() => {
+							setTab(Settings);
+							setClickedColor(4);
+						}}
+					>
+						{clickedColor == 4 ? (
+							<p style={{ color: "#004AAD" }}>Configurações</p>
+						) : (
+							<p>Configurações</p>
+						)}
+					</BoxTab>
 				</BoxLeftColumn>
 
 				<BoxRightColumn>{tab}</BoxRightColumn>
