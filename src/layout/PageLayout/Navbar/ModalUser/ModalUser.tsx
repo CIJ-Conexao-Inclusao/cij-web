@@ -1,16 +1,22 @@
-import React, { FC } from "react";
-import { Menu } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { removeUser } from "../../../../redux/user/userSlice";
+import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+
+import { Menu } from "@mui/material";
+
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { removeUser } from "../../../../redux/user/userSlice";
+
 import { ROUTES } from "../../../../constants";
 
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import TranslateOutlinedIcon from "@mui/icons-material/TranslateOutlined";
 
 import { MenuItemStyled } from "./ModalUser.styled";
+
+import ModalLangs from "./ModalLangs";
 
 type TModalUserProps = {
 	open: boolean;
@@ -18,10 +24,20 @@ type TModalUserProps = {
 	anchorEl: null | HTMLElement;
 };
 
+type TModalLang = {
+	open: boolean;
+	anchorEl: null | HTMLElement;
+};
+
 const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
+
+	const [modalLangs, setModalLangs] = useState<TModalLang>({
+		open: false,
+		anchorEl: null,
+	});
 
 	const logout = () => {
 		dispatch(removeUser());
@@ -34,30 +50,50 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 		navigate(ROUTES.login);
 	};
 
-	return (
-		<Menu
-			open={open}
-			anchorEl={anchorEl}
-			onClose={handleClose}
-			onClick={handleClose}
-		>
-			{user ? (
-				<MenuItemStyled onClick={logout}>
-					<LogoutIcon />
-					Logout
-				</MenuItemStyled>
-			) : (
-				<MenuItemStyled onClick={login}>
-					<LoginIcon />
-					Login
-				</MenuItemStyled>
-			)}
+	const openLangs = (e: React.MouseEvent<HTMLElement>) => {
+		setModalLangs({ ...modalLangs, open: true, anchorEl: e.currentTarget });
+	};
 
-			<MenuItemStyled>
-				<SettingsOutlinedIcon />
-				Ajustes
-			</MenuItemStyled>
-		</Menu>
+	const handleCloseLangs = () => {
+		setModalLangs({ ...modalLangs, open: false });
+	};
+
+	const handleSettings = () => {
+		navigate(ROUTES.profile);
+		handleClose();
+	};
+
+	return (
+		<>
+			<ModalLangs
+				open={modalLangs.open}
+				anchorEl={modalLangs.anchorEl}
+				handleClose={handleCloseLangs}
+			/>
+			<Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
+				{user ? (
+					<MenuItemStyled onClick={logout}>
+						<LogoutIcon />
+						Logout
+					</MenuItemStyled>
+				) : (
+					<MenuItemStyled onClick={login}>
+						<LoginIcon />
+						Login
+					</MenuItemStyled>
+				)}
+
+				<MenuItemStyled onClick={openLangs}>
+					<TranslateOutlinedIcon />
+					Idioma
+				</MenuItemStyled>
+
+				<MenuItemStyled onClick={handleSettings}>
+					<SettingsOutlinedIcon />
+					Ajustes
+				</MenuItemStyled>
+			</Menu>
+		</>
 	);
 };
 

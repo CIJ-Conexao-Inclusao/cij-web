@@ -46,12 +46,6 @@ const Navbar: React.FC<{ open: boolean; handleSidebarChange: () => void }> = ({
 		return name[0][0];
 	};
 
-	// const getUserTip = () => {
-	// 	if (!user) return "Sign in";
-
-	// 	return user.name;
-	// };
-
 	const handleCloseModalUser = () => {
 		setModalUser({ ...modalUser, open: false });
 	};
