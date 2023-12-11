@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
+
 import { Box, CssBaseline } from "@mui/material";
+import { SpaceHeader } from "./PageLayout.styled";
 
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-import { SpaceHeader } from "./PageLayout.styled";
-
 const PageLayout = () => {
 	const [open, setOpen] = useState(true);
-
 	const handleSidebarChange = () => {
 		setOpen(!open);
 	};

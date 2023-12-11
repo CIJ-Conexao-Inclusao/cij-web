@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700&display=swap');
 @import "./variables.scss";
 
 // @tailwind base;
@@ -9,9 +9,9 @@
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    font-weight: 600;
-    padding: 0;
+    font-weight: 500;
     margin: 0;
+    padding: 0;
 }
 
 .big-title {
@@ -20,25 +20,25 @@
 }
 
 .title {
+    color: $azul;
     font-size: 24px;
     font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 .big-text {
     font-size: 20px;
     font-weight: 700;
-
+    margin-bottom: 1rem;
 }
 
 .little-text {
     font-size: 12px;
-    font-weight: 600;
     margin-top: 1rem;
 
     .link {
         color: $azul;
         font-size: 12px;
-        font-weight: 600;
         text-decoration: none;
         
         &:hover {

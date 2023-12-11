@@ -1,0 +1,23 @@
+@import "../../variables.scss";
+
+.text {
+    color: $cinza;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+#disability-per-city {
+    width: 10vw;
+}
+
+#disability-per-neighborhood {
+    width: 15vw;
+}
+
+#map-chart {
+    width: 25vw;
+}
+
+#hiring-chart {
+    width: 25vw;
+}

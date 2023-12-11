@@ -22,7 +22,7 @@ export const CONSTS = {
 		},
 		{
 			name: "Vagas de emprego",
-			path: ROUTES.jobs,
+			path: ROUTES.jobVacancies,
 			icon: () => <WorkOutlineOutlinedIcon fontSize="medium" />,
 		},
 		{
