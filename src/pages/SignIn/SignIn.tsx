@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Box } from "@mui/material";
 import {
@@ -46,6 +47,10 @@ const SignIn = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const toast = useToast();
+	const { t } = useTranslation("translation", { keyPrefix: "signIn" });
+	const { t: tErrors } = useTranslation("translation", {
+		keyPrefix: "errors",
+	});
 
 	const [user, setUser] = useState<TLogin>({
 		email: "cauakathdev@gmail.com",
@@ -77,11 +82,11 @@ const SignIn = () => {
 
 			dispatch(defineUser({ user: userInfo }));
 
-			toast.showToast("success", "Login efetuado com sucesso");
+			toast.showToast("success", t("loginSuccess"));
 
 			navigate(ROUTES.home);
 		} catch (error: any) {
-			let message: string = "Email ou senha incorretos";
+			let message: string = tErrors("invalidCredentials");
 
 			toast.showToast("error", message);
 
@@ -93,7 +98,7 @@ const SignIn = () => {
 
 	// ************************************ Handlers ************************************ //
 
-	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 
@@ -123,20 +128,18 @@ const SignIn = () => {
 
 			<BoxRightColumn>
 				<BoxTitle>
-					<p className="big-title">Bem vindo(a)!</p>
+					<p className="big-title">{t("welcome")}</p>
 
-					<p className="little-text">
-						Insira suas credencias para acessar sua conta
-					</p>
+					<p className="little-text">{t("signInToContinue")}</p>
 				</BoxTitle>
 
 				<BoxInputs>
 					<Inputs
 						variant="outlined"
-						placeholder="Email"
+						placeholder={t("email")}
 						name="email"
 						value={user.email}
-						onChange={handledChange}
+						onChange={handleChange}
 						size="small"
 						required
 						InputProps={{
@@ -152,10 +155,10 @@ const SignIn = () => {
 
 					<Inputs
 						variant="outlined"
-						placeholder="Senha"
+						placeholder={t("password")}
 						name="password"
 						value={user.password}
-						onChange={handledChange}
+						onChange={handleChange}
 						type={passwordType}
 						size="small"
 						required
@@ -193,13 +196,13 @@ const SignIn = () => {
 						onClick={login}
 						startIcon={<LoginOutlinedIcon />}
 					>
-						Entrar
+						{t("enter")}
 					</PrimaryButton>
 
 					<p className="little-text">
-						Não possui uma conta?{" "}
-						<Link to={ROUTES.signUp} className="link">
-							Cadastrar-se
+						{t("doesntHaveAccount")}{" "}
+						<Link to={ROUTES.signup} className="link">
+							{t("signUp")}
 						</Link>
 					</p>
 				</BoxButtons>
@@ -208,26 +211,38 @@ const SignIn = () => {
 					<img
 						className="companies"
 						src={duasRodas}
-						alt="Duas Rodas"
+						alt={t("companies.duasRodas")}
 					/>
 
 					<img
 						className="companies"
 						src={grupoMalwee}
-						alt="Grupo Malwee"
+						alt={t("companies.grupoMalwee")}
 					/>
 
-					<img className="companies" src={marisol} alt="Marisol" />
+					<img
+						className="companies"
+						src={marisol}
+						alt={t("companies.marisol")}
+					/>
 
 					<img
 						className="companies"
 						src={prefeitura}
-						alt="Prefeitura de Jaraguá do Sul"
+						alt={t("companies.prefeitura")}
 					/>
 
-					<img className="companies" src={urbano} alt="Urbano" />
+					<img
+						className="companies"
+						src={urbano}
+						alt={t("companies.urbano")}
+					/>
 
-					<img className="companies" src={weg} alt="WEG" />
+					<img
+						className="companies"
+						src={weg}
+						alt={t("companies.weg")}
+					/>
 				</BoxCompanies>
 			</BoxRightColumn>
 		</Box>

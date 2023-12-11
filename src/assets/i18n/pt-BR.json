@@ -1,0 +1,23 @@
+{
+    "signIn": {
+        "welcome": "Bem vindo(a)!",
+        "signInToContinue": "Insira suas credencias para acessar sua conta",
+        "email": "Email",
+        "password": "Senha",
+        "enter": "Entrar",
+        "doesntHaveAccount": "Não tem uma conta?",
+        "signUp": "Cadastre-se",
+        "companies": {
+            "duasRodas": "Duas Rodas",
+            "grupoMalwee": "Grupo Malwee",
+            "marisol": "Marisol",
+            "prefeitura": "Prefeitura de Jaraguá do Sul",
+            "urbano": "Urbano",
+            "weg": "WEG"
+        },
+        "loginSuccess": "Login efetuado com sucesso"
+    },
+    "errors": {
+        "invalidCredentials": "Email ou senha incorretos"
+    }
+}
