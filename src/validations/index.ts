@@ -1,36 +1,40 @@
 import * as yup from "yup";
+import i18n from "../configs/i18n";
 
 export const userSchema = yup.object().shape({
 	cpf: yup
 		.string()
-		.required("O CPF é obrigatório")
-		.length(11, "O CPF deve ter 11 dígitos"),
+		.required(i18n.t("validations.requiredCPF"))
+		.length(11, i18n.t("validations.minLengthCPF")),
 	name: yup
 		.string()
-		.required("O nome é obrigatório")
-		.min(2, "Nome muito curto"),
+		.required(i18n.t("validations.requiredName"))
+		.min(2, i18n.t("validations.minLengthName")),
 	email: yup
 		.string()
-		.email("Email precisa ser válido")
-		.required("O email é obrigatório"),
-	password: yup.string().required("A senha é obrigatória"),
-	gender: yup.string().required("O gênero é obrigatório"),
-	phone: yup.string().length(13, "O telefone deve ter 13 dígitos").required(),
+		.email(i18n.t("validations.validEmail"))
+		.required(i18n.t("validations.requiredEmail")),
+	password: yup.string().required(i18n.t("validations.requiredPassword")),
+	gender: yup.string().required(i18n.t("validations.requiredGender")),
+	phone: yup
+		.string()
+		.length(13, i18n.t("validations.minLengthPhone"))
+		.required(),
 });
 
 export const companySchema = yup.object().shape({
 	name: yup
 		.string()
-		.required("O nome é obrigatório")
-		.min(2, "Nome muito curto"),
+		.required(i18n.t("validations.requiredName"))
+		.min(2, i18n.t("validations.minLengthName")),
 	cnpj: yup
 		.string()
-		.required("O CNPJ é obrigatório")
-		.length(11, "O CNPJ deve ter 11 dígitos"),
-	phone: yup.string(),
+		.required(i18n.t("validations.requiredCNPJ"))
+		.length(11, i18n.t("validations.minLengthCNPJ")),
+	phone: yup.string().length(13, i18n.t("validations.minLengthPhone")),
 	email: yup
 		.string()
-		.required("O domínio é obrigatório")
-		.min(2, "Domínio muito curto"),
-	password: yup.string().required("A senha é obrigatória"),
+		.required(i18n.t("validations.requiredDomain"))
+		.min(2, i18n.t("validations.minLengthDomain")),
+	password: yup.string().required(i18n.t("validations.requiredPassword")),
 });

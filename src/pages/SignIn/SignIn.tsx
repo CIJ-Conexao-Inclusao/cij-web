@@ -201,7 +201,7 @@ const SignIn = () => {
 
 					<p className="little-text">
 						{t("doesntHaveAccount")}{" "}
-						<Link to={ROUTES.signup} className="link">
+						<Link to={ROUTES.signUp} className="link">
 							{t("signUp")}
 						</Link>
 					</p>
