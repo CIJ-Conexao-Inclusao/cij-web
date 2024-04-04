@@ -1,6 +1,6 @@
 import React from "react";
 
-const Disability = () => {
+const Disability = ({ onNext }) => {
 	return (
 		<>
 			<p>Deficiência</p>
