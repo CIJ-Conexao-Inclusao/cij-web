@@ -17,7 +17,48 @@
         },
         "loginSuccess": "Login success"
     },
+    "signUp": {
+        "createdSuccess": "User created successfully",
+        "createYourAccount": "Create your account",
+        "details": "Inform some data to create your account in CIJ",
+        "signUp": "Sign up",
+        "alreadyHasAccount": "Already has an account?",
+        "login": "Login",
+        "phs": {
+            "fullName": "Full name",
+            "cpf": "CPF",
+            "gender": "Gender",
+            "female": "Female",
+            "male": "Male",
+            "others": "Others",
+            "cellphone": "Cellphone",
+            "email": "Email",
+            "password": "Passowrd",
+            "confirmPassword": "Confirm password"
+        },
+        "imgs": {
+            "logo": "Logo",
+            "background": "Background"
+        }
+    },
     "errors": {
-        "invalidCredentials": "Incorrect email or password"
+        "invalidCredentials": "Incorrect email or password",
+        "passwordNotMatch": "Password doesn't match",
+        "errorOnUserCreation": "Error on user creation"
+    },
+    "validations": {
+        "requiredCPF": "CPF is required",
+        "minLengthCPF": "CPF must have 11 digits",
+        "requiredName": "Name is required",
+        "minLengthName": "Name is too short",
+        "validEmail": "Email must be valid",
+        "requiredEmail": "Email is required",
+        "requiredPassword": "Password is required",
+        "requiredGender": "Gender is required",
+        "minLengthPhone": "Cellphone must have 13 digits",
+        "requiredCNPJ": "CNPJ is required",
+        "minLengthCNPJ": "CNPJ must have 14 digits",
+        "requiredDomain": "Domain is required",
+        "minLengthDomain": "Domain is too short"
     }
 }

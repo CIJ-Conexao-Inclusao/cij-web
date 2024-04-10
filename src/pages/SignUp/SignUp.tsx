@@ -41,10 +41,15 @@ import { TUserForm } from "../../types/index.ts";
 import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
 	const toast = useToast();
 	const navigate = useNavigate();
+	const { t } = useTranslation("translation", { keyPrefix: "signUp" });
+	const { t: tErrors } = useTranslation("translation", {
+		keyPrefix: "errors",
+	});
 
 	const [user, setUser] = useState<TUserForm>({
 		cpf: "",
@@ -85,21 +90,21 @@ const SignUp = () => {
 			.validate(user)
 			.then(() => {
 				if (user.password !== confirmPassword) {
-					toast.showToast("error", "As senhas não coincidem");
+					toast.showToast("error", tErrors("passwordNotMatch"));
 					return;
 				}
 
 				UserService.create(user)
 					.then(() => {
-						toast.showToast(
-							"success",
-							"Usuário criado com sucesso"
-						);
+						toast.showToast("success", t("createdSuccess"));
 						navigate(ROUTES.signIn);
 					})
 					.catch((err) => {
 						console.log("err: ", err);
-						toast.showToast("error", "Erro ao criar usuário");
+						toast.showToast(
+							"error",
+							tErrors("errorOnUserCreation")
+						);
 					});
 			})
 			.catch((err) => {
@@ -111,25 +116,27 @@ const SignUp = () => {
 		<Box sx={{ display: "flex" }}>
 			<BoxLeftColumn>
 				<BoxLogoImage>
-					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
+					<img
+						id="logo-white-full"
+						src={logoWhiteFull}
+						alt={t("imgs.logo")}
+					/>
 				</BoxLogoImage>
 
 				<BoxBackgroundImage>
 					<img
 						id="sign-up-background"
 						src={signUpBackground}
-						alt="Background"
+						alt={t("imgs.background")}
 					/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 
 			<BoxRightColumn>
 				<BoxTitle>
-					<p className="big-title">Crie sua conta</p>
+					<p className="big-title">{t("createYourAccount")}</p>
 
-					<p className="little-text">
-						Forneça alguns dados para criar sua conta no CIJ
-					</p>
+					<p className="little-text">{t("details")}</p>
 				</BoxTitle>
 
 				<BoxInputs>
@@ -138,7 +145,7 @@ const SignUp = () => {
 						value={user.name}
 						onChange={handledChange}
 						variant="outlined"
-						placeholder="Nome completo"
+						placeholder={t("phs.fullName")}
 						size="small"
 						required
 						InputProps={{
@@ -157,7 +164,7 @@ const SignUp = () => {
 						value={user.cpf}
 						onChange={handledChange}
 						variant="outlined"
-						placeholder="CPF"
+						placeholder={t("phs.cpf")}
 						size="small"
 						required
 						InputProps={{
@@ -176,7 +183,9 @@ const SignUp = () => {
 							width: "20vw",
 						}}
 					>
-						<FormLabel sx={{ color: "#999" }}>Gênero</FormLabel>
+						<FormLabel sx={{ color: "#999" }}>
+							{t("phs.gender")}
+						</FormLabel>
 
 						<RadioGroup
 							row
@@ -187,19 +196,19 @@ const SignUp = () => {
 							<FormControlLabel
 								value={GENDER.Female}
 								control={<Radio />}
-								label="Feminino"
+								label={t("phs.female")}
 							/>
 
 							<FormControlLabel
 								value={GENDER.Male}
 								control={<Radio />}
-								label="Masculino"
+								label={t("phs.male")}
 							/>
 
 							<FormControlLabel
 								value={GENDER.Other}
 								control={<Radio />}
-								label="Outros"
+								label={t("phs.others")}
 							/>
 						</RadioGroup>
 					</FormControl>
@@ -209,7 +218,7 @@ const SignUp = () => {
 						value={user.phone}
 						onChange={handledChange}
 						variant="outlined"
-						placeholder="Celular"
+						placeholder={t("phs.cellphone")}
 						size="small"
 						required
 						InputProps={{
@@ -228,7 +237,7 @@ const SignUp = () => {
 						value={user.email}
 						onChange={handledChange}
 						variant="outlined"
-						placeholder="Email"
+						placeholder={t("phs.email")}
 						size="small"
 						required
 						InputProps={{
@@ -247,7 +256,7 @@ const SignUp = () => {
 						value={user.password}
 						onChange={handledChange}
 						variant="outlined"
-						placeholder="Senha"
+						placeholder={t("phs.password")}
 						type={passwordType}
 						size="small"
 						required
@@ -283,7 +292,7 @@ const SignUp = () => {
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						variant="outlined"
-						placeholder="Confirmar senha"
+						placeholder={t("phs.confirmPassword")}
 						type={confirmPasswordType}
 						size="small"
 						required
@@ -317,13 +326,13 @@ const SignUp = () => {
 
 				<BoxButtons>
 					<PrimaryButton variant="contained" onClick={signUp}>
-						Cadastrar
+						{t("signUp")}
 					</PrimaryButton>
 
 					<p className="little-text">
-						Já possui uma conta?{" "}
+						{t("alreadyHasAccount") + " "}
 						<Link to={ROUTES.signIn} className="link">
-							Login
+							{t("login")}
 						</Link>
 					</p>
 				</BoxButtons>
