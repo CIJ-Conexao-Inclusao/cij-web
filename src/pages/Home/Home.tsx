@@ -2,17 +2,23 @@ import React, { useEffect, useState } from "react";
 
 import {
 	Box,
+	Button,
 	Card,
 	CardContent,
 	CircularProgress,
-	Typography,
 	Container,
+	Slider,
+	Typography,
+	useTheme,
 } from "@mui/material";
 
+import { THEME_OPTIONS } from "../../constants";
+import { useFontSize } from "../../hooks/useFontSize";
+import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import cadeirante from "./assets/cadeirante.png";
+import filmagens from "./assets/filmagens.png";
 import prefeitura from "./assets/prefeitura.png";
 import trabalho from "./assets/trabalho.png";
-import filmagens from "./assets/filmagens.png";
 
 // import NewsService from "../../services/NewsService";
 
@@ -44,6 +50,10 @@ const Company = [
 
 const Home = () => {
 	// const [news, setNews] = useState<[]>([]);
+	const theme = useTheme();
+	const { incrementFontSize, fontSizeConfig, fontSizeIncrementer } =
+		useFontSize();
+	const { switchTheme } = useSwitchTheme();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -60,6 +70,23 @@ const Home = () => {
 		setIsLoading(false);
 	}, []);
 
+	useEffect(() => {
+		console.log("o q está mduando tanto 1");
+	}, [fontSizeConfig]);
+
+	const toggleTheme = () => {
+		switchTheme(
+			theme.palette.mode === THEME_OPTIONS.LIGHT
+				? THEME_OPTIONS.DARK
+				: THEME_OPTIONS.LIGHT
+		);
+	};
+
+	const handleFontSizeChange = (event: any) => {
+		console.log(event.target.value);
+		incrementFontSize(event.target.value);
+	};
+
 	if (isLoading) {
 		return (
 			<div className="w-full mt-4 flex gap-2 items-center justify-center">
@@ -71,6 +98,22 @@ const Home = () => {
 
 	return (
 		<Box>
+			<Button variant="contained" color="primary" onClick={toggleTheme}>
+				lksdajflaskd;j
+				<Typography sx={{ color: theme.palette.color09.main }}>
+					teste dois
+				</Typography>
+			</Button>
+
+			<Typography>{fontSizeConfig.verySmall}</Typography>
+			<Typography>{fontSizeConfig.default}</Typography>
+			<Typography>{fontSizeConfig.title}</Typography>
+			<Slider
+				min={-10}
+				max={30}
+				value={fontSizeIncrementer}
+				onChange={handleFontSizeChange}
+			/>
 			<Container>
 				<Card sx={{ marginTop: 4 }}>
 					<CardContent sx={{ display: "flex", alignItems: "center" }}>

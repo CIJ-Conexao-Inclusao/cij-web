@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, IconButton, Toolbar } from "@mui/material";
-import { AppBar, BoxLeft, BoxRight, BoxUser } from "./Navbar.styled";
 import { useAppSelector } from "../../../redux/hooks";
+import {
+	AppBar,
+	BoxLeft,
+	BoxRight,
+	BoxUser,
+	PersonIconStyled,
+} from "./Navbar.styled";
 
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import PersonIcon from "@mui/icons-material/Person";
 import logoWhiteIcon from "../../../assets/logo-white-icon.png";
 
 import ModalUser from "./ModalUser";
@@ -111,7 +116,7 @@ const Navbar: React.FC<{ open: boolean; handleSidebarChange: () => void }> = ({
 									bgcolor: "primary.light",
 								}}
 							>
-								{user ? getNameDisplay() : <PersonIcon />}
+								{user ? getNameDisplay() : <PersonIconStyled />}
 							</Avatar>
 
 							<IconButton
