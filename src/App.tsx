@@ -18,6 +18,7 @@ import { ROUTES } from "./constants";
 import { FontSizeProvider } from "./hooks/useFontSize";
 import { SwitchThemeProvider } from "./hooks/useSwitchTheme";
 import { ToastProvider } from "./hooks/useToast";
+import Company from "./pages/Companies";
 import { useAppDispatch } from "./redux/hooks";
 import { defineUser } from "./redux/user/userSlice";
 import { CookieService, UserService } from "./services";
@@ -71,6 +72,10 @@ const App = () => {
 								<Route
 									path={ROUTES.profile}
 									element={<Profile />}
+								/>
+								<Route
+									path={ROUTES.company}
+									element={<Company />}
 								/>
 							</Route>
 							<Route path={ROUTES.signIn} element={<SignIn />} />

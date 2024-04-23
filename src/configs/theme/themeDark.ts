@@ -2,7 +2,7 @@ import { IPaletteOptions } from "./theme.interface";
 
 export const themeDark: IPaletteOptions = {
 	primary: {
-		main: "#000000",
+		main: "#004AAD",
 		dark: "#000000",
 		contrast: "#FFFFFF",
 	},

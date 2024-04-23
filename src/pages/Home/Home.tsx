@@ -7,12 +7,8 @@ import {
 	CircularProgress,
 	Container,
 	Typography,
-	useTheme,
 } from "@mui/material";
 
-import { THEME_OPTIONS } from "../../constants";
-import { useFontSize } from "../../hooks/useFontSize";
-import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import cadeirante from "./assets/cadeirante.png";
 import filmagens from "./assets/filmagens.png";
 import prefeitura from "./assets/prefeitura.png";
@@ -48,10 +44,10 @@ const Company = [
 
 const Home = () => {
 	// const [news, setNews] = useState<[]>([]);
-	const theme = useTheme();
-	const { incrementFontSize, fontSizeConfig, fontSizeIncrementer } =
-		useFontSize();
-	const { switchTheme } = useSwitchTheme();
+	// const theme = useTheme();
+	// const { incrementFontSize, fontSizeConfig, fontSizeIncrementer } =
+	// 	useFontSize();
+	// const { switchTheme } = useSwitchTheme();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -68,18 +64,18 @@ const Home = () => {
 		setIsLoading(false);
 	}, []);
 
-	const toggleTheme = () => {
-		switchTheme(
-			theme.palette.mode === THEME_OPTIONS.LIGHT
-				? THEME_OPTIONS.DARK
-				: THEME_OPTIONS.LIGHT
-		);
-	};
+	// const toggleTheme = () => {
+	// 	switchTheme(
+	// 		theme.palette.mode === THEME_OPTIONS.LIGHT
+	// 			? THEME_OPTIONS.DARK
+	// 			: THEME_OPTIONS.LIGHT
+	// 	);
+	// };
 
-	const handleFontSizeChange = (event: any) => {
-		console.log(event.target.value);
-		incrementFontSize(event.target.value);
-	};
+	// const handleFontSizeChange = (event: any) => {
+	// 	console.log(event.target.value);
+	// 	incrementFontSize(event.target.value);
+	// };
 
 	if (isLoading) {
 		return (

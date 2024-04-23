@@ -16,6 +16,10 @@ class CompanyService {
 	async create(company: Omit<TCompany, "id">) {
 		return await axios.post(`${basePath}/create`, company);
 	}
+
+	async get() {
+		return await axios.get(`${basePath}`);
+	}
 }
 
 export default new CompanyService();

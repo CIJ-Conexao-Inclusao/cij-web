@@ -9,4 +9,5 @@ export const ROUTES = {
 	supporters: "/apoiadores",
 	profile: "/perfil",
 	help: "/ajuda",
+	company: "/empresa",
 };
