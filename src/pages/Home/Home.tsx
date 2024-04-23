@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import {
 	Box,
-	Button,
 	Card,
 	CardContent,
 	CircularProgress,
 	Container,
-	Slider,
 	Typography,
 	useTheme,
 } from "@mui/material";
@@ -70,10 +68,6 @@ const Home = () => {
 		setIsLoading(false);
 	}, []);
 
-	useEffect(() => {
-		console.log("o q está mduando tanto 1");
-	}, [fontSizeConfig]);
-
 	const toggleTheme = () => {
 		switchTheme(
 			theme.palette.mode === THEME_OPTIONS.LIGHT
@@ -98,14 +92,15 @@ const Home = () => {
 
 	return (
 		<Box>
-			<Button variant="contained" color="primary" onClick={toggleTheme}>
+			{/* TESTANDO O TEMA */}
+			{/* <Button variant="contained" color="primary" onClick={toggleTheme}>
 				lksdajflaskd;j
 				<Typography sx={{ color: theme.palette.color09.main }}>
 					teste dois
 				</Typography>
-			</Button>
+			</Button> */}
 
-			<Typography>{fontSizeConfig.verySmall}</Typography>
+			{/* <Typography>{fontSizeConfig.verySmall}</Typography>
 			<Typography>{fontSizeConfig.default}</Typography>
 			<Typography>{fontSizeConfig.title}</Typography>
 			<Slider
@@ -113,7 +108,7 @@ const Home = () => {
 				max={30}
 				value={fontSizeIncrementer}
 				onChange={handleFontSizeChange}
-			/>
+			/> */}
 			<Container>
 				<Card sx={{ marginTop: 4 }}>
 					<CardContent sx={{ display: "flex", alignItems: "center" }}>

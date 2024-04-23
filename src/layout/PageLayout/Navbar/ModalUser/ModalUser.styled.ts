@@ -8,3 +8,12 @@ export const MenuItemStyled = styled(MenuItem)({
 	gap: "0.5rem",
 	padding: "0.5rem 0.7rem ",
 });
+
+export const SwitchContainer = styled.div({
+	display: "flex",
+	width: "100%",
+	alignItems: "center",
+	justifyContent: "space-between",
+	paddingLeft: "0.6rem",
+	paddingRight: "0.6rem",
+});
