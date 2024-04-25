@@ -37,7 +37,7 @@ const ModalUser: FC<TModalUserProps> = ({ open, handleClose, anchorEl }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
-	const { switchTheme, themeMode } = useSwitchTheme();
+	const { switchTheme } = useSwitchTheme();
 
 	const [modalLangs, setModalLangs] = useState<TModalLang>({
 		open: false,
