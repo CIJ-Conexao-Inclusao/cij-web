@@ -34,11 +34,12 @@ const Sidebar: React.FC<{ open: boolean }> = ({ open }) => {
 	};
 
 	const sidebarItems: TSideBarItem[] = useMemo(() => {
-		if (role)
-			return CONSTS.sidebarItems.filter((item) =>
-				item.roles.includes(role)
-			);
-		return [];
+		let userRole = ROLES.PERSON;
+		if (role != null) userRole = role;
+
+		return CONSTS.sidebarItems.filter((item) =>
+			item.roles.includes(userRole)
+		);
 	}, [role]);
 
 	return (
