@@ -1,12 +1,3 @@
-type TCompany = {
-	id: number;
-	name: string;
-	cnpj: string;
-	phone?: string;
-	email: string;
-	password: string;
-};
-
 export type TCompanyAdressForm = {
 	city: string;
 	complement: string;
@@ -37,4 +28,24 @@ export type TCompanyData = {
 	phone: string;
 };
 
-export default TCompany;
+export type TCompany = {
+	id: number;
+	name: string;
+	cnpj: string;
+	phone: string;
+	user: {
+		id: number;
+		email: string;
+	};
+	address: {
+		id: number;
+		street: string;
+		number: string;
+		complement: string;
+		neighborhood: string;
+		city: string;
+		state: string;
+		country: string;
+		zip_code: string;
+	};
+};

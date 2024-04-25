@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+	Navigate,
+	Outlet,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from "react-router-dom";
 import "./App.scss";
 
 import { PageLayout } from "./layout";
@@ -15,6 +21,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Supporters from "./pages/Supporters/Supporters";
 
 import { ROUTES } from "./constants";
+import { ROLES } from "./constants/ROLES";
 import { FontSizeProvider } from "./hooks/useFontSize";
 import { SwitchThemeProvider } from "./hooks/useSwitchTheme";
 import { ToastProvider } from "./hooks/useToast";
@@ -75,7 +82,13 @@ const App = () => {
 								/>
 								<Route
 									path={ROUTES.company}
-									element={<Company />}
+									element={
+										<ProtectedRoute
+											allowedUserRoles={[ROLES.ADMIN]}
+											redirectPath="/"
+											children={<Company />}
+										/>
+									}
 								/>
 							</Route>
 							<Route path={ROUTES.signIn} element={<SignIn />} />
@@ -89,30 +102,24 @@ const App = () => {
 	);
 };
 
-// type ProtectedRouteProps = {
-//   tiposUsuarioAllowed: string;
-//   children: any;
-//   redirectPath: string;
-// };
+type ProtectedRouteProps = {
+	allowedUserRoles: ROLES[];
+	children: any;
+	redirectPath: string;
+};
 
-// const ProtectedRoute = ({
-//   tiposUsuarioAllowed = "",
-//   children,
-//   redirectPath = "/signIn",
-// }: ProtectedRouteProps) => {
-//   const cookie = CookieService.getCookie("jwt");
-//   const userJpa = CookieService.getCookie("user");
+const ProtectedRoute = ({
+	allowedUserRoles = [],
+	children,
+	redirectPath = "/signIn",
+}: ProtectedRouteProps) => {
+	const role = CookieService.getRole();
 
-//   if (
-//     cookie != null &&
-//     cookie.exp > Math.floor(Date.now() / 1000) &&
-//     (tiposUsuarioAllowed.includes(userJpa.authorities[0].authority) ||
-//       tiposUsuarioAllowed == "")
-//   ) {
-//     return children ? children : <Outlet />;
-//   } else {
-//     return <Navigate to={redirectPath} replace />;
-//   }
-// };
+	if (role && allowedUserRoles.includes(role)) {
+		return children ? children : <Outlet />;
+	} else {
+		return <Navigate to={redirectPath} replace />;
+	}
+};
 
 export default App;
