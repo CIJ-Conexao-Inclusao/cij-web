@@ -6,6 +6,7 @@ import {
 	BrowserRouter as Router,
 	Routes,
 } from "react-router-dom";
+
 import "./App.scss";
 
 import { PageLayout } from "./layout";
