@@ -1,4 +1,3 @@
-
 import { Box, FormControl, FormLabel } from "@mui/material";
 import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, BoxButtons } from "./SignUp.styled";
 import { Inputs, PrimaryButton } from "../../App.styled";
@@ -19,6 +18,7 @@ import { TUserForm } from "../../types/index.ts";
 import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
+import { useTranslation } from "react-i18next";
 
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -98,7 +98,11 @@ const SignUp = () => {
 		<Box sx={{ display: "flex" }}>
 			<BoxLeftColumn>
 				<BoxLogoImage>
-					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />
+					<img
+						id="logo-white-full"
+						src={logoWhiteFull}
+						alt={t("imgs.logo")}
+					/>
 				</BoxLogoImage>
 				<BoxBackgroundImage>
 					<img id="sign-up-background" src={signUpBackground} alt="Background"/>

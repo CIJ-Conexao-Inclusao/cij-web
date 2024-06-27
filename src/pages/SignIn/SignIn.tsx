@@ -3,45 +3,45 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Box } from "@mui/material";
+import { Inputs, PrimaryButton } from "../../App.styled";
 import {
-	BoxRightColumn,
-	BoxLeftColumn,
-	BoxLogoImage,
 	BoxBackgroundImage,
-	BoxTitle,
-	BoxInputs,
 	BoxButtons,
 	BoxCompanies,
+	BoxInputs,
+	BoxLeftColumn,
+	BoxLogoImage,
+	BoxRightColumn,
+	BoxTitle,
 } from "./SignIn.styled";
-import { Inputs, PrimaryButton } from "../../App.styled";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import "./SignIn.scss";
 
 import logoWhiteFull from "../../assets/logo-white-full.png";
-import signInBackground from "./assets/sign-in-background.png";
 import duasRodas from "./assets/companies/duas-rodas.png";
 import grupoMalwee from "./assets/companies/grupo-malwee.png";
 import marisol from "./assets/companies/marisol.png";
 import prefeitura from "./assets/companies/prefeitura-jaragua-do-sul.png";
 import urbano from "./assets/companies/urbano.png";
 import weg from "./assets/companies/weg.png";
+import signInBackground from "./assets/sign-in-background.png";
 
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
-import { TLogin } from "../../types";
-import { LoginService, UserService } from "../../services";
 import Cookies from "js-cookie";
-import { defineUser } from "../../redux/user/userSlice";
-import { useToast } from "../../hooks/useToast";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
+import { useToast } from "../../hooks/useToast";
+import { useAppDispatch } from "../../redux/hooks";
+import { defineUser } from "../../redux/user/userSlice";
+import { LoginService, UserService } from "../../services";
+import { TLogin } from "../../types";
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -53,8 +53,8 @@ const SignIn = () => {
 	});
 
 	const [user, setUser] = useState<TLogin>({
-		email: "cauakathdev@gmail.com",
-		password: "1234",
+		email: "",
+		password: "",
 	});
 
 	const [passwordType, setPasswordType] = useState("password");

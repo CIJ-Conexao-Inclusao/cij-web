@@ -17,7 +17,48 @@
         },
         "loginSuccess": "Login efetuado com sucesso"
     },
+    "signUp": {
+        "createdSuccess": "Usuário criado com sucesso",
+        "createYourAccount": "Crie sua conta",
+        "details": "Forneça alguns dados para criar sua conta no CIJ",
+        "signUp": "Cadastrar",
+        "alreadyHasAccount": "Já possui uma conta?",
+        "login": "Login",
+        "phs": {
+            "fullName": "Nome completo",
+            "cpf": "CPF",
+            "gender": "Gênero",
+            "female": "Feminino",
+            "male": "Masculino",
+            "others": "Outros",
+            "cellphone": "Celular",
+            "email": "Email",
+            "password": "Senha",
+            "confirmPassword": "Confirmar senha"
+        },
+        "imgs": {
+            "logo": "Logo",
+            "background": "Background"
+        }
+    },
     "errors": {
-        "invalidCredentials": "Email ou senha incorretos"
+        "invalidCredentials": "Email ou senha incorretos",
+        "passwordNotMatch": "As senhas não coincidem",
+        "errorOnUserCreation": "Erro ao criar usuário"
+    },
+    "validations": {
+        "requiredCPF": "O CPF é obrigatório",
+        "minLengthCPF": "O CPF deve ter 11 dígitos",
+        "requiredName": "O nome é obrigatório",
+        "minLengthName": "Nome muito curto",
+        "validEmail": "Email precisa ser válido",
+        "requiredEmail": "O Email é obrigatório",
+        "requiredPassword": "A senha é obrigatória",
+        "requiredGender": "O gênero é obrigatório",
+        "minLengthPhone": "O telefone deve ter 13 dígitos",
+        "requiredCNPJ": "O CNPJ é obrigatório",
+        "minLengthCNPJ": "O CNPJ deve ter 11 dígitos",
+        "requiredDomain": "O domínio é obrigatório",
+        "minLengthDomain": "Domínio muito curto"
     }
 }

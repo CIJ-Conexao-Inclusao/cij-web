@@ -1,8 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Drawer, ListItemStyled } from "./Sidebar.styled";
-import { SpaceHeader } from "../PageLayout.styled";
 import {
 	Box,
 	List,
@@ -11,23 +9,38 @@ import {
 	ListItemText,
 	Typography,
 } from "@mui/material";
+import { SpaceHeader } from "../PageLayout.styled";
+import { Drawer, ListItemStyled } from "./Sidebar.styled";
 
 import { CONSTS, ROUTES } from "../../../constants";
 
 import SupportOutlinedIcon from "@mui/icons-material/SupportOutlined";
+import { ROLES } from "../../../constants/ROLES";
+import { CookieService } from "../../../services";
 
 type TSideBarItem = {
 	name: string;
 	path: string;
 	icon: () => ReactNode;
+	roles: ROLES[];
 };
 
 const Sidebar: React.FC<{ open: boolean }> = ({ open }) => {
 	const navigate = useNavigate();
+	const role = CookieService.getRole();
 
 	const handleNavigate = (path: string) => {
 		navigate(path);
 	};
+
+	const sidebarItems: TSideBarItem[] = useMemo(() => {
+		let userRole = ROLES.PERSON;
+		if (role != null) userRole = role;
+
+		return CONSTS.sidebarItems.filter((item) =>
+			item.roles.includes(userRole)
+		);
+	}, [role]);
 
 	return (
 		<Drawer
@@ -40,47 +53,40 @@ const Sidebar: React.FC<{ open: boolean }> = ({ open }) => {
 			<Box>
 				<SpaceHeader />
 				<List sx={{ paddingLeft: "0" }} id="teste">
-					{CONSTS.sidebarItems.map(
-						(item: TSideBarItem, index: number) => {
-							return (
-								<ListItemStyled
-									sx={{ height: "4rem" }}
-									key={index}
+					{sidebarItems.map((item: TSideBarItem, index: number) => {
+						return (
+							<ListItemStyled sx={{ height: "4rem" }} key={index}>
+								<ListItemButton
+									sx={{
+										padding: "12px",
+										height: "100%",
+									}}
+									onClick={() => handleNavigate(item.path)}
 								>
-									<ListItemButton
+									<ListItemIcon
 										sx={{
-											padding: "12px",
-											height: "100%",
+											minWidth: "0",
+											padding: "0 12px",
 										}}
-										onClick={() =>
-											handleNavigate(item.path)
-										}
 									>
-										<ListItemIcon
+										{item.icon()}
+									</ListItemIcon>
+									{open && (
+										<ListItemText
 											sx={{
-												minWidth: "0",
-												padding: "0 12px",
+												whiteSpace: "pre-line",
 											}}
+											disableTypography
 										>
-											{item.icon()}
-										</ListItemIcon>
-										{open && (
-											<ListItemText
-												sx={{
-													whiteSpace: "pre-line",
-												}}
-												disableTypography
-											>
-												<Typography fontSize="16px">
-													{item.name}
-												</Typography>
-											</ListItemText>
-										)}
-									</ListItemButton>
-								</ListItemStyled>
-							);
-						}
-					)}
+											<Typography fontSize="16px">
+												{item.name}
+											</Typography>
+										</ListItemText>
+									)}
+								</ListItemButton>
+							</ListItemStyled>
+						);
+					})}
 				</List>
 			</Box>
 			<Box sx={{ marginBottom: "1rem" }}>
