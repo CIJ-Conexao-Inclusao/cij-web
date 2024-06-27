@@ -1,11 +1,4 @@
-import {
-	Box,
-	Modal,
-	Step,
-	StepLabel,
-	Stepper,
-	Typography,
-} from "@mui/material";
+import { Box, Modal, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import "ag-grid-enterprise/styles/ag-grid.css";
 import "ag-grid-enterprise/styles/ag-theme-quartz.css";
 
@@ -16,22 +9,8 @@ import { useFontSize } from "../../hooks/useFontSize";
 import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import { useToast } from "../../hooks/useToast";
 import CompanyService from "../../services/CompanyService";
-import {
-	TCompany,
-	TCompanyAdressForm,
-	TCompanyData,
-	TUserSummary,
-} from "../../types/TCompany";
-import {
-	ButtonNavigation,
-	ButtonStyled,
-	Content,
-	FormContent,
-	FormFooter,
-	FormHeader,
-	HeaderWrapper,
-	InputStyled,
-} from "./Company.styled";
+import { TCompany, TCompanyAdressForm, TCompanyData, TUserSummary } from "../../types/TCompany";
+import { ButtonNavigation, ButtonStyled, Content, FormContent, FormFooter, FormHeader, HeaderWrapper, InputStyled } from "./Company.styled";
 
 const Company = () => {
 	const toast = useToast();

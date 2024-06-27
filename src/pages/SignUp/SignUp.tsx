@@ -15,12 +15,11 @@ import { userSchema } from "../../validations/index.ts";
 import { GENDER, ROUTES } from "../../constants/index.ts";
 import { TUserForm } from "../../types/index.ts";
 
-import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
 import { useTranslation } from "react-i18next";
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Stepper, Step, StepLabel, Button, TextField, RadioGroup, FormControlLabel, Radio, MenuItem } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -29,43 +28,142 @@ import axios from 'axios';
 
 import InputMask from 'react-input-mask';
 
+import { ColDef } from "ag-grid-enterprise";
+
+import { t } from "i18next";
+import { useFontSize } from "../../hooks/useFontSize.tsx";
+import { useSwitchTheme } from "../../hooks/useSwitchTheme.tsx";
+import UserService from "../../services/UserService.ts";
+import TUser from "../../types/TUser.ts";
+
 
 const steps = ['Dados Pessoais', 'Deficiência', 'Endereço'];
 
 const SignUp = () => {
+	const toast = useToast();
+	const { fontSizeConfig } = useFontSize();
+	const { themeMode } = useSwitchTheme();
+
+	const [companies, setCompanies] = useState<TUser[]>([]);
+	const [showFormModal, setShowFormModal] = useState<boolean>(false);
+	
 	const [activeStep, setActiveStep] = useState(0);
-    const { handleSubmit, control, watch, setValue } = useForm();
-    const [cepData, setCepData] = useState(null);
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+	const [rowData, setRowData] = useState<TUser[]>([]);
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+	const agGridTheme = useMemo(() => {
+		return themeMode === "light"
+			? "ag-theme-quartz"
+			: "ag-theme-quartz-dark";
+	}, [themeMode]);
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-    };
+	const steps = ["Dados Pessoais", "Deficiência", "Ender"];
 
-    const handleCepBlur = async () => {
-        const cep = watch('cep');
-        if (cep && cep.replace(/\D/g, '').length === 8) {
-            try {
-                const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-                if (response.data) {
-                    setValue('pais', 'Brasil');
-                    setValue('estado', response.data.uf);
-                    setValue('cidade', response.data.localidade);
-                    setValue('bairro', response.data.bairro);
-                    setValue('rua', response.data.logradouro);
-                }
-            } catch (error) {
-                console.error('Erro ao buscar o CEP:', error);
-            }
-        }
-    };
+	const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUserForm({ ...UserForm, [e.target.name]: e.target.value });
+	};
+
+	const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUserForm({ ...userForm, [e.target.name]: e.target.value });
+	};
+
+	const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAdressForm({ ...addressForm, [e.target.name]: e.target.value });
+	};
+
+	const [gridApi, setGridApi] = useState<any>(null);
+
+	const handleOnGridReady = (params: any) => {
+		setGridApi(params.api);
+		params.api.sizeColumnsToFit();
+	};
+
+	useEffect(() => {
+		if (gridApi && companies) setRowData(companies);
+	}, [companies, gridApi]);
+
+	useEffect(() => {
+		if (gridApi && rowData) gridApi.sizeColumnsToFit();
+	}, [rowData]);
+
+	const style = {
+		position: "absolute" as "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%, -50%)",
+		width: 500,
+		bgcolor: "background.paper",
+		boxShadow: 24,
+		p: 2,
+		borderRadius: 2,
+	};
+
+	const allFieldsFilled = useMemo(() => {
+		switch (activeStep) {
+			case 0:
+				return (
+					!UserForm.cnpj || !UserForm.name || !UserForm.phone
+				);
+			case 1:
+				return (
+					!addressForm.city ||
+					!addressForm.country ||
+					!addressForm.neighborhood ||
+					!addressForm.number ||
+					!addressForm.state ||
+					!addressForm.street ||
+					!addressForm.zip_code
+				);
+			case 2:
+				return !userForm.email || !userForm.password;
+			default:
+				return true;
+		}
+	}, [addressForm, userForm, UserForm, activeStep]);
+
+	const handleCancelForm = () => {
+		setShowFormModal(false);
+		reset();
+	};
+
+	const reset = () => {
+		setActiveStep(0);
+		setUserForm({
+			cnpj: "",
+			name: "",
+			phone: "",
+		});
+		setAdressForm({
+			city: "",
+			complement: "",
+			country: "",
+			neighborhood: "",
+			number: "",
+			state: "",
+			street: "",
+			zip_code: "",
+		});
+		setUserForm({
+			email: "",
+			password: "",
+		});
+	};
+
+	const createUser = async () => {
+		try {
+			await UserService.create({
+				...UserForm,
+				address: addressForm,
+				user: userForm,
+			});
+			toast.showToast("success", "Empresa criada com sucesso");
+			setShowFormModal(false);
+			reset();
+			getCompanies();
+		} catch (error: any) {
+			toast.showToast("error", "Falha ao criar empresa");
+		}
+	};
 
 	// const signUp = () => {
 	// 	userSchema
@@ -109,194 +207,96 @@ const SignUp = () => {
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 			<BoxRightColumn>
-			<form onSubmit={handleSubmit(onSubmit)}>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            {activeStep === 0 && (
-                <>
-                    <Controller
-                        name="nome"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Nome Completo" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="cpf"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <InputMask mask="999.999.999-99" {...field} maskChar={null}>
-                                {(inputProps: any) => <TextField {...inputProps} label="CPF" fullWidth margin="normal" />}
-                            </InputMask>
-                        )}
-                    />
-                    <Controller
-                        name="dataNascimento"
-                        control={control}
-                        defaultValue={null}
-                        render={({ field }) => (
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    {...field}
-                                    label="Data de Nascimento"
-                                    renderInput={(props: any) => <TextField {...props} fullWidth margin="normal" />}
-                                />
-                            </LocalizationProvider>
-                        )}
-                    />
-                    <Controller
-                        name="genero"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <RadioGroup {...field} row>
-                                <FormControlLabel value="masculino" control={<Radio />} label="Masculino" />
-                                <FormControlLabel value="feminino" control={<Radio />} label="Feminino" />
-                                <FormControlLabel value="outro" control={<Radio />} label="Outro" />
-                            </RadioGroup>
-                        )}
-                    />
-                    <Controller
-                        name="celular"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <InputMask mask="(99) 99999-9999" {...field}>
-                                {(inputProps: any) => <TextField {...inputProps} label="Celular" fullWidth margin="normal" />}
-                            </InputMask>
-                        )}
-                    />
-                    <Controller
-                        name="email"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="E-mail" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="senha"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} type="password" label="Senha" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="confirmarSenha"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} type="password" label="Confirmar Senha" fullWidth margin="normal" />}
-                    />
-                </>
-            )}
-            {activeStep === 1 && (
-                <>
-                    <Controller
-                        name="tipoDeficiencia"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <TextField {...field} select label="Tipo de Deficiência" fullWidth margin="normal">
-                                <MenuItem value="auditiva">Auditiva</MenuItem>
-                                <MenuItem value="fisica">Física</MenuItem>
-                                <MenuItem value="intelectual">Intelectual</MenuItem>
-                                <MenuItem value="psicossocial">Psicossocial</MenuItem>
-                                <MenuItem value="visual">Visual</MenuItem>
-                            </TextField>
-                        )}
-                    />
-                    <Controller
-                        name="deficiencia"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Deficiência" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="grauSubdivisao"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Grau/Subdivisão" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="deficienciaAdquirida"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <RadioGroup {...field} row>
-                                <FormControlLabel value="sim" control={<Radio />} label="Sim" />
-                                <FormControlLabel value="nao" control={<Radio />} label="Não" />
-                            </RadioGroup>
-                        )}
-                    />
-                </>
-            )}
-            {activeStep === 2 && (
-                <>
-                    <Controller
-                        name="cep"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <InputMask mask="99999-999" {...field}>
-                                {(inputProps: any) => <TextField {...inputProps} label="CEP" fullWidth margin="normal" onBlur={handleCepBlur} />}
-                            </InputMask>
-                        )}
-                    />
-                    <Controller
-                        name="pais"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="País" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="estado"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Estado" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="cidade"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Cidade" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="bairro"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Bairro" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="rua"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Rua" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="numero"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Número" fullWidth margin="normal" />}
-                    />
-                    <Controller
-                        name="complemento"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => <TextField {...field} label="Complemento" fullWidth margin="normal" />}
-                    />
-                </>
-            )}
-            <div>
-                <Button disabled={activeStep === 0} onClick={handleBack}>
-                    Voltar
-                </Button>
-                <Button variant="contained" color="primary" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
-                </Button>
-            </div>
-        </form>
+				<Stepper sx={{ width: "100%" }} activeStep={activeStep}>
+					{steps.map((label) => {
+						return (
+							<Step key={label}>
+								<StepLabel>{label}</StepLabel>
+							</Step>
+						);
+					})}
+				</Stepper>
+				<Box>
+
+				{activeStep === 0 ? (
+
+					<>
+						<InputStyled variant="outlined" placeholder={"CNPJ"} name="cnpj" value={companyForm.cnpj} onChange={handleCompanyChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Nome"} name="name" value={companyForm.name} onChange={handleCompanyChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Número"} name="phone" value={companyForm.phone} onChange={handleCompanyChange} size="small" required />
+					</>
+
+				) : activeStep === 1 ? (
+
+					<>
+						<InputStyled variant="outlined" placeholder={"País"} name="country" value={addressForm.country} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"CEP"} name="zip_code" value={addressForm.zip_code} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Estado"} name="state" value={addressForm.state} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Cidade"} name="city" value={addressForm.city} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Bairro"} name="neighborhood" value={addressForm.neighborhood} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Rua"} name="street" value={addressForm.street} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Número"} name="number" value={addressForm.number} onChange={handleAddressChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Complement"} name="complement" value={addressForm.complement} onChange={handleAddressChange} size="small" required />
+					</>
+
+				) : activeStep === 2 ? (
+
+					<>
+						<InputStyled variant="outlined" placeholder={"Email"} name="email" value={userForm.email} onChange={handleUserChange} size="small" required />
+						<InputStyled variant="outlined" placeholder={"Senha"} name="password" type="password" value={userForm.password} onChange={handleUserChange} size="small" required />
+					</>
+
+				) : (
+								
+					<></>
+
+				)}
+
+				</Box>
+
+				<Box>
+					<ButtonStyled disableElevation variant="outlined" onClick={handleCancelForm}>
+						<Typography fontSize={fontSizeConfig.medium}>
+							Cancelar
+						</Typography>
+					</ButtonStyled>
+
+					<ButtonNavigation>
+						<ButtonStyled disableElevation variant="outlined" disabled={activeStep === 0}
+							onClick={() =>
+								setActiveStep(activeStep - 1)
+							}
+						>
+							<Typography fontSize={fontSizeConfig.medium}>
+								Voltar
+							</Typography>
+						</ButtonStyled>
+						
+						{activeStep !== steps.length - 1 ? (
+
+							<ButtonStyled disableElevation disabled={allFieldsFilled} variant="contained" sx={{ width: "50%" }}
+								onClick={() =>
+									setActiveStep(activeStep + 1)
+								}
+										
+							>
+								<Typography fontSize={fontSizeConfig.medium}>
+									Próximo
+								</Typography>
+							</ButtonStyled>
+
+						) : (
+
+							<ButtonStyled disableElevation disabled={allFieldsFilled} variant="contained" onClick={createCompany} sx={{ width: "50%" }}>
+								<Typography fontSize={fontSizeConfig.medium}>
+									Criar
+								</Typography>
+							</ButtonStyled>
+
+						)}
+
+					</ButtonNavigation>
+				</Box>
 			</BoxRightColumn>
 		</Box>
 	);
