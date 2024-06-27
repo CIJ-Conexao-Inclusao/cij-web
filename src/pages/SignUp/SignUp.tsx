@@ -17,7 +17,6 @@ import { TUserForm, TUserDisability, TUserAddress } from "../../types/TUserForm.
 import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
-import { useTranslation } from "react-i18next";
 
 import { useFontSize } from "../../hooks/useFontSize";
 
@@ -28,10 +27,6 @@ const SignUp = () => {
 	const toast = useToast();
 	const { fontSizeConfig } = useFontSize();
 	const navigate = useNavigate();
-	const { t } = useTranslation("translation", { keyPrefix: "signUp" });
-	const { t: tErrors } = useTranslation("translation", {
-		keyPrefix: "errors",
-	});
 
 	const [user, setUser] = useState<TUserForm>({
 		name: "",
@@ -156,7 +151,7 @@ const SignUp = () => {
 						<Inputs variant="outlined" placeholder={"Celular"} name="phone" value={user.phone} onChange={handleUserChange} size="small" required />
 						<Inputs variant="outlined" placeholder={"E-mail"} name="email" value={user.email} onChange={handleUserChange} size="small" required />
 						<Inputs variant="outlined" placeholder={"Senha"} name="password" value={user.password} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Confirmar senha"} name="confirmPassword" value={user.name} onChange={handleUserChange} size="small" required />
+						<Inputs variant="outlined" placeholder={"Confirmar senha"} name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} size="small" required />
 					</>
 
 				) : activeStep === 1 ? (
