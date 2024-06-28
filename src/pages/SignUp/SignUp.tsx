@@ -137,8 +137,8 @@ const SignUp = () => {
 			</BoxLeftColumn>
 			<BoxRightColumn>
 				<BoxTitle>
-					<Typography className="big-title">Crie sua conta</Typography>
-					<Typography className="little-text">Forneça alguns dados para criar sua conta no CIJ</Typography>
+					<Typography fontSize={fontSizeConfig.title} className="big-title">Crie sua conta</Typography>
+					<Typography fontSize={fontSizeConfig.small} className="little-text">Forneça alguns dados para criar sua conta no CIJ</Typography>
 				</BoxTitle>
 				<Stepper activeStep={activeStep} alternativeLabel sx={{ width: "60%" }}>
 					{steps.map((label) => {
