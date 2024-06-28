@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
-import { Box, TextField, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage } from "./SignUp.styled";
-import { Inputs, PrimaryButton } from "../../App.styled";
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { BoxRightColumn, BoxLeftColumn, BoxLogoImage, BoxBackgroundImage, BoxTitle, BoxInputs, BoxButtons } from "./SignUp.styled";
+import { Inputs, } from "../../App.styled";
 
 import "./SignUp.scss";
 
@@ -21,12 +21,13 @@ import { useToast } from "../../hooks/useToast.tsx";
 import { useFontSize } from "../../hooks/useFontSize";
 
 
-const steps = ['Dados Pessoais', 'Deficiência', 'Endereço'];
-
 const SignUp = () => {
 	const toast = useToast();
 	const { fontSizeConfig } = useFontSize();
 	const navigate = useNavigate();
+
+	const steps = ['Dados Pessoais', 'Deficiência', 'Endereço'];
+	const [activeStep, setActiveStep] = useState(0);
 
 	const [user, setUser] = useState<TUserForm>({
 		name: "",
@@ -37,14 +38,12 @@ const SignUp = () => {
 		email: "",
 		password: ""
 	});
-
 	const [userDisability, setUserDisability] = useState<TUserDisability>({
 		disabilityType: "",
 		disability: "",
 		disablityDegree: "",
 		adquiredDisability: ADQUIREDDISABILITY.No
 	});
-
 	const [userAddress, setUserAddress] = useState<TUserAddress>({
 		zip_code: "",
 		country: "",
@@ -55,23 +54,50 @@ const SignUp = () => {
 		number: "",
 		complement: "",
 	});
-
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
 
 	const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
-
 	const handleUserDisabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserDisability({ ...userDisability, [e.target.name]: e.target.value });
 	};
-	
 	const handleUserAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserAddress({ ...userAddress, [e.target.name]: e.target.value });
 	};
 
-	const [activeStep, setActiveStep] = useState(0);
-
+	const allFieldsFilled = useMemo(() => {
+		switch (activeStep) {
+			case 0:
+				return (
+					!user.name ||
+					!user.cpf ||
+					!user.birthDate ||
+					!user.phone ||
+					!user.email ||
+					!user.password
+				);
+			case 1:
+				return (
+					!userDisability.disabilityType ||
+					!userDisability.disability ||
+					!userDisability.disablityDegree
+				);
+			case 2:
+				return (
+					!userAddress.zip_code ||
+					!userAddress.country ||
+					!userAddress.state ||
+					!userAddress.city ||
+					!userAddress.neighborhood ||
+					!userAddress.street ||
+					!userAddress.number ||
+					!userAddress.complement
+				);
+			default:
+				return true;
+		}
+	}, [user, userDisability, userAddress, activeStep]);
 
 	const signUp = () => {
 		userSchema
@@ -103,18 +129,18 @@ const SignUp = () => {
 		<Box sx={{ display: "flex" }}>
 			<BoxLeftColumn>
 				<BoxLogoImage>
-					<img
-						id="logo-white-full"
-						src={logoWhiteFull}
-						alt={t("imgs.logo")}
-					/>
+					<img id="logo-white-full" src={logoWhiteFull} alt="Logo White Full" />
 				</BoxLogoImage>
 				<BoxBackgroundImage>
-					<img id="sign-up-background" src={signUpBackground} alt="Background"/>
+					<img id="sign-up-background" src={signUpBackground} alt="Sign Up Background"/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
 			<BoxRightColumn>
-				<Stepper sx={{ width: "100%" }} activeStep={activeStep}>
+				<BoxTitle>
+					<Typography className="big-title">Crie sua conta</Typography>
+					<Typography className="little-text">Forneça alguns dados para criar sua conta no CIJ</Typography>
+				</BoxTitle>
+				<Stepper activeStep={activeStep} alternativeLabel sx={{ width: "60%" }}>
 					{steps.map((label) => {
 						return (
 							<Step key={label}>
@@ -123,14 +149,13 @@ const SignUp = () => {
 						);
 					})}
 				</Stepper>
-				<Box>
-
+				<BoxInputs>
 				{activeStep === 0 ? (
 
 					<>
-						<Inputs variant="outlined" placeholder={"Nome Completo"} name="name" value={user.name} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"CPF"} name="cpf" value={user.cpf} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Data de nascimento"} name="birthDate" value={user.birthDate} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"Nome Completo"} name="name" value={user.name} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"CPF"} name="cpf" value={user.cpf} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"Data de nascimento"} name="birthDate" value={user.birthDate} onChange={handleUserChange} size="small" required />
 						<FormControl
 							sx={{
 								color: "#999",
@@ -148,30 +173,22 @@ const SignUp = () => {
 							</RadioGroup>
 						</FormControl>
 						
-						<Inputs variant="outlined" placeholder={"Celular"} name="phone" value={user.phone} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"E-mail"} name="email" value={user.email} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Senha"} name="password" value={user.password} onChange={handleUserChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Confirmar senha"} name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} size="small" required />
+						<Inputs placeholder={"Celular"} name="phone" value={user.phone} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"E-mail"} name="email" value={user.email} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"Senha"} name="password" value={user.password} onChange={handleUserChange} size="small" required />
+						<Inputs placeholder={"Confirmar senha"} name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} size="small" required />
 					</>
 
 				) : activeStep === 1 ? (
 
 					<>
-						<Inputs variant="outlined" placeholder={"Tipo de deficiência"} name="disabilityType" value={userDisability.disabilityType} onChange={handleUserDisabilityChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Deficiência"} name="disability" value={userDisability.disability} onChange={handleUserDisabilityChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Grau/Subdivisão"} name="disablityDegree" value={userDisability.disablityDegree} onChange={handleUserDisabilityChange} size="small" required />
-						
-						<FormControl
-							sx={{
-								color: "#999",
-								marginBottom: "2rem",
-								width: "20vw",
-							}}
-						>
+						<Inputs placeholder={"Tipo de deficiência"} name="disabilityType" value={userDisability.disabilityType} onChange={handleUserDisabilityChange} size="small" required />
+						<Inputs placeholder={"Deficiência"} name="disability" value={userDisability.disability} onChange={handleUserDisabilityChange} size="small" required />
+						<Inputs placeholder={"Grau/Subdivisão"} name="disablityDegree" value={userDisability.disablityDegree} onChange={handleUserDisabilityChange} size="small" required />
+						<FormControl sx={{ color: "#999", marginBottom: "2rem", width: "20vw" }}>
 							<FormLabel sx={{ color: "#999" }}>
 								A deficiência foi adquirida?
 							</FormLabel>
-
 							<RadioGroup row name="adquiredDisability" value={userDisability.adquiredDisability} onChange={handleUserDisabilityChange}>
 								<FormControlLabel value={ADQUIREDDISABILITY.Yes} control={<Radio />} label="Sim" />
 								<FormControlLabel value={ADQUIREDDISABILITY.No} control={<Radio />} label="Não" />
@@ -182,14 +199,14 @@ const SignUp = () => {
 				) : activeStep === 2 ? (
 
 					<>
-						<Inputs variant="outlined" placeholder={"CEP"} name="zip_code" value={userAddress.zip_code} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"País"} name="country" value={userAddress.country} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Estado"} name="state" value={userAddress.state} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Cidade"} name="city" value={userAddress.city} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Bairro"} name="neighborhood" value={userAddress.neighborhood} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Rua"} name="street" value={userAddress.street} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Número"} name="number" value={userAddress.number} onChange={handleUserAddressChange} size="small" required />
-						<Inputs variant="outlined" placeholder={"Complemento"} name="complement" value={userAddress.complement} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"CEP"} name="zip_code" value={userAddress.zip_code} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"País"} name="country" value={userAddress.country} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Estado"} name="state" value={userAddress.state} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Cidade"} name="city" value={userAddress.city} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Bairro"} name="neighborhood" value={userAddress.neighborhood} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Rua"} name="street" value={userAddress.street} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Número"} name="number" value={userAddress.number} onChange={handleUserAddressChange} size="small" required />
+						<Inputs placeholder={"Complemento"} name="complement" value={userAddress.complement} onChange={handleUserAddressChange} size="small" required />
 					</>
 
 				) : (
@@ -197,52 +214,40 @@ const SignUp = () => {
 					<></>
 
 				)}
+				</BoxInputs>
+				<BoxButtons>
 
-				</Box>
+					{activeStep !== 0 ? (
+						<Button variant="outlined" disableElevation disabled={activeStep === 0} onClick={() => setActiveStep(activeStep - 1)}>
+							<Typography fontSize={fontSizeConfig.medium}>Voltar</Typography>
+						</Button>
+					
+					) : (
 
-				<Box>
-					<ButtonStyled disableElevation variant="outlined" onClick={handleCancelForm}>
-						<Typography fontSize={fontSizeConfig.medium}>
-							Cancelar
+						<Typography fontSize={fontSizeConfig.small} className="little-text">
+							Já possui uma conta?
+							<Link to={ROUTES.signIn} className="link">
+								Login
+							</Link>
 						</Typography>
-					</ButtonStyled>
 
-					<ButtonNavigation>
-						<ButtonStyled disableElevation variant="outlined" disabled={activeStep === 0}
-							onClick={() =>
-								setActiveStep(activeStep - 1)
-							}
-						>
-							<Typography fontSize={fontSizeConfig.medium}>
-								Voltar
-							</Typography>
-						</ButtonStyled>
-						
-						{activeStep !== steps.length - 1 ? (
+					)}
 
-							<ButtonStyled disableElevation disabled={allFieldsFilled} variant="contained" sx={{ width: "50%" }}
-								onClick={() =>
-									setActiveStep(activeStep + 1)
-								}
-										
-							>
-								<Typography fontSize={fontSizeConfig.medium}>
-									Próximo
-								</Typography>
-							</ButtonStyled>
+					{activeStep !== steps.length - 1 ? (
 
-						) : (
+						<Button variant="contained" disableElevation disabled={allFieldsFilled} onClick={() => setActiveStep(activeStep + 1)}>
+							<Typography fontSize={fontSizeConfig.medium}>Próximo</Typography>
+						</Button>
 
-							<ButtonStyled disableElevation disabled={allFieldsFilled} variant="contained" onClick={createCompany} sx={{ width: "50%" }}>
-								<Typography fontSize={fontSizeConfig.medium}>
-									Criar
-								</Typography>
-							</ButtonStyled>
+					) : (
 
-						)}
+						<Button variant="contained" disableElevation disabled={allFieldsFilled} onClick={signUp}>
+							<Typography fontSize={fontSizeConfig.medium}>Criar</Typography>
+						</Button>
 
-					</ButtonNavigation>
-				</Box>
+					)}
+					
+				</BoxButtons>
 			</BoxRightColumn>
 		</Box>
 	);
