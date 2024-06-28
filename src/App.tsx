@@ -21,6 +21,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Supporters from "./pages/Supporters/Supporters";
 
+import TextReader from "./components/TextReader/TextReader";
 import { ROUTES } from "./constants";
 import { ROLES } from "./constants/ROLES";
 import { FontSizeProvider } from "./hooks/useFontSize";
@@ -59,6 +60,7 @@ const App = () => {
 			<ToastProvider>
 				<FontSizeProvider>
 					<TextReaderProvider>
+						<TextReader />
 						<Router>
 							<Routes>
 								<Route element={<PageLayout />}>

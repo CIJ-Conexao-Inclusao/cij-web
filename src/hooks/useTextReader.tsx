@@ -2,6 +2,7 @@ import React, {
 	ReactNode,
 	createContext,
 	useContext,
+	useEffect,
 	useMemo,
 	useState,
 } from "react";
@@ -27,7 +28,22 @@ export const TextReaderProvider: React.FC<{ children: ReactNode }> = ({
 			return;
 		}
 
-		console.log("chegou aq", event);
+		const allowedTags = [
+			"P",
+			"SPAN",
+			"H1",
+			"H2",
+			"H3",
+			"H4",
+			"H5",
+			"H6",
+			"A",
+			"BUTTON",
+		];
+
+		if (!allowedTags.includes(event.target.tagName)) {
+			return;
+		}
 
 		const msg = new SpeechSynthesisUtterance();
 		const voices = window.speechSynthesis.getVoices();
@@ -38,6 +54,12 @@ export const TextReaderProvider: React.FC<{ children: ReactNode }> = ({
 		window.speechSynthesis.speak(msg);
 	};
 
+	useEffect(() => {
+		if (!isReadActive) {
+			window.speechSynthesis.cancel();
+		}
+	}, [isReadActive]);
+
 	const contextValue: TextReaderContextData = useMemo(
 		() => ({
 			readText: readText,
@@ -46,6 +68,18 @@ export const TextReaderProvider: React.FC<{ children: ReactNode }> = ({
 		}),
 		[readText, isReadActive, setIsReadActive]
 	);
+
+	useEffect(() => {
+		if (isReadActive) {
+			window.addEventListener("click", readText);
+		} else {
+			window.removeEventListener("click", readText);
+		}
+
+		return () => {
+			window.removeEventListener("click", readText);
+		};
+	}, [isReadActive]);
 
 	return (
 		<TextReaderContext.Provider value={contextValue}>
@@ -65,36 +99,3 @@ export const useTextReader = () => {
 
 	return context;
 };
-
-// export function TextReaderComponent(props: { filtroAberto: boolean }) {
-// 	const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(
-// 		TextReaderContext
-// 	) as any;
-
-// 	return (
-// 		<BoxIcone
-// 			onClick={() => {
-// 				setLeituraDeSiteAtiva(!leituraDeSiteAtiva);
-// 			}}
-// 			sx={{ right: props.filtroAberto ? "250px" : "10px" }}
-// 		>
-// 			<BoxIcone
-// 				sx={{
-// 					backgroundImage: leituraDeSiteAtiva
-// 						? "linear-gradient(to right, #006281, #05274c)"
-// 						: "linear-gradient(to right, #008db9, #0c529d)",
-// 				}}
-// 			>
-// 				<IconButton>
-// 					{leituraDeSiteAtiva ? (
-// 						<CloseRoundedIcon sx={{ color: "#fff" }} />
-// 					) : (
-// 						<SpatialAudioRoundedIcon
-// 							sx={{ width: "20px", color: "#fff" }}
-// 						/>
-// 					)}
-// 				</IconButton>
-// 			</BoxIcone>
-// 		</BoxIcone>
-// 	);
-// }

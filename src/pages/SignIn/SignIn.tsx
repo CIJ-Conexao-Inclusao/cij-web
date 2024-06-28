@@ -36,7 +36,6 @@ import signInBackground from "./assets/sign-in-background.png";
 
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
-import TextReader from "../../components/TextReader/TextReader";
 import { ROUTES } from "../../constants";
 import { useToast } from "../../hooks/useToast";
 import { useAppDispatch } from "../../redux/hooks";
@@ -113,7 +112,6 @@ const SignIn = () => {
 				justifyContent: "center",
 			}}
 		>
-			<TextReader />
 			<BoxLeftColumn>
 				<BoxLogoImage>
 					<img id="logo-white-full" src={logoWhiteFull} alt="Logo" />

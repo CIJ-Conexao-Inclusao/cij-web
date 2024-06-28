@@ -31,7 +31,7 @@ export const CONSTS = {
 			roles: [ROLES.ADMIN, ROLES.PERSON, ROLES.COMPANY],
 		},
 		{
-			name: "Parecerias e apoiadores",
+			name: "Parcerias e apoiadores",
 			path: ROUTES.supporters,
 			icon: () => <HandshakeOutlinedIcon fontSize="medium" />,
 			roles: [ROLES.ADMIN, ROLES.PERSON, ROLES.COMPANY],
