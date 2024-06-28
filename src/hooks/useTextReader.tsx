@@ -1,26 +1,33 @@
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import SpatialAudioRoundedIcon from "@mui/icons-material/SpatialAudioRounded";
-import { IconButton } from "@mui/material";
-import { createContext, useContext, useMemo, useState } from "react";
-import { BoxIcone } from "./TextReaderContext.styles";
+import React, {
+	ReactNode,
+	createContext,
+	useContext,
+	useMemo,
+	useState,
+} from "react";
+// import { BoxIcone } from "./TextReaderContext.styles";
 
-export const TextReaderContext: any = createContext(null);
+interface TextReaderContextData {
+	readText: (event: any) => void;
+	isReadActive: boolean;
+	setIsReadActive: (value: boolean) => void;
+}
 
-export function TextReaderProvider({ children }: { children: any }) {
-	const [leituraDeSiteAtiva, setLeituraDeSiteAtiva] = useState(false);
-	const contextValue = useMemo(
-		() => ({
-			lerTexto,
-			leituraDeSiteAtiva,
-			setLeituraDeSiteAtiva,
-		}),
-		[lerTexto, leituraDeSiteAtiva, setLeituraDeSiteAtiva]
-	);
+const TextReaderContext = createContext<TextReaderContextData | undefined>(
+	undefined
+);
 
-	function lerTexto(event: any) {
-		if (!leituraDeSiteAtiva) {
+export const TextReaderProvider: React.FC<{ children: ReactNode }> = ({
+	children,
+}) => {
+	const [isReadActive, setIsReadActive] = useState<boolean>(false);
+
+	const readText = (event: any) => {
+		if (!isReadActive) {
 			return;
 		}
+
+		console.log("chegou aq", event);
 
 		const msg = new SpeechSynthesisUtterance();
 		const voices = window.speechSynthesis.getVoices();
@@ -29,44 +36,65 @@ export function TextReaderProvider({ children }: { children: any }) {
 		msg.text = event.target.innerText;
 
 		window.speechSynthesis.speak(msg);
-	}
+	};
+
+	const contextValue: TextReaderContextData = useMemo(
+		() => ({
+			readText: readText,
+			isReadActive: isReadActive,
+			setIsReadActive: setIsReadActive,
+		}),
+		[readText, isReadActive, setIsReadActive]
+	);
 
 	return (
 		<TextReaderContext.Provider value={contextValue}>
 			{children}
 		</TextReaderContext.Provider>
 	);
-}
+};
 
-export function TextReaderComponent(props: { filtroAberto: boolean }) {
-	const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(
-		TextReaderContext
-	) as any;
+export const useTextReader = () => {
+	const context = useContext(TextReaderContext);
 
-	return (
-		<BoxIcone
-			onClick={() => {
-				setLeituraDeSiteAtiva(!leituraDeSiteAtiva);
-			}}
-			sx={{ right: props.filtroAberto ? "250px" : "10px" }}
-		>
-			<BoxIcone
-				sx={{
-					backgroundImage: leituraDeSiteAtiva
-						? "linear-gradient(to right, #006281, #05274c)"
-						: "linear-gradient(to right, #008db9, #0c529d)",
-				}}
-			>
-				<IconButton>
-					{leituraDeSiteAtiva ? (
-						<CloseRoundedIcon sx={{ color: "#fff" }} />
-					) : (
-						<SpatialAudioRoundedIcon
-							sx={{ width: "20px", color: "#fff" }}
-						/>
-					)}
-				</IconButton>
-			</BoxIcone>
-		</BoxIcone>
-	);
-}
+	if (!context) {
+		throw new Error(
+			"useTextReader deve ser usado dentro de um TextReaderProvider"
+		);
+	}
+
+	return context;
+};
+
+// export function TextReaderComponent(props: { filtroAberto: boolean }) {
+// 	const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(
+// 		TextReaderContext
+// 	) as any;
+
+// 	return (
+// 		<BoxIcone
+// 			onClick={() => {
+// 				setLeituraDeSiteAtiva(!leituraDeSiteAtiva);
+// 			}}
+// 			sx={{ right: props.filtroAberto ? "250px" : "10px" }}
+// 		>
+// 			<BoxIcone
+// 				sx={{
+// 					backgroundImage: leituraDeSiteAtiva
+// 						? "linear-gradient(to right, #006281, #05274c)"
+// 						: "linear-gradient(to right, #008db9, #0c529d)",
+// 				}}
+// 			>
+// 				<IconButton>
+// 					{leituraDeSiteAtiva ? (
+// 						<CloseRoundedIcon sx={{ color: "#fff" }} />
+// 					) : (
+// 						<SpatialAudioRoundedIcon
+// 							sx={{ width: "20px", color: "#fff" }}
+// 						/>
+// 					)}
+// 				</IconButton>
+// 			</BoxIcone>
+// 		</BoxIcone>
+// 	);
+// }
