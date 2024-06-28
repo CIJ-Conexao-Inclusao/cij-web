@@ -1,6 +1,4 @@
-import { GENDER } from "../constants";
-import { ADQUIREDDISABILITY } from "../constants";
-
+import { ADQUIREDDISABILITY, GENDER } from "../constants";
 
 export type TUserForm = {
 	name: string;
@@ -28,4 +26,27 @@ export type TUserAddress = {
 	street: string;
 	number: string;
 	complement: string;
+};
+
+export type TUserFull = {
+	name: string;
+	cpf: string;
+	birthDate: string;
+	gender: GENDER;
+	phone?: string;
+	user: {
+		email: string;
+		password: string;
+	};
+	disabilities: [];
+	address: {
+		street: string;
+		number: string;
+		complement: string;
+		neighborhood: string;
+		city: string;
+		state: string;
+		country: string;
+		zip_code: string;
+	};
 };
