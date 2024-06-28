@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import axios from "../api";
-import { TUserForm } from "../types";
+import { TUserFull } from "../types/TUserForm";
 
 const basePath = "/people";
 
@@ -20,16 +20,10 @@ class UserService {
 		return await axios.post("/get-user-data", { token });
 	}
 
-	async create(user: TUserForm) {
-		const { cpf, email, gender, name, password, phone } = user;
+	async create(user: TUserFull) {
+		// const { cpf, email, gender, name, password, phone } = user;
 
-		return await axios.post(basePath, {
-			cpf,
-			gender,
-			name,
-			phone,
-			user: { email, password },
-		});
+		return await axios.post(basePath, user);
 	}
 }
 

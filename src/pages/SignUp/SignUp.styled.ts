@@ -59,13 +59,14 @@ export const BoxInputs = styled(Box)({
 	alignItems: "center",
 	display: "flex",
 	flexDirection: "column",
+	marginTop: "2rem",
 	width: "100%",
 });
 
 export const BoxButtons = styled(Box)({
 	alignItems: "center",
 	display: "flex",
-	flexDirection: "column",
+	justifyContent: "space-between",
 	marginTop: "2rem",
-	width: "100%",
+	width: "60%",
 });

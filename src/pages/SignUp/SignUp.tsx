@@ -1,110 +1,175 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import {
 	Box,
+	Button,
 	FormControl,
 	FormControlLabel,
 	FormLabel,
 	Radio,
 	RadioGroup,
+	Step,
+	StepLabel,
+	Stepper,
+	Typography,
 } from "@mui/material";
+import { Inputs } from "../../App.styled";
 import {
-	BoxRightColumn,
+	BoxBackgroundImage,
+	BoxButtons,
+	BoxInputs,
 	BoxLeftColumn,
 	BoxLogoImage,
-	BoxBackgroundImage,
+	BoxRightColumn,
 	BoxTitle,
-	BoxInputs,
-	BoxButtons,
 } from "./SignUp.styled";
-import { Inputs, PrimaryButton } from "../../App.styled";
 
 import "./SignUp.scss";
-
-import InputAdornment from "@mui/material/InputAdornment";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
-import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
-import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import logoWhiteFull from "../../assets/logo-white-full.png";
 import signUpBackground from "./assets/sign-up-background.png";
 
 import { userSchema } from "../../validations/index.ts";
 
-import { GENDER, ROUTES } from "../../constants/index.ts";
-import { TUserForm } from "../../types/index.ts";
+import { ADQUIREDDISABILITY, GENDER, ROUTES } from "../../constants/index.ts";
+import {
+	TUserAddress,
+	TUserDisability,
+	TUserForm,
+} from "../../types/TUserForm.ts";
 
-import { UserService } from "../../services/index.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
-import { useTranslation } from "react-i18next";
+import { UserService } from "../../services/index.ts";
+
+import { useFontSize } from "../../hooks/useFontSize";
 
 const SignUp = () => {
 	const toast = useToast();
+	const { fontSizeConfig } = useFontSize();
 	const navigate = useNavigate();
-	const { t } = useTranslation("translation", { keyPrefix: "signUp" });
-	const { t: tErrors } = useTranslation("translation", {
-		keyPrefix: "errors",
-	});
+
+	const steps = ["Dados Pessoais", "Deficiência", "Endereço"];
+	const [activeStep, setActiveStep] = useState(0);
 
 	const [user, setUser] = useState<TUserForm>({
-		cpf: "",
 		name: "",
+		cpf: "",
+		birthDate: "",
+		gender: GENDER.Male,
+		phone: "",
 		email: "",
 		password: "",
-		phone: "",
-		gender: GENDER.Female,
+	});
+	const [userDisability, setUserDisability] = useState<TUserDisability>({
+		disabilityType: "",
+		disability: "",
+		disablityDegree: "",
+		adquiredDisability: ADQUIREDDISABILITY.No,
+	});
+	const [userAddress, setUserAddress] = useState<TUserAddress>({
+		zip_code: "",
+		country: "",
+		state: "",
+		city: "",
+		neighborhood: "",
+		street: "",
+		number: "",
+		complement: "",
 	});
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-	const [passwordType, setPasswordType] = useState<string>("password");
-	const [confirmPasswordType, setConfirmPasswordType] =
-		useState<string>("password");
-
-	const showPassword = () => {
-		if (passwordType == "text") {
-			setPasswordType("password");
-		} else {
-			setPasswordType("text");
-		}
-	};
-
-	const showConfirmPassword = () => {
-		if (confirmPasswordType == "text") {
-			setConfirmPasswordType("password");
-		} else {
-			setConfirmPasswordType("text");
-		}
-	};
-
-	const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
+	const handleUserDisabilityChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setUserDisability({
+			...userDisability,
+			[e.target.name]: e.target.value,
+		});
+	};
+	const handleUserAddressChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setUserAddress({ ...userAddress, [e.target.name]: e.target.value });
+	};
+
+	const allFieldsFilled = useMemo(() => {
+		switch (activeStep) {
+			case 0:
+				return (
+					!user.name ||
+					!user.cpf ||
+					!user.birthDate ||
+					!user.phone ||
+					!user.email ||
+					!user.password
+				);
+			case 1:
+				return (
+					!userDisability.disabilityType ||
+					!userDisability.disability ||
+					!userDisability.disablityDegree
+				);
+			case 2:
+				return (
+					!userAddress.zip_code ||
+					!userAddress.country ||
+					!userAddress.state ||
+					!userAddress.city ||
+					!userAddress.neighborhood ||
+					!userAddress.street ||
+					!userAddress.number ||
+					!userAddress.complement
+				);
+			default:
+				return true;
+		}
+	}, [user, userDisability, userAddress, activeStep]);
 
 	const signUp = () => {
 		userSchema
 			.validate(user)
 			.then(() => {
 				if (user.password !== confirmPassword) {
-					toast.showToast("error", tErrors("passwordNotMatch"));
+					toast.showToast("error", "As senhas não coincidem");
 					return;
 				}
 
-				UserService.create(user)
+				UserService.create({
+					name: user.name,
+					cpf: user.cpf,
+					birthDate: user.birthDate,
+					gender: user.gender,
+					phone: user.phone,
+					user: {
+						email: user.email,
+						password: user.password,
+					},
+					disabilities: [],
+					address: {
+						street: userAddress.street,
+						number: userAddress.number,
+						complement: userAddress.complement,
+						neighborhood: userAddress.neighborhood,
+						city: userAddress.city,
+						state: userAddress.state,
+						country: userAddress.country,
+						zip_code: userAddress.zip_code,
+					},
+				})
 					.then(() => {
-						toast.showToast("success", t("createdSuccess"));
+						toast.showToast(
+							"success",
+							"Usuário cadastrado com sucesso"
+						);
 						navigate(ROUTES.signIn);
 					})
 					.catch((err) => {
 						console.log("err: ", err);
-						toast.showToast(
-							"error",
-							tErrors("errorOnUserCreation")
-						);
+						toast.showToast("error", "Erro ao cadastrar usuário");
 					});
 			})
 			.catch((err) => {
@@ -119,222 +184,314 @@ const SignUp = () => {
 					<img
 						id="logo-white-full"
 						src={logoWhiteFull}
-						alt={t("imgs.logo")}
+						alt="Logo White Full"
 					/>
 				</BoxLogoImage>
-
 				<BoxBackgroundImage>
 					<img
 						id="sign-up-background"
 						src={signUpBackground}
-						alt={t("imgs.background")}
+						alt="Sign Up Background"
 					/>
 				</BoxBackgroundImage>
 			</BoxLeftColumn>
-
 			<BoxRightColumn>
 				<BoxTitle>
-					<p className="big-title">{t("createYourAccount")}</p>
-
-					<p className="little-text">{t("details")}</p>
-				</BoxTitle>
-
-				<BoxInputs>
-					<Inputs
-						name="name"
-						value={user.name}
-						onChange={handledChange}
-						variant="outlined"
-						placeholder={t("phs.fullName")}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<PersonOutlinedIcon
-										sx={{ color: "#999" }}
-									/>
-								</InputAdornment>
-							),
-						}}
-					/>
-
-					<Inputs
-						name="cpf"
-						value={user.cpf}
-						onChange={handledChange}
-						variant="outlined"
-						placeholder={t("phs.cpf")}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<BadgeOutlinedIcon sx={{ color: "#999" }} />
-								</InputAdornment>
-							),
-						}}
-					/>
-
-					<FormControl
-						sx={{
-							color: "#999",
-							marginBottom: "2rem",
-							width: "20vw",
-						}}
+					<Typography
+						fontSize={fontSizeConfig.title}
+						className="big-title"
 					>
-						<FormLabel sx={{ color: "#999" }}>
-							{t("phs.gender")}
-						</FormLabel>
-
-						<RadioGroup
-							row
-							name="gender"
-							value={user.gender}
-							onChange={handledChange}
-						>
-							<FormControlLabel
-								value={GENDER.Female}
-								control={<Radio />}
-								label={t("phs.female")}
+						Crie sua conta
+					</Typography>
+					<Typography
+						fontSize={fontSizeConfig.small}
+						className="little-text"
+					>
+						Forneça alguns dados para criar sua conta no CIJ
+					</Typography>
+				</BoxTitle>
+				<Stepper
+					activeStep={activeStep}
+					alternativeLabel
+					sx={{ width: "60%" }}
+				>
+					{steps.map((label) => {
+						return (
+							<Step key={label}>
+								<StepLabel>{label}</StepLabel>
+							</Step>
+						);
+					})}
+				</Stepper>
+				<BoxInputs>
+					{activeStep === 0 ? (
+						<>
+							<Inputs
+								placeholder={"Nome Completo"}
+								name="name"
+								value={user.name}
+								onChange={handleUserChange}
+								size="small"
+								required
 							/>
-
-							<FormControlLabel
-								value={GENDER.Male}
-								control={<Radio />}
-								label={t("phs.male")}
+							<Inputs
+								placeholder={"CPF"}
+								name="cpf"
+								value={user.cpf}
+								onChange={handleUserChange}
+								size="small"
+								required
 							/>
-
-							<FormControlLabel
-								value={GENDER.Other}
-								control={<Radio />}
-								label={t("phs.others")}
+							<Inputs
+								placeholder={"Data de nascimento"}
+								name="birthDate"
+								value={user.birthDate}
+								onChange={handleUserChange}
+								size="small"
+								required
 							/>
-						</RadioGroup>
-					</FormControl>
+							<FormControl
+								sx={{
+									color: "#999",
+									marginBottom: "2rem",
+									width: "20vw",
+								}}
+							>
+								<FormLabel sx={{ color: "#999" }}>
+									Gênero
+								</FormLabel>
+								<RadioGroup
+									row
+									name="gender"
+									value={user.gender}
+									onChange={handleUserChange}
+								>
+									<FormControlLabel
+										value={GENDER.Male}
+										control={<Radio />}
+										label="Masculino"
+									/>
+									<FormControlLabel
+										value={GENDER.Female}
+										control={<Radio />}
+										label="Feminino"
+									/>
+									<FormControlLabel
+										value={GENDER.Other}
+										control={<Radio />}
+										label="Outro"
+									/>
+								</RadioGroup>
+							</FormControl>
 
-					<Inputs
-						name="phone"
-						value={user.phone}
-						onChange={handledChange}
-						variant="outlined"
-						placeholder={t("phs.cellphone")}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<PhoneIphoneOutlinedIcon
-										sx={{ color: "#999" }}
+							<Inputs
+								placeholder={"Celular"}
+								name="phone"
+								value={user.phone}
+								onChange={handleUserChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"E-mail"}
+								name="email"
+								value={user.email}
+								onChange={handleUserChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Senha"}
+								name="password"
+								value={user.password}
+								onChange={handleUserChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Confirmar senha"}
+								name="confirmPassword"
+								value={confirmPassword}
+								onChange={(e) =>
+									setConfirmPassword(e.target.value)
+								}
+								size="small"
+								required
+							/>
+						</>
+					) : activeStep === 1 ? (
+						<>
+							<Inputs
+								placeholder={"Tipo de deficiência"}
+								name="disabilityType"
+								value={userDisability.disabilityType}
+								onChange={handleUserDisabilityChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Deficiência"}
+								name="disability"
+								value={userDisability.disability}
+								onChange={handleUserDisabilityChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Grau/Subdivisão"}
+								name="disablityDegree"
+								value={userDisability.disablityDegree}
+								onChange={handleUserDisabilityChange}
+								size="small"
+								required
+							/>
+							<FormControl
+								sx={{
+									color: "#999",
+									marginBottom: "2rem",
+									width: "20vw",
+								}}
+							>
+								<FormLabel sx={{ color: "#999" }}>
+									A deficiência foi adquirida?
+								</FormLabel>
+								<RadioGroup
+									row
+									name="adquiredDisability"
+									value={userDisability.adquiredDisability}
+									onChange={handleUserDisabilityChange}
+								>
+									<FormControlLabel
+										value={ADQUIREDDISABILITY.Yes}
+										control={<Radio />}
+										label="Sim"
 									/>
-								</InputAdornment>
-							),
-						}}
-					/>
-
-					<Inputs
-						name="email"
-						value={user.email}
-						onChange={handledChange}
-						variant="outlined"
-						placeholder={t("phs.email")}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<AlternateEmailOutlinedIcon
-										sx={{ color: "#999" }}
+									<FormControlLabel
+										value={ADQUIREDDISABILITY.No}
+										control={<Radio />}
+										label="Não"
 									/>
-								</InputAdornment>
-							),
-						}}
-					/>
-
-					<Inputs
-						name="password"
-						value={user.password}
-						onChange={handledChange}
-						variant="outlined"
-						placeholder={t("phs.password")}
-						type={passwordType}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<LockOutlinedIcon sx={{ color: "#999" }} />
-								</InputAdornment>
-							),
-							endAdornment:
-								passwordType == "text" ? (
-									<VisibilityOffOutlinedIcon
-										onClick={showPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								) : (
-									<VisibilityOutlinedIcon
-										onClick={showPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								),
-						}}
-					/>
-
-					<Inputs
-						name="confirmPassword"
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-						variant="outlined"
-						placeholder={t("phs.confirmPassword")}
-						type={confirmPasswordType}
-						size="small"
-						required
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<LockOutlinedIcon sx={{ color: "#999" }} />
-								</InputAdornment>
-							),
-							endAdornment:
-								confirmPasswordType == "text" ? (
-									<VisibilityOffOutlinedIcon
-										onClick={showConfirmPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								) : (
-									<VisibilityOutlinedIcon
-										onClick={showConfirmPassword}
-										sx={{
-											color: "#999",
-											cursor: "pointer",
-										}}
-									/>
-								),
-						}}
-					/>
+								</RadioGroup>
+							</FormControl>
+						</>
+					) : activeStep === 2 ? (
+						<>
+							<Inputs
+								placeholder={"CEP"}
+								name="zip_code"
+								value={userAddress.zip_code}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"País"}
+								name="country"
+								value={userAddress.country}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Estado"}
+								name="state"
+								value={userAddress.state}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Cidade"}
+								name="city"
+								value={userAddress.city}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Bairro"}
+								name="neighborhood"
+								value={userAddress.neighborhood}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Rua"}
+								name="street"
+								value={userAddress.street}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Número"}
+								name="number"
+								value={userAddress.number}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+							<Inputs
+								placeholder={"Complemento"}
+								name="complement"
+								value={userAddress.complement}
+								onChange={handleUserAddressChange}
+								size="small"
+								required
+							/>
+						</>
+					) : (
+						<></>
+					)}
 				</BoxInputs>
-
 				<BoxButtons>
-					<PrimaryButton variant="contained" onClick={signUp}>
-						{t("signUp")}
-					</PrimaryButton>
+					{activeStep !== 0 ? (
+						<Button
+							variant="outlined"
+							disableElevation
+							disabled={activeStep === 0}
+							onClick={() => setActiveStep(activeStep - 1)}
+						>
+							<Typography fontSize={fontSizeConfig.medium}>
+								Voltar
+							</Typography>
+						</Button>
+					) : (
+						<Typography
+							fontSize={fontSizeConfig.small}
+							className="little-text"
+						>
+							Já possui uma conta?
+							<Link to={ROUTES.signIn} className="link">
+								Login
+							</Link>
+						</Typography>
+					)}
 
-					<p className="little-text">
-						{t("alreadyHasAccount") + " "}
-						<Link to={ROUTES.signIn} className="link">
-							{t("login")}
-						</Link>
-					</p>
+					{activeStep !== steps.length - 1 ? (
+						<Button
+							variant="contained"
+							disableElevation
+							disabled={allFieldsFilled}
+							onClick={() => setActiveStep(activeStep + 1)}
+						>
+							<Typography fontSize={fontSizeConfig.medium}>
+								Próximo
+							</Typography>
+						</Button>
+					) : (
+						<Button
+							variant="contained"
+							disableElevation
+							disabled={allFieldsFilled}
+							onClick={signUp}
+						>
+							<Typography fontSize={fontSizeConfig.medium}>
+								Criar
+							</Typography>
+						</Button>
+					)}
 				</BoxButtons>
 			</BoxRightColumn>
 		</Box>
