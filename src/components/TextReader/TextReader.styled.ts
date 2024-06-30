@@ -4,11 +4,12 @@ import { Box } from "@mui/material";
 import HearingDisabledIcon from "@mui/icons-material/HearingDisabled";
 
 export const Container = styled(Box)({
-	position: "absolute",
+	position: "fixed",
 	right: 0,
-	top: 500,
+	top: 360,
 	width: "40px",
 	margin: "10px",
+	zIndex: 9999,
 	// overflow: "hidden", // Ensures content does not overflow the container
 	// textOverflow: "ellipsis", // Adds ellipsis (...) if text overflows
 	// whiteSpace: "nowrap", // Prevents text from wrapping to a new line

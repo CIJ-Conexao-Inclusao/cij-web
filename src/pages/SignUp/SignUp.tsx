@@ -306,11 +306,13 @@ const SignUp = () => {
 								value={user.password}
 								onChange={handleUserChange}
 								size="small"
+								type="password"
 								required
 							/>
 							<Inputs
 								placeholder={"Confirmar senha"}
 								name="confirmPassword"
+								type="password"
 								value={confirmPassword}
 								onChange={(e) =>
 									setConfirmPassword(e.target.value)
