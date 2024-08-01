@@ -6,12 +6,16 @@ const basePath = "/companies";
 
 class CompanyService {
 	async create(company: TCompanyForm) {
-		return await axios.post(`${basePath}`, company, {
-			headers: {
-				Authorization: Cookies.get("token"),
-			},
-			withCredentials: false,
-		});
+		return await axios.post(
+			`${basePath}`,
+			{ ...company, phone: parseInt(company.phone) },
+			{
+				headers: {
+					Authorization: Cookies.get("token"),
+				},
+				withCredentials: false,
+			}
+		);
 	}
 
 	async get() {
