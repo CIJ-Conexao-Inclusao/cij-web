@@ -6,7 +6,7 @@ import HearingDisabledIcon from "@mui/icons-material/HearingDisabled";
 export const Container = styled(Box)({
 	position: "fixed",
 	right: 0,
-	top: 360,
+	top: window.innerHeight / 2 - 72,
 	width: "40px",
 	margin: "10px",
 	zIndex: 9999,

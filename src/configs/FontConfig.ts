@@ -7,11 +7,10 @@ export interface IFontConfig {
 	veryBig: string;
 	smallTitle: string;
 	title: string;
-	[key: string]: string;
 }
 
 const FontConfig: IFontConfig = {
-	verySmall: "0.625",
+	verySmall: "0.625rem",
 	small: "0.75rem",
 	default: "0.875rem",
 	medium: "1rem",

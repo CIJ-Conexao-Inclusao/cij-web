@@ -18,8 +18,10 @@ const PageLayout = () => {
 			<CssBaseline />
 			<Navbar open={open} handleSidebarChange={handleSidebarChange} />
 			<Sidebar open={open} />
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+			<Box component="main" sx={{ flexGrow: 1, p: 3, pt: 0 }}>
 				<SpaceHeader />
+				<Box className="pt-3" />
+
 				<Outlet />
 			</Box>
 		</Box>

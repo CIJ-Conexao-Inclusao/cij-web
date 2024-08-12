@@ -5,6 +5,7 @@ interface IFontSizeContextData {
 	fontSizeIncrementer: number;
 	incrementFontSize: (increment: number) => void;
 	fontSizeConfig: IFontConfig;
+	getNewFontSize: (key: keyof IFontConfig, increment: number) => number;
 }
 
 const FontSizeContext = createContext<IFontSizeContextData>(
@@ -21,20 +22,26 @@ const FontSizeProvider: React.FC<IFontSizeProviderProps> = ({ children }) => {
 	});
 	const [fontSizeIncrementer, setFontSizeIncrementer] = useState<number>(0);
 
-	const incrementFontSize = (incremet: number) => {
+	const incrementFontSize = (increment: number) => {
 		const newFontSizeConfig = { ...FontConfig };
 
 		for (let key in newFontSizeConfig) {
-			const value = newFontSizeConfig[key];
-			const numberPart = value.replace(/[^0-9.]/g, "");
-			newFontSizeConfig[key] = `${
-				parseFloat(numberPart) + incremet / 16
-			}rem`;
+			const typedKey = key as keyof IFontConfig;
+
+			newFontSizeConfig[typedKey] = `${getNewFontSize(
+				typedKey,
+				increment
+			)}rem`;
 		}
 
 		setFontSizeConfig(newFontSizeConfig);
-		setFontSizeIncrementer(incremet);
+		setFontSizeIncrementer(increment);
 	};
+
+	function getNewFontSize(key: keyof IFontConfig, increment: number) {
+		const value = FontConfig[key].replace(/[^0-9.]/g, "");
+		return parseFloat(value) + increment / 16;
+	}
 
 	return (
 		<FontSizeContext.Provider
@@ -42,6 +49,7 @@ const FontSizeProvider: React.FC<IFontSizeProviderProps> = ({ children }) => {
 				fontSizeIncrementer,
 				incrementFontSize,
 				fontSizeConfig,
+				getNewFontSize,
 			}}
 		>
 			{children}

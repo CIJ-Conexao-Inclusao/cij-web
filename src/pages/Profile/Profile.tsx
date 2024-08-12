@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 
-import { Box, Container } from "@mui/material";
-import { BoxLeftColumn, BoxTab, BoxRightColumn } from "./Profile.styled";
+import { Box } from "@mui/material";
+import { BoxLeftColumn, BoxRightColumn, BoxTab } from "./Profile.styled";
 
-import PersonalData from "./Tabs/PersonalData/PersonalData";
-import Disability from "./Tabs/Disability/Disability";
 import Address from "./Tabs/Address/Address";
 import Curriculum from "./Tabs/Curriculum/Curriculum";
+import Disability from "./Tabs/Disability/Disability";
+import PersonalData from "./Tabs/PersonalData/PersonalData";
 import Settings from "./Tabs/Settings/Settings";
 
 const Profile = () => {
-	const [tab, setTab] = useState(PersonalData);
-	const [clickedColor, setClickedColor] = useState(0);
+	const [tabSelected, setTabSelected] = useState(4);
 
 	return (
-		<Container>
+		<Box className="mx-40 mt-10">
 			<p className="title">Meu perfil</p>
 
 			<Box sx={{ display: "flex", width: "100%" }}>
 				<BoxLeftColumn>
 					<BoxTab
 						onClick={() => {
-							setTab(PersonalData);
-							setClickedColor(0);
+							setTabSelected(0);
 						}}
 					>
-						{clickedColor == 0 ? (
+						{tabSelected == 0 ? (
 							<p style={{ color: "#004AAD" }}>Dados pessoais</p>
 						) : (
 							<p>Dados pessoais</p>
@@ -34,11 +32,10 @@ const Profile = () => {
 
 					<BoxTab
 						onClick={() => {
-							setTab(Disability);
-							setClickedColor(1);
+							setTabSelected(1);
 						}}
 					>
-						{clickedColor == 1 ? (
+						{tabSelected == 1 ? (
 							<p style={{ color: "#004AAD" }}>Deficiência</p>
 						) : (
 							<p>Deficiência</p>
@@ -47,11 +44,10 @@ const Profile = () => {
 
 					<BoxTab
 						onClick={() => {
-							setTab(Address);
-							setClickedColor(2);
+							setTabSelected(2);
 						}}
 					>
-						{clickedColor == 2 ? (
+						{tabSelected == 2 ? (
 							<p style={{ color: "#004AAD" }}>Endereço</p>
 						) : (
 							<p>Endereço</p>
@@ -60,11 +56,10 @@ const Profile = () => {
 
 					<BoxTab
 						onClick={() => {
-							setTab(Curriculum);
-							setClickedColor(3);
+							setTabSelected(3);
 						}}
 					>
-						{clickedColor == 3 ? (
+						{tabSelected == 3 ? (
 							<p style={{ color: "#004AAD" }}>Currículo</p>
 						) : (
 							<p>Currículo</p>
@@ -73,11 +68,10 @@ const Profile = () => {
 
 					<BoxTab
 						onClick={() => {
-							setTab(Settings);
-							setClickedColor(4);
+							setTabSelected(4);
 						}}
 					>
-						{clickedColor == 4 ? (
+						{tabSelected == 4 ? (
 							<p style={{ color: "#004AAD" }}>Configurações</p>
 						) : (
 							<p>Configurações</p>
@@ -85,9 +79,15 @@ const Profile = () => {
 					</BoxTab>
 				</BoxLeftColumn>
 
-				<BoxRightColumn>{tab}</BoxRightColumn>
+				<BoxRightColumn>
+					{tabSelected == 0 && <PersonalData />}
+					{tabSelected == 1 && <Disability />}
+					{tabSelected == 2 && <Address />}
+					{tabSelected == 3 && <Curriculum />}
+					{tabSelected == 4 && <Settings />}
+				</BoxRightColumn>
 			</Box>
-		</Container>
+		</Box>
 	);
 };
 
