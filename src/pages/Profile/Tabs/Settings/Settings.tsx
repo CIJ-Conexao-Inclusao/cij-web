@@ -8,16 +8,22 @@ import {
 	RadioGroup,
 	Slider,
 	Typography,
+	useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import ButtonCIJ from "../../../../components/ButtonCIJ/ButtonCIJ";
 import Item from "../../../../components/Item/Item";
 import Switch from "../../../../components/Switch/Switch";
-import { THEME_OPTIONS } from "../../../../constants";
+import { DALTONISM_TYPES, THEME_OPTIONS } from "../../../../constants";
 import { useFontSize } from "../../../../hooks/useFontSize";
 import { useSwitchTheme } from "../../../../hooks/useSwitchTheme";
 import {
 	ActionsContainer,
+	Color,
+	ColorContainer,
+	ColorInfo,
+	ColorsContainer,
+	ColorsGrid,
 	SettingsContainer,
 	SliderContainer,
 } from "./Settings.styled";
@@ -25,6 +31,7 @@ import {
 const Settings = () => {
 	const { getNewFontSize, fontSizeConfig } = useFontSize();
 	const { themeMode } = useSwitchTheme();
+	const { palette } = useTheme();
 
 	// Control form
 	const [changedValues, setChangedValues] = useState(false);
@@ -40,10 +47,14 @@ const Settings = () => {
 	const [voiceInput, setVoiceInput] = useState(false);
 
 	// Theme
-	const [theme, setTheme] = useState(themeMode);
+	const [themeSelected, setThemeSelected] = useState(themeMode);
+
+	// Daltonism
+	const [daltonism, setDaltonism] = useState(DALTONISM_TYPES.DEUTERANOPIA);
 
 	const handleFontSizeChange = (event: any) => {
 		const fontSize = getNewFontSize("default", event.target.value);
+		if (`${fontSize}rem` === newFontSize) return;
 
 		setNewFontSize(`${fontSize}rem`);
 		setSliderValue(event.target.value);
@@ -51,23 +62,40 @@ const Settings = () => {
 	};
 
 	const handleScreenReaderChange = (newValue: boolean) => {
+		if (screenReader === newValue) return;
+
 		setScreenReader(newValue);
 		setChangedValues(true);
 	};
 
 	const handleVoiceInputChange = (newValue: boolean) => {
+		if (voiceInput === newValue) return;
+
 		setVoiceInput(newValue);
 		setChangedValues(true);
 	};
 
 	const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTheme(event.target.value as THEME_OPTIONS);
+		if (themeSelected === event.target.value) return;
+
+		setThemeSelected(event.target.value as THEME_OPTIONS);
+		setChangedValues(true);
+	};
+
+	const handleDaltonismChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		if (daltonism === event.target.value) return;
+
+		setDaltonism(event.target.value as DALTONISM_TYPES);
 		setChangedValues(true);
 	};
 
 	function handleSaveButton() {
 		setChangedValues(false);
 	}
+
+	console.log(palette);
 
 	return (
 		<SettingsContainer>
@@ -157,7 +185,11 @@ const Settings = () => {
 
 			<Item title="Tema">
 				<FormControl>
-					<RadioGroup row value={theme} onChange={handleThemeChange}>
+					<RadioGroup
+						row
+						value={themeSelected}
+						onChange={handleThemeChange}
+					>
 						<FormControlLabel
 							value={THEME_OPTIONS.LIGHT}
 							control={<Radio />}
@@ -170,6 +202,62 @@ const Settings = () => {
 						/>
 					</RadioGroup>
 				</FormControl>
+			</Item>
+
+			<Item title="Modo daltonismo">
+				<FormControl>
+					<RadioGroup
+						row
+						value={daltonism}
+						onChange={handleDaltonismChange}
+					>
+						<FormControlLabel
+							value={DALTONISM_TYPES.DEUTERANOPIA}
+							control={<Radio />}
+							label="Deuteranopia"
+						/>
+						<FormControlLabel
+							value={DALTONISM_TYPES.PROTANOPIA}
+							control={<Radio />}
+							label="Protanopia"
+						/>
+						<FormControlLabel
+							value={DALTONISM_TYPES.TRITANOPIA}
+							control={<Radio />}
+							label="Tritaonopia"
+						/>
+					</RadioGroup>
+				</FormControl>
+			</Item>
+
+			<Item title="Cores do sistema">
+				<ColorsContainer>
+					<Typography
+						fontSize={fontSizeConfig.default}
+						fontWeight={"bold"}
+					>
+						Principais
+					</Typography>
+					<ColorsGrid>
+						<ColorContainer>
+							<Color color={palette.color03.main} />
+							<ColorInfo>
+								<Typography
+									fontSize={fontSizeConfig.small}
+									fontWeight={"bold"}
+								>
+									Azul
+								</Typography>
+								<Typography
+									fontSize={fontSizeConfig.small}
+									fontWeight={200}
+								>
+									{palette.color03.main}
+								</Typography>
+							</ColorInfo>
+						</ColorContainer>
+					</ColorsGrid>
+				</ColorsContainer>
 			</Item>
 
 			<ActionsContainer>
