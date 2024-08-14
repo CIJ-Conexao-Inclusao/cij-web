@@ -12,6 +12,9 @@ export const Container = styled(Box)(({ theme }) => ({
 	padding: "0.5rem",
 	borderRadius: "1.5rem",
 	gap: "0.2rem",
+	...(theme.palette.mode === "dark" && {
+		backgroundColor: theme.palette.color03.main,
+	}),
 }));
 
 export const OptionContainer = styled(Box)<OptionProps>(
@@ -36,6 +39,13 @@ export const OptionContainer = styled(Box)<OptionProps>(
 					? darken(theme.palette.primary.main, 0.2)
 					: darken(theme.palette.color02.main, 0.2),
 			},
+		}),
+		...(theme.palette.mode === "dark" && {
+			backgroundColor: !enabled
+				? theme.palette.color03.main
+				: selected
+				? theme.palette.primary.main
+				: theme.palette.color03.main,
 		}),
 	})
 );
