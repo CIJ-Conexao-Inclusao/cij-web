@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import TextDecreaseIcon from "@mui/icons-material/TextDecrease";
 import TextIncreaseIcon from "@mui/icons-material/TextIncrease";
 import {
@@ -8,22 +10,17 @@ import {
 	RadioGroup,
 	Slider,
 	Typography,
-	useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+
 import ButtonCIJ from "../../../../components/ButtonCIJ/ButtonCIJ";
 import Item from "../../../../components/Item/Item";
 import Switch from "../../../../components/Switch/Switch";
 import { DALTONISM_TYPES, THEME_OPTIONS } from "../../../../constants";
 import { useFontSize } from "../../../../hooks/useFontSize";
 import { useSwitchTheme } from "../../../../hooks/useSwitchTheme";
+import Colors from "./Components/Colors/Colors";
 import {
 	ActionsContainer,
-	Color,
-	ColorContainer,
-	ColorInfo,
-	ColorsContainer,
-	ColorsGrid,
 	SettingsContainer,
 	SliderContainer,
 } from "./Settings.styled";
@@ -31,7 +28,6 @@ import {
 const Settings = () => {
 	const { getNewFontSize, fontSizeConfig } = useFontSize();
 	const { themeMode } = useSwitchTheme();
-	const { palette } = useTheme();
 
 	// Control form
 	const [changedValues, setChangedValues] = useState(false);
@@ -95,7 +91,9 @@ const Settings = () => {
 		setChangedValues(false);
 	}
 
-	console.log(palette);
+	function handleResetButton() {
+		setChangedValues(false);
+	}
 
 	return (
 		<SettingsContainer>
@@ -231,33 +229,7 @@ const Settings = () => {
 			</Item>
 
 			<Item title="Cores do sistema">
-				<ColorsContainer>
-					<Typography
-						fontSize={fontSizeConfig.default}
-						fontWeight={"bold"}
-					>
-						Principais
-					</Typography>
-					<ColorsGrid>
-						<ColorContainer>
-							<Color color={palette.color03.main} />
-							<ColorInfo>
-								<Typography
-									fontSize={fontSizeConfig.small}
-									fontWeight={"bold"}
-								>
-									Azul
-								</Typography>
-								<Typography
-									fontSize={fontSizeConfig.small}
-									fontWeight={200}
-								>
-									{palette.color03.main}
-								</Typography>
-							</ColorInfo>
-						</ColorContainer>
-					</ColorsGrid>
-				</ColorsContainer>
+				<Colors />
 			</Item>
 
 			<ActionsContainer>
@@ -265,6 +237,7 @@ const Settings = () => {
 					variant="outlined"
 					text="Voltar ao padrão"
 					enabled={changedValues}
+					onClick={handleResetButton}
 				/>
 
 				<ButtonCIJ
