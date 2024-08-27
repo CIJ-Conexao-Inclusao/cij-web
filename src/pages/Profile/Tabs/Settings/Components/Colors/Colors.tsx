@@ -1,103 +1,104 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { Typography, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import { GetColorName } from "hex-color-to-color-name";
 
 import { useFontSize } from "../../../../../../hooks/useFontSize";
 import {
-	Color,
-	ColorContainer,
-	ColorInfo,
-	ColorInput,
-	ColorsContainer,
-	ColorsGrid,
+    Color,
+    ColorContainer,
+    ColorInfo,
+    ColorInput,
+    ColorsContainer,
+    ColorsGrid,
 } from "./Colors.styled";
 
-const Colors = () => {
-	const { fontSizeConfig } = useFontSize();
-	const { palette } = useTheme();
+interface IColorsProps {
+    colors: string[];
+    onColorChange: (index: number, newColor: string) => void;
+}
 
-	const [colorIndex, setColorIndex] = useState<number>(0);
-	const [newColors, setNewColors] = useState<string[]>([]);
+interface INewColor {
+    index: number;
+    newColor: string;
+}
 
-	const inputColorRef = useRef<HTMLInputElement>(null);
+const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
+    const { fontSizeConfig } = useFontSize();
 
-	const onColorClick = (
-		index: number,
-		event: React.MouseEvent<HTMLDivElement>
-	) => {
-		setColorIndex(index);
+    const inputColorRef = useRef<HTMLInputElement>(null);
 
-		if (!inputColorRef.current) return;
+    const newColors = useMemo<string[]>(() => colors, [colors]);
+    const [colorIndexSelected, setColorIndexSelected] = useState<number>(0);
 
-		inputColorRef.current.value = newColors[index];
+    const onColorClick = (
+        index: number,
+        event: React.MouseEvent<HTMLDivElement>
+    ) => {
+        setColorIndexSelected(index);
 
-		const rect = event.currentTarget.getBoundingClientRect();
-		inputColorRef.current.style.left = `${rect.left}px`;
-		inputColorRef.current.style.top = `${
-			rect.top - inputColorRef.current.offsetHeight
-		}px`;
+        if (!inputColorRef.current) return;
 
-		inputColorRef.current.click();
-	};
+        inputColorRef.current.value = newColors[index];
+        setInputColorToPosition(event);
 
-	useEffect(() => {
-		if (inputColorRef.current) {
-			inputColorRef.current.addEventListener("change", (event) => {
-				const color = (event.target as HTMLInputElement).value;
+        inputColorRef.current.click();
+    };
 
-				console.log(GetColorName(color));
-			});
-		}
-	}, []);
+    const setInputColorToPosition = (
+        event: React.MouseEvent<HTMLDivElement>
+    ) => {
+        if (!inputColorRef.current) return;
 
-	useEffect(() => {
-		setNewColors([
-			palette.primary.main,
-			palette.secondary.main,
-			palette.color01.main,
-			palette.color02.main,
-			palette.color03.main,
-			palette.color04.main,
-			palette.color05.main,
-			palette.color06.main,
-			palette.color07.main,
-			palette.color08.main,
-			palette.color09.main,
-		]);
-	}, [palette]);
+        const rect = event.currentTarget.getBoundingClientRect();
+        inputColorRef.current.style.left = `${rect.left}px`;
+        inputColorRef.current.style.top = `${
+            rect.top - inputColorRef.current.offsetHeight
+        }px`;
+    };
 
-	return (
-		<>
-			<ColorInput ref={inputColorRef} type="color" />
-			<ColorsContainer>
-				<ColorsGrid>
-					{newColors.map((color, index) => (
-						<ColorContainer key={index}>
-							<Color
-								onClick={(event) => onColorClick(index, event)}
-								color={color}
-							/>
-							<ColorInfo>
-								<Typography
-									fontSize={fontSizeConfig.small}
-									fontWeight={"bold"}
-								>
-									{GetColorName(color)}
-								</Typography>
-								<Typography
-									fontSize={fontSizeConfig.small}
-									fontWeight={200}
-								>
-									{color}
-								</Typography>
-							</ColorInfo>
-						</ColorContainer>
-					))}
-				</ColorsGrid>
-			</ColorsContainer>
-		</>
-	);
+    const onChange = (event: any) => {
+        const color = (event.target as HTMLInputElement).value;
+
+        onColorChange(colorIndexSelected, color);
+        console.log(GetColorName(color));
+    };
+
+    useEffect(() => {
+        inputColorRef.current?.addEventListener("change", onChange);
+
+        () => inputColorRef.current?.removeEventListener("change", onChange);
+    }, []);
+
+    return (
+        <>
+            <ColorInput ref={inputColorRef} type="color" />
+            <ColorsContainer>
+                <ColorsGrid>
+                    {newColors.map((color, index) => (
+                        <ColorContainer key={index}>
+                            <Color
+                                onClick={(event) => onColorClick(index, event)}
+                                color={color}
+                            />
+                            <ColorInfo>
+                                <Typography
+                                    fontSize={fontSizeConfig.small}
+                                    fontWeight={"bold"}>
+                                    {GetColorName(color)}
+                                </Typography>
+                                <Typography
+                                    fontSize={fontSizeConfig.small}
+                                    fontWeight={200}>
+                                    {color}
+                                </Typography>
+                            </ColorInfo>
+                        </ColorContainer>
+                    ))}
+                </ColorsGrid>
+            </ColorsContainer>
+        </>
+    );
 };
 
 export default Colors;
