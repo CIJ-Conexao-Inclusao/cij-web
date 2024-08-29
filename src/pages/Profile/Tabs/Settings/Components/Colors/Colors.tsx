@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Typography } from "@mui/material";
 import { GetColorName } from "hex-color-to-color-name";
@@ -28,8 +28,9 @@ const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
 
     const inputColorRef = useRef<HTMLInputElement>(null);
 
-    const newColors = useMemo<string[]>(() => colors, [colors]);
     const [colorIndexSelected, setColorIndexSelected] = useState<number>(0);
+    const [newColors, setNewColors] = useState<string[]>(colors);
+    const [newColor, setNewColor] = useState<string>("");
 
     const onColorClick = (
         index: number,
@@ -42,7 +43,10 @@ const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
         inputColorRef.current.value = newColors[index];
         setInputColorToPosition(event);
 
-        inputColorRef.current.click();
+        setTimeout(() => {
+            if (!inputColorRef.current) return;
+            inputColorRef.current.click();
+        }, 1000);
     };
 
     const setInputColorToPosition = (
@@ -50,19 +54,31 @@ const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
     ) => {
         if (!inputColorRef.current) return;
 
-        const rect = event.currentTarget.getBoundingClientRect();
-        inputColorRef.current.style.left = `${rect.left}px`;
-        inputColorRef.current.style.top = `${
-            rect.top - inputColorRef.current.offsetHeight
-        }px`;
+        const x = event.currentTarget.offsetLeft;
+        const y = event.currentTarget.offsetTop;
+
+        inputColorRef.current.style.left = `${x}px`;
+        inputColorRef.current.style.top = `${y}px`;
+    };
+
+    const changeColor = (newColor: string) => {
+        const colorsAux = [...newColors];
+        colorsAux[colorIndexSelected] = newColor;
+
+        setNewColors(colorsAux);
     };
 
     const onChange = (event: any) => {
         const color = (event.target as HTMLInputElement).value;
-
-        onColorChange(colorIndexSelected, color);
-        console.log(GetColorName(color));
+        setNewColor(color);
     };
+
+    useEffect(() => {
+        if (newColor) {
+            changeColor(newColor);
+            onColorChange(colorIndexSelected, newColor);
+        }
+    }, [newColor]);
 
     useEffect(() => {
         inputColorRef.current?.addEventListener("change", onChange);
