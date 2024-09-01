@@ -18,11 +18,6 @@ interface IColorsProps {
   onColorChange: (index: number, newColor: string) => void;
 }
 
-interface INewColor {
-  index: number;
-  newColor: string;
-}
-
 const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
   const { fontSizeConfig } = useFontSize();
 
@@ -43,10 +38,10 @@ const Colors: React.FC<IColorsProps> = ({ colors, onColorChange }) => {
     inputColorRef.current.value = newColors[index];
     setInputColorToPosition(event);
 
-    setTimeout(() => {
-      if (!inputColorRef.current) return;
-      inputColorRef.current.click();
-    }, 1000);
+    // Forces the browser to recalculate the input position
+    inputColorRef.current.getBoundingClientRect();
+
+    inputColorRef.current.click();
   };
 
   const setInputColorToPosition = (event: React.MouseEvent<HTMLDivElement>) => {
