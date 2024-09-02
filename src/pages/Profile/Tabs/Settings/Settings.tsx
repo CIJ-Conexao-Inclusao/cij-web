@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import TextDecreaseIcon from "@mui/icons-material/TextDecrease";
 import TextIncreaseIcon from "@mui/icons-material/TextIncrease";
@@ -18,7 +18,7 @@ import Item from "../../../../components/Item/Item";
 import Switch from "../../../../components/Switch/Switch";
 import { DALTONISM_TYPES, THEME_OPTIONS } from "../../../../constants";
 import { useFontSize } from "../../../../hooks/useFontSize";
-import { useSwitchTheme } from "../../../../hooks/useSwitchTheme";
+import { NewColor, useSwitchTheme } from "../../../../hooks/useSwitchTheme";
 import { useTextReader } from "../../../../hooks/useTextReader";
 import Colors from "./Components/Colors/Colors";
 import {
@@ -27,14 +27,14 @@ import {
   SliderContainer,
 } from "./Settings.styled";
 
-interface NewColor {
+interface INewColor {
   index: number;
   newColor: string;
 }
 
 const Settings = () => {
   const { getNewFontSize, fontSizeConfig, incrementFontSize } = useFontSize();
-  const { themeMode, switchTheme } = useSwitchTheme();
+  const { themeMode, switchTheme, changeThemeColors } = useSwitchTheme();
   const { palette } = useTheme();
   const { isReadActive, setIsReadActive } = useTextReader();
 
@@ -74,8 +74,7 @@ const Settings = () => {
     ],
     [palette]
   );
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [newColors, setNewColors] = useState<NewColor[]>([]);
+  const [newColors, setNewColors] = useState<INewColor[]>([]);
 
   const handleFontSizeChange = (event: any) => {
     const fontSize = getNewFontSize("default", event.target.value);
@@ -116,21 +115,50 @@ const Settings = () => {
     setChangedValues(true);
   };
 
-  const handleColorChange = (colorIndex: number, color: string) => {};
+  const handleColorChange = (colorIndex: number, color: string) => {
+    setNewColors([...newColors, { index: colorIndex, newColor: color }]);
+    setChangedValues(true);
+  };
 
   function handleSaveButton() {
     if (themeSelected !== themeMode) switchTheme(themeSelected);
     if (isReadActive !== screenReader) setIsReadActive(screenReader);
     incrementFontSize(sliderValue);
+    changeSystemColors();
 
     setChangedValues(false);
   }
 
-  function handleResetButton() {
-    setChangedValues(false);
-  }
+  const changeSystemColors = () => {
+    const propertiesSorted = [
+      "primary",
+      "secondary",
+      "color01",
+      "color02",
+      "color03",
+      "color04",
+      "color05",
+      "color06",
+      "color07",
+      "color08",
+      "color09",
+    ];
 
-  useEffect(() => {}, [palette]);
+    const newColorsAux: NewColor[] = [];
+
+    for (let color of newColors) {
+      newColorsAux.push({
+        key: propertiesSorted[color.index],
+        hex: color.newColor,
+      });
+    }
+
+    changeThemeColors(themeSelected, newColorsAux);
+  };
+
+  const handleResetButton = () => {
+    setChangedValues(false);
+  };
 
   return (
     <SettingsContainer>
