@@ -1,11 +1,11 @@
 import React from "react";
 
-const Address = ({ onNext }) => {
-	return (
-		<>
-			<p>Endereço</p>
-		</>
-	);
+const Address = () => {
+  return (
+    <>
+      <p>Endereço</p>
+    </>
+  );
 };
 
 export default Address;
