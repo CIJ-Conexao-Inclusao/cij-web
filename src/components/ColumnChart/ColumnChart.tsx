@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
+import { useTheme } from "@mui/material";
 import { Chart } from "chart.js/auto";
 
 export interface IColumnChart {
@@ -24,40 +25,93 @@ const fdata = {
   },
 };
 
+const randomNumbers = () =>
+  Array.from({ length: 3 }, () => Math.floor(Math.random() * 100));
+
 const ColumnChart: React.FC<IColumnChart> = ({
   chartId = "12",
   data = [
     {
-      data: [3, 7, 4],
+      data: randomNumbers(),
       label: "Auditiva",
-      backgroundColor: "blue",
     },
     {
-      data: [4, 3, 5],
+      data: randomNumbers(),
       label: "Visual",
-      backgroundColor: "red",
     },
     {
-      data: [7, 2, 6],
+      data: randomNumbers(),
       label: "Física",
-      backgroundColor: "green",
+    },
+    {
+      data: randomNumbers(),
+      label: "Intelectual",
+    },
+    {
+      data: randomNumbers(),
+      label: "Psicossocial",
     },
   ],
   labels = ["2024-10", "2024-09", "2024-08"],
 }) => {
+  const { palette } = useTheme();
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const createChart = async () => {
       if (!chartRef.current) return;
 
+      data[0].backgroundColor = palette.color05.main;
+      data[1].backgroundColor = palette.color06.main;
+      data[2].backgroundColor = palette.color07.main;
+      data[3].backgroundColor = palette.color08.main;
+      data[4].backgroundColor = palette.color09.main;
+
       new Chart(chartRef.current, {
         type: "bar",
         data: {
           labels,
-          datasets: data,
+          datasets: [
+            {
+              data: randomNumbers(),
+              label: "Auditiva",
+              borderRadius: 8,
+              backgroundColor: palette.color05.main,
+            },
+            {
+              data: randomNumbers(),
+              label: "Visual",
+              borderRadius: 8,
+              backgroundColor: palette.color06.main,
+            },
+            {
+              data: randomNumbers(),
+              label: "Física",
+              borderRadius: 8,
+              backgroundColor: palette.color07.main,
+            },
+            {
+              data: randomNumbers(),
+              label: "Intelectual",
+              borderRadius: 8,
+              backgroundColor: palette.color08.main,
+            },
+            {
+              data: randomNumbers(),
+              label: "Psicossocial",
+              borderRadius: 8,
+              backgroundColor: palette.color09.main,
+            },
+          ],
         },
-        options: {},
+        options: {
+          animation: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
       });
     };
 

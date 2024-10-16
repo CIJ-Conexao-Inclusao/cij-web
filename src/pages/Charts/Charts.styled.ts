@@ -24,6 +24,7 @@ export const BoxDisabilityPerCity = styled(Box)({
 export const BoxBottomCharts = styled(Box)({
   display: "flex",
   width: "100%",
+  gap: "2%",
 });
 
 export const BoxDisabilitiesPerNeighborhood = styled(Box)({
@@ -34,8 +35,8 @@ export const BoxDisabilitiesPerNeighborhood = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  marginRight: "2rem",
   padding: "1rem",
+  flex: 1.5,
 });
 
 export const ColumnsContainer = styled(Box)({
@@ -58,9 +59,11 @@ export const BoxHiring = styled(Box)({
 
 export const GridContainer = styled(Box)(() => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(12rem, 1fr))",
-  gap: "2%",
   width: "100%",
+  maxWidth: "100%",
+  // gridTemplateColumns: "repeat(auto-fill, minmax(10rem, 1fr))",
+  gridTemplateColumns: "repeat(5, 1fr)",
+  gap: "2%",
 }));
 
 export const Container = styled(Box)({
@@ -68,6 +71,7 @@ export const Container = styled(Box)({
   flexDirection: "column",
   gap: "1rem",
   padding: "1rem",
+  width: "100%",
 });
 
 export const ColumnContainer = styled(Box)({});

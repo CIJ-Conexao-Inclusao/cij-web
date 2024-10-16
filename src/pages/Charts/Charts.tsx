@@ -27,7 +27,7 @@ import barChartPhysicalDisability from "./assets/bar-chart-physical-disability.p
 import barChartPsychosocialDisability from "./assets/bar-chart-psychosocial-disability.png";
 import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
 
-import ColumnChart from "../../components/ColumnChart/ColumnChart";
+import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
 import mapChart from "./assets/map-chart.png";
@@ -96,61 +96,65 @@ const Charts = () => {
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
   return (
-    <Box>
-      <Container>
-        <p className="title">Gráficos</p>
+    <Container>
+      <p className="title">Gráficos</p>
 
-        <BoxTopCharts sx={{ flexGrow: 1 }}>
-          <Typography
-            variant="h6"
-            fontSize={fontSizeConfig.veryBig}
-            fontWeight={600}
-            color="color00.main">
-            Deficiências por cidade
-          </Typography>
+      <BoxTopCharts>
+        <Typography
+          variant="h6"
+          fontSize={fontSizeConfig.veryBig}
+          fontWeight={600}
+          color="color00.main">
+          Deficiências por cidade
+        </Typography>
 
-          <GridContainer>
-            {disabilitiesPerCity.map((disability) => (
+        <GridContainer>
+          {disabilitiesPerCity.map((disability) => (
+            <Box sx={{ width: "100%" }}>
               <DoughnutCard
                 key={disability.name}
                 title={disability.name}
                 chartData={chartData}
               />
-            ))}
-          </GridContainer>
-        </BoxTopCharts>
-
-        <BoxBottomCharts>
-          <BoxDisabilitiesPerNeighborhood>
-            <p className="text">Centro</p>
-
-            <Box sx={{ display: "flex", marginRight: "1rem" }}>
-              <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                spacing={4}>
-                {disabilitiesPerNeighborhood.map((disability, index) => (
-                  <Grid key={index} item xs>
-                    <img
-                      id="disability-per-neighborhood"
-                      src={disability.image}
-                      alt="Gráfico de Barras"
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-
-              <img id="map-chart" src={mapChart} alt="Gráfico de Mapa" />
             </Box>
-          </BoxDisabilitiesPerNeighborhood>
+          ))}
+        </GridContainer>
+      </BoxTopCharts>
 
-          <ColumnsContainer>
-            <ColumnContainer>
-              <ColumnChart />
-            </ColumnContainer>
-            {/* <BoxHiring sx={{ marginBottom: "2rem" }}>
+      <BoxBottomCharts>
+        <BoxDisabilitiesPerNeighborhood>
+          <p className="text">Centro</p>
+
+          <Box sx={{ display: "flex" }}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              spacing={4}>
+              {disabilitiesPerNeighborhood.map((disability, index) => (
+                <Grid key={index} item xs>
+                  <img
+                    id="disability-per-neighborhood"
+                    src={disability.image}
+                    alt="Gráfico de Barras"
+                  />
+                </Grid>
+              ))}
+            </Grid>
+
+            <img id="map-chart" src={mapChart} alt="Gráfico de Mapa" />
+          </Box>
+        </BoxDisabilitiesPerNeighborhood>
+
+        <ColumnsContainer>
+          <ColumnContainer>
+            <ColumnCard title="Homens" />
+          </ColumnContainer>
+          <ColumnContainer>
+            <ColumnCard title="Mulheres" />
+          </ColumnContainer>
+          {/* <BoxHiring sx={{ marginBottom: "2rem" }}>
               <p className="text">Homens</p>
 
               <img
@@ -169,10 +173,9 @@ const Charts = () => {
                 alt="Gráfico de Barras"
               />
             </BoxHiring> */}
-          </ColumnsContainer>
-        </BoxBottomCharts>
-      </Container>
-    </Box>
+        </ColumnsContainer>
+      </BoxBottomCharts>
+    </Container>
   );
 };
 
