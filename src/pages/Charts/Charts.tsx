@@ -110,13 +110,11 @@ const Charts = () => {
 
         <GridContainer>
           {disabilitiesPerCity.map((disability) => (
-            <Box sx={{ width: "100%" }}>
-              <DoughnutCard
-                key={disability.name}
-                title={disability.name}
-                chartData={chartData}
-              />
-            </Box>
+            <DoughnutCard
+              key={disability.name}
+              title={disability.name}
+              chartData={chartData}
+            />
           ))}
         </GridContainer>
       </BoxTopCharts>

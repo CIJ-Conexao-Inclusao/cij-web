@@ -60,9 +60,7 @@ export const BoxHiring = styled(Box)({
 export const GridContainer = styled(Box)(() => ({
   display: "grid",
   width: "100%",
-  maxWidth: "100%",
-  // gridTemplateColumns: "repeat(auto-fill, minmax(10rem, 1fr))",
-  gridTemplateColumns: "repeat(5, 1fr)",
+  gridTemplateColumns: "repeat(auto-fill, minmax(12rem, 1fr))",
   gap: "2%",
 }));
 
