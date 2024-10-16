@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const Container = styled(Box)(({ theme }) => ({
-  width: "100% !important",
+  width: "100%",
   display: "flex",
   gap: "0.5rem",
   flexDirection: "column",

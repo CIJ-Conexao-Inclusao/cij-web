@@ -40,6 +40,7 @@ const DoughnutChart: React.FC<IDoughnutChart> = ({
         },
         options: {
           cutout: `${cutoutPercent}%`,
+          animation: false,
           plugins: {
             legend: {
               display: displayLegend,
@@ -50,7 +51,7 @@ const DoughnutChart: React.FC<IDoughnutChart> = ({
     };
 
     createChart();
-  }, [data]);
+  }, []);
 
   return <canvas ref={chartRef} id={chartId}></canvas>;
 };

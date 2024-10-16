@@ -30,6 +30,7 @@ import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
+import MapChart from "../../components/MapChart/Mapchart";
 import mapChart from "./assets/map-chart.png";
 
 const Charts = () => {
@@ -85,14 +86,6 @@ const Charts = () => {
     ],
   } as IDoughnutChart;
 
-  // const columnData = {
-  //   chartId: "teste",
-  //   data: [
-  //     { value: 70, label: "teste", color: palette.primary.main },
-  //     { value: 30, label: "aham", color: palette.color01.main },
-  //   ],
-  // } as IColumnChart;
-
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
   return (
@@ -113,7 +106,7 @@ const Charts = () => {
             <DoughnutCard
               key={disability.name}
               title={disability.name}
-              chartData={chartData}
+              chartData={{ ...chartData, chartId: disability.name }}
             />
           ))}
         </GridContainer>
@@ -152,27 +145,9 @@ const Charts = () => {
           <ColumnContainer>
             <ColumnCard title="Mulheres" />
           </ColumnContainer>
-          {/* <BoxHiring sx={{ marginBottom: "2rem" }}>
-              <p className="text">Homens</p>
-
-              <img
-                id="hiring-chart"
-                src={barChartMenHiring}
-                alt="Gráfico de Barras"
-              />
-            </BoxHiring>
-
-            <BoxHiring>
-              <p className="text">Mulheres</p>
-
-              <img
-                id="hiring-chart"
-                src={barChartWomenHiring}
-                alt="Gráfico de Barras"
-              />
-            </BoxHiring> */}
         </ColumnsContainer>
       </BoxBottomCharts>
+      <MapChart />
     </Container>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import {
-	Navigate,
-	Outlet,
-	Route,
-	BrowserRouter as Router,
-	Routes,
+  Navigate,
+  Outlet,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
 
 import "./App.scss";
@@ -21,6 +21,13 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Supporters from "./pages/Supporters/Supporters";
 
+import { Chart } from "chart.js";
+import {
+  ChoroplethController,
+  ColorScale,
+  GeoFeature,
+  ProjectionScale,
+} from "chartjs-chart-geo";
 import TextReader from "./components/TextReader/TextReader";
 import { ROUTES } from "./constants";
 import { ROLES } from "./constants/ROLES";
@@ -33,108 +40,92 @@ import { useAppDispatch } from "./redux/hooks";
 import { defineUser } from "./redux/user/userSlice";
 import { CookieService, UserService } from "./services";
 
+Chart.register(ChoroplethController, GeoFeature, ColorScale, ProjectionScale);
+
 const App = () => {
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-	useEffect(() => {
-		const tokenCookies = CookieService.getCookie("token");
+  useEffect(() => {
+    const tokenCookies = CookieService.getCookie("token");
 
-		if (tokenCookies != null) {
-			UserService.getUserByToken(tokenCookies)
-				.then((res) => {
-					const user = res.data.user_info;
-					dispatch(defineUser({ user }));
-				})
-				.catch((err) => {
-					console.log(err);
+    if (tokenCookies != null) {
+      UserService.getUserByToken(tokenCookies)
+        .then((res) => {
+          const user = res.data.user_info;
+          dispatch(defineUser({ user }));
+        })
+        .catch((err) => {
+          console.log(err);
 
-					if (err.response.data.message == "invalid token") {
-						CookieService.removeCookie("token");
-					}
-				});
-		}
-	}, []);
+          if (err.response.data.message == "invalid token") {
+            CookieService.removeCookie("token");
+          }
+        });
+    }
+  }, []);
 
-	return (
-		<SwitchThemeProvider>
-			<ToastProvider>
-				<FontSizeProvider>
-					<TextReaderProvider>
-						<TextReader />
-						<Router>
-							<Routes>
-								<Route element={<PageLayout />}>
-									<Route
-										path={ROUTES.home}
-										element={<Home />}
-									/>
-									<Route
-										path={ROUTES.charts}
-										element={<Charts />}
-									/>
-									<Route
-										path={ROUTES.jobVacancies}
-										element={<JobVacancies />}
-									/>
-									<Route
-										path={ROUTES.jobVacancyDetails}
-										element={<JobVacancyDetails />}
-									/>
-									<Route
-										path={ROUTES.supporters}
-										element={<Supporters />}
-									/>
-									<Route
-										path={ROUTES.profile}
-										element={<Profile />}
-									/>
-									<Route
-										path={ROUTES.company}
-										element={
-											<ProtectedRoute
-												allowedUserRoles={[ROLES.ADMIN]}
-												redirectPath="/"
-												children={<Company />}
-											/>
-										}
-									/>
-								</Route>
-								<Route
-									path={ROUTES.signIn}
-									element={<SignIn />}
-								/>
-								<Route
-									path={ROUTES.signUp}
-									element={<SignUp />}
-								/>
-								<Route path="/*" element={<NotFound />} />
-							</Routes>
-						</Router>
-					</TextReaderProvider>
-				</FontSizeProvider>
-			</ToastProvider>
-		</SwitchThemeProvider>
-	);
+  return (
+    <SwitchThemeProvider>
+      <ToastProvider>
+        <FontSizeProvider>
+          <TextReaderProvider>
+            <TextReader />
+            <Router>
+              <Routes>
+                <Route element={<PageLayout />}>
+                  <Route path={ROUTES.home} element={<Home />} />
+                  <Route path={ROUTES.charts} element={<Charts />} />
+                  <Route
+                    path={ROUTES.jobVacancies}
+                    element={<JobVacancies />}
+                  />
+                  <Route
+                    path={ROUTES.jobVacancyDetails}
+                    element={<JobVacancyDetails />}
+                  />
+                  <Route path={ROUTES.supporters} element={<Supporters />} />
+                  <Route path={ROUTES.profile} element={<Profile />} />
+                  <Route
+                    path={ROUTES.company}
+                    element={
+                      <ProtectedRoute
+                        allowedUserRoles={[ROLES.ADMIN]}
+                        redirectPath="/"
+                        children={<Company />}
+                      />
+                    }
+                  />
+                </Route>
+                <Route path={ROUTES.signIn} element={<SignIn />} />
+                <Route path={ROUTES.signUp} element={<SignUp />} />
+                <Route path="/*" element={<NotFound />} />
+              </Routes>
+            </Router>
+          </TextReaderProvider>
+        </FontSizeProvider>
+      </ToastProvider>
+    </SwitchThemeProvider>
+  );
 };
 
 type ProtectedRouteProps = {
-	allowedUserRoles: ROLES[];
-	children: any;
-	redirectPath: string;
+  allowedUserRoles: ROLES[];
+  children: any;
+  redirectPath: string;
 };
 
 const ProtectedRoute = ({
-	allowedUserRoles = [],
-	children,
-	redirectPath = "/signIn",
+  allowedUserRoles = [],
+  children,
+  redirectPath = "/signIn",
 }: ProtectedRouteProps) => {
-	const role = CookieService.getRole();
+  const role = CookieService.getRole();
 
-	if (role && allowedUserRoles.includes(role)) {
-		return children ? children : <Outlet />;
-	} else {
-		return <Navigate to={redirectPath} replace />;
-	}
+  if (role && allowedUserRoles.includes(role)) {
+    return children ? children : <Outlet />;
+  } else {
+    return <Navigate to={redirectPath} replace />;
+  }
 };
 
 export default App;
