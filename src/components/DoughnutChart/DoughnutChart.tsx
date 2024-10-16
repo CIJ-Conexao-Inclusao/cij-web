@@ -1,5 +1,6 @@
-import { Chart } from "chart.js/auto";
 import React, { useEffect, useRef } from "react";
+
+import { Chart } from "chart.js/auto";
 
 export interface IDoughnutChart {
   chartId: string;
@@ -31,7 +32,7 @@ const DoughnutChart: React.FC<IDoughnutChart> = ({
           datasets: [
             {
               data: data.map((row) => row.value),
-              backgroundColor: data.map((row) => row.color ?? ''),
+              backgroundColor: data.map((row) => row.color ?? ""),
               borderWidth: 1,
               borderColor: "#F6F6F6",
             },
@@ -44,7 +45,7 @@ const DoughnutChart: React.FC<IDoughnutChart> = ({
               display: displayLegend,
             },
           },
-        }
+        },
       });
     };
 

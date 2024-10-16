@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, useTheme, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import {
   BoxBottomCharts,
   BoxDisabilitiesPerNeighborhood,
@@ -29,9 +29,12 @@ import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
 import barChartMenHiring from "./assets/bar-chart-men-hiring.png";
 import barChartWomenHiring from "./assets/bar-chart-women-hiring.png";
 
+import ColumnChart, {
+  IColumnChart,
+} from "../../components/ColumnChart/ColumnChart";
+import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
 import mapChart from "./assets/map-chart.png";
-import DoughnutCard from '../../components/DoughnutCard/DoughnutCard';
 
 const Charts = () => {
   const { palette } = useTheme();
@@ -83,8 +86,16 @@ const Charts = () => {
     data: [
       { value: 70, label: "teste", color: palette.primary.main },
       { value: 30, label: "aham", color: palette.color01.main },
-    ]
+    ],
   } as IDoughnutChart;
+
+  const columnData = {
+    chartId: "teste",
+    data: [
+      { value: 70, label: "teste", color: palette.primary.main },
+      { value: 30, label: "aham", color: palette.color01.main },
+    ],
+  } as IColumnChart;
 
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
@@ -94,13 +105,21 @@ const Charts = () => {
         <p className="title">Gráficos</p>
 
         <BoxTopCharts sx={{ flexGrow: 1 }}>
-          <Typography variant="h6" fontSize={fontSizeConfig.veryBig} fontWeight={600} color="color00.main">
+          <Typography
+            variant="h6"
+            fontSize={fontSizeConfig.veryBig}
+            fontWeight={600}
+            color="color00.main">
             Deficiências por cidade
           </Typography>
 
           <GridContainer>
             {disabilitiesPerCity.map((disability) => (
-              <DoughnutCard key={disability.name} title={disability.name} chartData={chartData} />
+              <DoughnutCard
+                key={disability.name}
+                title={disability.name}
+                chartData={chartData}
+              />
             ))}
           </GridContainer>
         </BoxTopCharts>
@@ -153,6 +172,7 @@ const Charts = () => {
             </BoxHiring>
           </Box>
         </BoxBottomCharts>
+        <ColumnChart chartId={columnData.chartId} data={columnData.data} />
       </Container>
     </Box>
   );
