@@ -4,8 +4,9 @@ import { Box, Grid, Typography, useTheme } from "@mui/material";
 import {
   BoxBottomCharts,
   BoxDisabilitiesPerNeighborhood,
-  BoxHiring,
   BoxTopCharts,
+  ColumnContainer,
+  ColumnsContainer,
   Container,
   GridContainer,
 } from "./Charts.styled";
@@ -26,12 +27,7 @@ import barChartPhysicalDisability from "./assets/bar-chart-physical-disability.p
 import barChartPsychosocialDisability from "./assets/bar-chart-psychosocial-disability.png";
 import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
 
-import barChartMenHiring from "./assets/bar-chart-men-hiring.png";
-import barChartWomenHiring from "./assets/bar-chart-women-hiring.png";
-
-import ColumnChart, {
-  IColumnChart,
-} from "../../components/ColumnChart/ColumnChart";
+import ColumnChart from "../../components/ColumnChart/ColumnChart";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
 import mapChart from "./assets/map-chart.png";
@@ -89,13 +85,13 @@ const Charts = () => {
     ],
   } as IDoughnutChart;
 
-  const columnData = {
-    chartId: "teste",
-    data: [
-      { value: 70, label: "teste", color: palette.primary.main },
-      { value: 30, label: "aham", color: palette.color01.main },
-    ],
-  } as IColumnChart;
+  // const columnData = {
+  //   chartId: "teste",
+  //   data: [
+  //     { value: 70, label: "teste", color: palette.primary.main },
+  //     { value: 30, label: "aham", color: palette.color01.main },
+  //   ],
+  // } as IColumnChart;
 
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
@@ -150,8 +146,11 @@ const Charts = () => {
             </Box>
           </BoxDisabilitiesPerNeighborhood>
 
-          <Box>
-            <BoxHiring sx={{ marginBottom: "2rem" }}>
+          <ColumnsContainer>
+            <ColumnContainer>
+              <ColumnChart />
+            </ColumnContainer>
+            {/* <BoxHiring sx={{ marginBottom: "2rem" }}>
               <p className="text">Homens</p>
 
               <img
@@ -169,10 +168,9 @@ const Charts = () => {
                 src={barChartWomenHiring}
                 alt="Gráfico de Barras"
               />
-            </BoxHiring>
-          </Box>
+            </BoxHiring> */}
+          </ColumnsContainer>
         </BoxBottomCharts>
-        <ColumnChart chartId={columnData.chartId} data={columnData.data} />
       </Container>
     </Box>
   );

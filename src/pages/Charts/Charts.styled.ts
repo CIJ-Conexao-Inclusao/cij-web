@@ -1,12 +1,12 @@
-import { Box } from "@mui/material";
 import styled from "@emotion/styled";
+import { Box } from "@mui/material";
 
 export const BoxTopCharts = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "0.8rem",
   marginBottom: "2rem",
-  width: "100%"
+  width: "100%",
 });
 
 export const BoxDisabilityPerCity = styled(Box)({
@@ -18,12 +18,12 @@ export const BoxDisabilityPerCity = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   padding: "1rem",
-  width: "100%"
+  width: "100%",
 });
 
 export const BoxBottomCharts = styled(Box)({
   display: "flex",
-  width: "100%"
+  width: "100%",
 });
 
 export const BoxDisabilitiesPerNeighborhood = styled(Box)({
@@ -35,7 +35,14 @@ export const BoxDisabilitiesPerNeighborhood = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   marginRight: "2rem",
-  padding: "1rem"
+  padding: "1rem",
+});
+
+export const ColumnsContainer = styled(Box)({
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  gap: "2rem",
 });
 
 export const BoxHiring = styled(Box)({
@@ -46,19 +53,21 @@ export const BoxHiring = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: "1rem"
+  padding: "1rem",
 });
 
 export const GridContainer = styled(Box)(() => ({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(12rem, 1fr))",
   gap: "2%",
-  width: "100%"
+  width: "100%",
 }));
 
 export const Container = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "1rem",
-  padding: "1rem"
+  padding: "1rem",
 });
+
+export const ColumnContainer = styled(Box)({});
