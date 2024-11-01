@@ -1,153 +1,76 @@
-import * as ChartGeo from "chartjs-chart-geo";
-import React, { useEffect, useRef } from "react";
-import { feature } from "topojson-client";
-// import tst from "../../assets/geojson/jaragua-do-sul-bairros-tst.json";
-import GeoJson from "../../assets/geojson/jaragua-do-sul-bairros.json";
+import * as d3 from "d3";
+import React, { useEffect, useRef, useState } from "react";
+import api from "../../api";
+
+import { Container } from "./MapChart.styled";
+
+const mapUrl =
+  "https://gist.githubusercontent.com/Kenzohfs/c32921eddaeb2e00cc219e0fc016a46e/raw/9ef94f2d48dfda5fe1f550bdbefeba14c6c2012c/jaragua-do-sul-bairros.json";
 
 const MapChart = () => {
-  const chartRef = useRef<HTMLCanvasElement | null>(null);
-  console.log(ChartGeo);
+  const vizRef = useRef<HTMLDivElement | null>(null);
+  const [mapData, setMapData] = useState<any>(null);
 
   useEffect(() => {
-    const url = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
+    const getMap = async () => {
+      console.log("passou get");
+      const res = await api.get(mapUrl);
+      setMapData(res.data);
 
-    if (!chartRef.current) return;
+      return res.data;
+    };
 
-    fetch(url)
-      .then((result) => result.json())
-      .then((datapoint) => {
-        const countries = (
-          feature(datapoint, datapoint.objects.countries) as any
-        ).features;
+    const onSelectNeighbourhood = (neighbourhood: string) => {
+      console.log(neighbourhood);
+    };
 
-        console.log("datapoint", datapoint);
-        console.log("countries", countries);
+    const updateMap = async () => {
+      if (!vizRef.current) return;
 
-        // console.log("geoJson", GeoJson);
-        // console.log("features", nbs);
+      let data = mapData;
+      if (mapData == null) data = await getMap();
 
-        // const data = {
-        //   labels: countries.map((country: any) => country.properties.name),
-        //   datasets: [
-        //     {
-        //       label: "Countries",
-        //       data: countries.map((country: any) => ({
-        //         feature: country,
-        //         value: Math.random(),
-        //       })),
-        //     },
-        //   ],
-        // };
+      const viz = vizRef.current;
 
-        // const config: any = {
-        //   type: "choropleth",
-        //   data,
-        //   options: {
-        //     showOutline: true,
-        //     showGraticule: true,
-        //     scales: {
-        //       xy: {
-        //         projection: "equalEarth",
-        //       },
-        //     },
-        //     plugins: {
-        //       legend: {
-        //         display: false,
-        //       },
-        //     },
-        //   },
-        // };
+      d3.select(viz).selectAll("*").remove();
 
-        // new ChartGeo.ChoroplethChart(
-        //   chartRef.current as HTMLCanvasElement,
-        //   config
-        // );
+      let width = parseInt(d3.select(viz).style("width"));
+      let height = parseInt(d3.select(viz).style("height"));
+      console.log(width, height);
 
-        // WORKING
-        const nbs = GeoJson.features;
+      // Área usável do mapa
+      const svg = d3
+        .select(viz)
+        .append("svg")
+        .attr("class", "d3-svg")
+        .attr("width", height)
+        .attr("height", width);
 
-        const data = {
-          labels: nbs.map((nb) => nb.properties.name || "Sem nome"),
-          datasets: [
-            {
-              label: "Bairros",
-              data: nbs.map((nb) => ({
-                feature: nb,
-                value: Math.random(),
-              })),
-            },
-          ],
-        };
+      const projection = d3.geoMercator().fitSize([height, width], data);
+      const pathGen = d3.geoPath(projection);
 
-        const config: any = {
-          type: "choropleth",
-          data,
-          options: {
-            showOutline: true,
-            showGraticule: true,
-            scales: {
-              xy: {},
-            },
-            plugins: {
-              legend: {
-                display: false,
-              },
-            },
-          },
-        };
+      const g = svg.append("g");
 
-        new ChartGeo.ChoroplethChart(
-          chartRef.current as HTMLCanvasElement,
-          config
-        );
+      g.attr("class", "d3-neighbourhoods")
+        .selectAll("path")
+        .data(data.features)
+        .enter()
+        .append("path")
+        .attr("key", (feature: any) => feature.properties.name ?? "Not Found")
+        .attr("d", pathGen as any)
+        .attr("class", "d3-neighbourhood")
+        .on("click", (_: any, feature: any) => {
+          onSelectNeighbourhood(feature.properties.name);
+        });
+    };
 
-        // COULDN'T MAKE IT WORK
-        //   const nbs = (
-        //     ChartGeo.topojson.feature(
-        //       tst as any,
-        //       tst.objects.tst.features as any
-        //     ) as any
-        //   ).features;
-        //   console.log("aqui", nbs);
+    updateMap();
+    window.addEventListener("resize", updateMap);
 
-        //   const data = {
-        //     labels: nbs.map((nb: any) => nb.properties.name || "Sem nome"),
-        //     datasets: [
-        //       {
-        //         label: "Bairros",
-        //         data: nbs.map((nb: any) => ({
-        //           feature: nb,
-        //           value: Math.random(),
-        //         })),
-        //       },
-        //     ],
-        //   };
-
-        //   const config: any = {
-        //     type: "choropleth",
-        //     data,
-        //     options: {
-        //       showOutline: true,
-        //       showGraticule: true,
-        //       scales: {
-        //         xy: {},
-        //       },
-        //       plugins: {
-        //         legend: {
-        //           display: false,
-        //         },
-        //       },
-        //     },
-        //   };
-
-        //   new ChartGeo.ChoroplethChart(
-        //     chartRef.current as HTMLCanvasElement,
-        //     config
-        //   );
-      });
+    return () => window.removeEventListener("resize", updateMap);
   }, []);
 
-  return <canvas ref={chartRef}></canvas>;
+  return <Container ref={vizRef} className="viz"></Container>;
 };
 
 export default MapChart;

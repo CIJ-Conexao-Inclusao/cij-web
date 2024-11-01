@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import {
   BoxBottomCharts,
   BoxDisabilitiesPerNeighborhood,
@@ -30,8 +30,7 @@ import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
-import MapChart from "../../components/MapChart/Mapchart";
-import mapChart from "./assets/map-chart.png";
+import MapCard from "../../components/MapCard/MapCard";
 
 const Charts = () => {
   const { palette } = useTheme();
@@ -113,29 +112,8 @@ const Charts = () => {
       </BoxTopCharts>
 
       <BoxBottomCharts>
-        <BoxDisabilitiesPerNeighborhood>
-          <p className="text">Centro</p>
-
-          <Box sx={{ display: "flex" }}>
-            <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              spacing={4}>
-              {disabilitiesPerNeighborhood.map((disability, index) => (
-                <Grid key={index} item xs>
-                  <img
-                    id="disability-per-neighborhood"
-                    src={disability.image}
-                    alt="Gráfico de Barras"
-                  />
-                </Grid>
-              ))}
-            </Grid>
-
-            <img id="map-chart" src={mapChart} alt="Gráfico de Mapa" />
-          </Box>
+        <BoxDisabilitiesPerNeighborhood id="map-container">
+          <MapCard />
         </BoxDisabilitiesPerNeighborhood>
 
         <ColumnsContainer>
@@ -147,7 +125,6 @@ const Charts = () => {
           </ColumnContainer>
         </ColumnsContainer>
       </BoxBottomCharts>
-      <MapChart />
     </Container>
   );
 };
