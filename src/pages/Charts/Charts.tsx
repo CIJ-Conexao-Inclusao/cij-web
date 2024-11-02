@@ -96,7 +96,7 @@ const Charts = () => {
           variant="h6"
           fontSize={fontSizeConfig.veryBig}
           fontWeight={600}
-          color="color00.main">
+          color="color04.main">
           Deficiências por cidade
         </Typography>
 

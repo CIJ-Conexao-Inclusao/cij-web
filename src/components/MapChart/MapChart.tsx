@@ -2,12 +2,23 @@ import * as d3 from "d3";
 import React, { useEffect, useRef, useState } from "react";
 import api from "../../api";
 
+import { useSidebar } from "../../hooks/useSidebar";
 import { Container } from "./MapChart.styled";
 
 const mapUrl =
   "https://gist.githubusercontent.com/Kenzohfs/c32921eddaeb2e00cc219e0fc016a46e/raw/9ef94f2d48dfda5fe1f550bdbefeba14c6c2012c/jaragua-do-sul-bairros.json";
 
-const MapChart = () => {
+interface IMapChartProps {
+  selectedNeighborhood: string;
+  onSelect: (neighbourhood: string) => void;
+}
+
+const MapChart: React.FC<IMapChartProps> = ({
+  selectedNeighborhood,
+  onSelect,
+}) => {
+  const { changed } = useSidebar();
+
   const vizRef = useRef<HTMLDivElement | null>(null);
   const [mapData, setMapData] = useState<any>(null);
 
@@ -21,6 +32,7 @@ const MapChart = () => {
 
   const onSelectNeighbourhood = (neighbourhood: string) => {
     console.log(neighbourhood);
+    onSelect(neighbourhood);
   };
 
   const updateMap = async () => {
@@ -35,18 +47,17 @@ const MapChart = () => {
 
     d3.select(viz).selectAll("*").remove();
 
-    // Using only height bc the map is a square
-    // Also width is changing even though it's set to 100%
-    let height = parseInt(d3.select(viz).style("height"));
+    let width = parseInt(d3.select(viz).style("width"));
+    // let height = parseInt(d3.select(viz).style("height"));
 
     const svg = d3
       .select(viz)
       .append("svg")
       .attr("class", "d3-svg")
-      .attr("width", height)
-      .attr("height", height);
+      .attr("width", width)
+      .attr("height", width);
 
-    const projection = d3.geoMercator().fitSize([height, height], data);
+    const projection = d3.geoMercator().fitSize([width, width], data);
     const pathGen = d3.geoPath(projection);
 
     const g = svg.append("g");
@@ -59,6 +70,9 @@ const MapChart = () => {
       .attr("key", (feature: any) => feature.properties.name ?? "Not Found")
       .attr("d", pathGen as any)
       .attr("class", "d3-neighbourhood")
+      .attr("active", (feature: any) => {
+        return selectedNeighborhood === feature.properties.name;
+      })
       .on("click", (_: any, feature: any) => {
         onSelectNeighbourhood(feature.properties.name);
       });
@@ -66,7 +80,7 @@ const MapChart = () => {
 
   useEffect(() => {
     updateMap();
-  }, []);
+  }, [changed, selectedNeighborhood]);
 
   useEffect(() => {
     window.addEventListener("resize", updateMap);

@@ -1,13 +1,14 @@
 import { Box, styled } from "@mui/material";
 
 export const Container = styled(Box)(({ theme }) => ({
-  // display: "grid",
-  placeItems: "center",
-  transform: "scaleX(-1) rotate(270deg)",
+  flex: 2,
   height: "100%",
-  width: "100%",
-  minWidth: 0,
-  minHeight: 0,
+  display: "flex",
+  placeItems: "center",
+
+  "& .d3-svg": {
+    transform: "scaleX(-1) rotate(270deg)",
+  },
 
   "& .d3-neighbourhoods": {
     backgroundColor: theme.palette.color02.main,
@@ -22,6 +23,10 @@ export const Container = styled(Box)(({ theme }) => ({
     fill: theme.palette.color02.main,
 
     "&:hover": {
+      fill: theme.palette.primary.main,
+    },
+
+    "&[active='true']": {
       fill: theme.palette.primary.main,
     },
   },

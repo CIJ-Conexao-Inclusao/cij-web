@@ -32,6 +32,7 @@ import TextReader from "./components/TextReader/TextReader";
 import { ROUTES } from "./constants";
 import { ROLES } from "./constants/ROLES";
 import { FontSizeProvider } from "./hooks/useFontSize";
+import { SidebarProvider } from "./hooks/useSidebar";
 import { SwitchThemeProvider } from "./hooks/useSwitchTheme";
 import { TextReaderProvider } from "./hooks/useTextReader";
 import { ToastProvider } from "./hooks/useToast";
@@ -69,38 +70,40 @@ const App = () => {
       <ToastProvider>
         <FontSizeProvider>
           <TextReaderProvider>
-            <TextReader />
-            <Router>
-              <Routes>
-                <Route element={<PageLayout />}>
-                  <Route path={ROUTES.home} element={<Home />} />
-                  <Route path={ROUTES.charts} element={<Charts />} />
-                  <Route
-                    path={ROUTES.jobVacancies}
-                    element={<JobVacancies />}
-                  />
-                  <Route
-                    path={ROUTES.jobVacancyDetails}
-                    element={<JobVacancyDetails />}
-                  />
-                  <Route path={ROUTES.supporters} element={<Supporters />} />
-                  <Route path={ROUTES.profile} element={<Profile />} />
-                  <Route
-                    path={ROUTES.company}
-                    element={
-                      <ProtectedRoute
-                        allowedUserRoles={[ROLES.ADMIN]}
-                        redirectPath="/"
-                        children={<Company />}
-                      />
-                    }
-                  />
-                </Route>
-                <Route path={ROUTES.signIn} element={<SignIn />} />
-                <Route path={ROUTES.signUp} element={<SignUp />} />
-                <Route path="/*" element={<NotFound />} />
-              </Routes>
-            </Router>
+            <SidebarProvider>
+              <TextReader />
+              <Router>
+                <Routes>
+                  <Route element={<PageLayout />}>
+                    <Route path={ROUTES.home} element={<Home />} />
+                    <Route path={ROUTES.charts} element={<Charts />} />
+                    <Route
+                      path={ROUTES.jobVacancies}
+                      element={<JobVacancies />}
+                    />
+                    <Route
+                      path={ROUTES.jobVacancyDetails}
+                      element={<JobVacancyDetails />}
+                    />
+                    <Route path={ROUTES.supporters} element={<Supporters />} />
+                    <Route path={ROUTES.profile} element={<Profile />} />
+                    <Route
+                      path={ROUTES.company}
+                      element={
+                        <ProtectedRoute
+                          allowedUserRoles={[ROLES.ADMIN]}
+                          redirectPath="/"
+                          children={<Company />}
+                        />
+                      }
+                    />
+                  </Route>
+                  <Route path={ROUTES.signIn} element={<SignIn />} />
+                  <Route path={ROUTES.signUp} element={<SignUp />} />
+                  <Route path="/*" element={<NotFound />} />
+                </Routes>
+              </Router>
+            </SidebarProvider>
           </TextReaderProvider>
         </FontSizeProvider>
       </ToastProvider>
