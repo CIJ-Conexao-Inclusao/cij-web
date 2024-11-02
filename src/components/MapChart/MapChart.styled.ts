@@ -1,10 +1,13 @@
 import { Box, styled } from "@mui/material";
 
 export const Container = styled(Box)(({ theme }) => ({
-  display: "grid",
+  // display: "grid",
   placeItems: "center",
   transform: "scaleX(-1) rotate(270deg)",
   height: "100%",
+  width: "100%",
+  minWidth: 0,
+  minHeight: 0,
 
   "& .d3-neighbourhoods": {
     backgroundColor: theme.palette.color02.main,

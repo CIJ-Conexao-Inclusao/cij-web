@@ -32,9 +32,6 @@ export const BoxDisabilitiesPerNeighborhood = styled(Box)({
   backgroundColor: "#EEEEEE",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
   padding: "1rem",
   flex: 1.5,
 });

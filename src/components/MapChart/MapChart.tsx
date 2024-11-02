@@ -35,19 +35,18 @@ const MapChart = () => {
 
     d3.select(viz).selectAll("*").remove();
 
-    let width = parseInt(d3.select(viz).style("width"));
+    // Using only height bc the map is a square
+    // Also width is changing even though it's set to 100%
     let height = parseInt(d3.select(viz).style("height"));
-    console.log(d3.select(viz), width, height);
 
-    // Área usável do mapa
     const svg = d3
       .select(viz)
       .append("svg")
       .attr("class", "d3-svg")
       .attr("width", height)
-      .attr("height", width);
+      .attr("height", height);
 
-    const projection = d3.geoMercator().fitSize([height, width], data);
+    const projection = d3.geoMercator().fitSize([height, height], data);
     const pathGen = d3.geoPath(projection);
 
     const g = svg.append("g");
