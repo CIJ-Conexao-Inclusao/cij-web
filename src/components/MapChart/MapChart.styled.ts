@@ -1,6 +1,8 @@
 import { Box, styled } from "@mui/material";
 
 export const Container = styled(Box)(({ theme }) => ({
+  display: "grid",
+  placeItems: "center",
   transform: "scaleX(-1) rotate(270deg)",
   height: "100%",
 
