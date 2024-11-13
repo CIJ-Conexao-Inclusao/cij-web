@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/ROUTES";
 
 import { Box, TextField, Select, MenuItem, Button } from "@mui/material";
-import { BoxCompanies } from "./JobVacancies.styled";
+import { BoxCompanies, BoxButtons } from "./JobVacancies.styled";
 
 import "tailwindcss/tailwind.css";
 
@@ -17,6 +17,10 @@ import duasRodas from "./assets/companies/duas-rodas.png";
 import malwee from "./assets/companies/grupo-malwee.png";
 import urbano from "./assets/companies/urbano.png";
 import weg from "./assets/companies/weg.png";
+
+
+import { useTranslation } from "react-i18next";
+import RegisterJobsModal from '../../modals/registerJob/registerJob';
 
 interface Vaga {
 	id: number;
@@ -36,6 +40,18 @@ const listImages = [
 ];
 
 const Jobs: React.FC = () => {
+	const { t } = useTranslation("translation", { keyPrefix: "signIn" });
+
+	const [openModal, setOpenModal] = useState(false);
+
+	const handleOpenModal = () => {
+		setOpenModal(true);
+	};
+
+	const handleCloseModal = () => {
+		setOpenModal(false);
+	};
+
 	const navigate = useNavigate();
 
 	const [vagas] = useState<Vaga[]>([
@@ -97,9 +113,26 @@ const Jobs: React.FC = () => {
 
 	return (
 		<Box p={4} sx={{ maxWidth: "xl", margin: "auto" }}>
-			<h1 className="text-lg font-bold mb-2 text-blue-500">
-				Vagas de Emprego
-			</h1>
+			<Box sx={{justifyContent: "space-between", display: "flex"}}>
+				<Box>
+					<h1 className="text-lg font-bold mb-2 text-blue-500">
+						Vagas de Emprego
+					</h1>
+				</Box>
+				<Box>
+					<Box>
+						<BoxButtons
+							variant="contained"
+							onClick={handleOpenModal}
+						>
+							Cadastrar Vaga
+						</BoxButtons>
+					</Box>
+					<Box>
+						<RegisterJobsModal open={openModal} onClose={handleCloseModal} />
+					</Box>
+				</Box>
+			</Box>
 			<Box sx={{ textAlign: "center" }}>
 				<Box display="flex" gap={2} mb={2}>
 					<Box flex="1">
@@ -203,9 +236,8 @@ const Jobs: React.FC = () => {
 				</ul>
 
 				<Box mt={2} display="flex" justifyContent="space-between">
-					<p className="text-sm">{`Mostrando ${
-						indexOfFirstItem + 1
-					} - ${indexOfLastItem} de ${vagas.length} itens`}</p>
+					<p className="text-sm">{`Mostrando ${indexOfFirstItem + 1
+						} - ${indexOfLastItem} de ${vagas.length} itens`}</p>
 					<div>
 						{Array.from({
 							length: Math.ceil(vagas.length / itemsPerPage),

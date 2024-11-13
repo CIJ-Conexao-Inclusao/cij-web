@@ -7,12 +7,14 @@ import {
 	CircularProgress,
 	Container,
 	Typography,
+	Button
 } from "@mui/material";
 
 import cadeirante from "./assets/cadeirante.png";
 import filmagens from "./assets/filmagens.png";
 import prefeitura from "./assets/prefeitura.png";
 import trabalho from "./assets/trabalho.png";
+import RegisterNoticeModal from "../../modals/registerNotice/registerNotice";
 
 // import NewsService from "../../services/NewsService";
 
@@ -49,6 +51,17 @@ const Home = () => {
 	// 	useFontSize();
 	// const { switchTheme } = useSwitchTheme();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const [openModal, setOpenModal] = useState(false);
+
+	const handleOpenModal = () => {
+		setOpenModal(true);
+	};
+
+	const handleCloseModal = () => {
+		alert("Botão flutuante clicado!")
+		setOpenModal(false);
+	};
 
 	useEffect(() => {
 		// NewsService.list()
@@ -173,6 +186,25 @@ const Home = () => {
 						</Card>
 					))}
 				</Box>
+				<Button
+					variant="contained"
+					sx={{
+						position: "fixed",
+						bottom: 16,
+						right: 16,
+						borderRadius: "50%",
+						width: 56,
+						height: 56,
+						display: "flex",
+						 justifyContent: "center",
+						alignItems: "center",
+						boxShadow: 3,
+					}}
+					onClick={handleOpenModal}
+				>
+					<Typography variant="h3" sx={{ color: "white" }}>+</Typography>
+					<RegisterNoticeModal open={openModal} onClose={handleCloseModal} />
+				</Button>
 			</Container>
 		</Box>
 	);
