@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Typography, useTheme } from "@mui/material";
 import {
@@ -15,75 +15,65 @@ import "./Charts.scss";
 
 import { useFontSize } from "../../hooks/useFontSize";
 
-import pieChartHearingDisability from "./assets/pie-chart-hearing-disability.png";
-import pieChartIntellectualDisability from "./assets/pie-chart-intellectual-disability.png";
-import pieChartPhysicalDisability from "./assets/pie-chart-physical-disability.png";
-import pieChartPsychosocialDisability from "./assets/pie-chart-psychosocial-disability.png";
-import pieChartVisualDisability from "./assets/pie-chart-visual-disability.png";
-
-import barChartHearingDisability from "./assets/bar-chart-hearing-disability.png";
-import barChartIntellectualDisability from "./assets/bar-chart-intellectual-disability.png";
-import barChartPhysicalDisability from "./assets/bar-chart-physical-disability.png";
-import barChartPsychosocialDisability from "./assets/bar-chart-psychosocial-disability.png";
-import barChartVisualDisability from "./assets/bar-chart-visual-disability.png";
-
+import { useTranslation } from "react-i18next";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
-import { IDoughnutChart } from "../../components/DoughnutChart/DoughnutChart";
 import MapCard from "../../components/MapCard/MapCard";
+import { DisabilityColorsRef } from "../../constants/disabilityTypes";
+import ChartService, { IDisabilityData } from "../../services/ChartService";
 
 const Charts = () => {
   const { palette } = useTheme();
   const { fontSizeConfig } = useFontSize();
+  const { t } = useTranslation();
 
-  const disabilitiesPerCity = [
-    {
-      name: "Auditiva",
-      image: pieChartHearingDisability,
-    },
-    {
-      name: "Física",
-      image: pieChartPhysicalDisability,
-    },
-    {
-      name: "Intelectual",
-      image: pieChartIntellectualDisability,
-    },
-    {
-      name: "Psicossocial",
-      image: pieChartPsychosocialDisability,
-    },
-    {
-      name: "Visual",
-      image: pieChartVisualDisability,
-    },
-  ];
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [disabilitiesTotals, setDisabilitiesTotals] = useState<IDisabilityData>(
+    {} as IDisabilityData
+  );
 
-  const disabilitiesPerNeighborhood = [
-    {
-      image: barChartHearingDisability,
-    },
-    {
-      image: barChartIntellectualDisability,
-    },
-    {
-      image: barChartPhysicalDisability,
-    },
-    {
-      image: barChartPsychosocialDisability,
-    },
-    {
-      image: barChartVisualDisability,
-    },
-  ];
+  const totalizer = useMemo(() => {
+    return Object.values(disabilitiesTotals).reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
+  }, [disabilitiesTotals]);
 
-  const chartData = {
-    chartId: "teste",
-    data: [
-      { value: 70, label: "teste", color: palette.primary.main },
-      { value: 30, label: "aham", color: palette.color01.main },
-    ],
-  } as IDoughnutChart;
+  const pieData = useMemo(() => {
+    return Object.keys(disabilitiesTotals).map((disability) => {
+      //@ts-ignore
+      const value = disabilitiesTotals[disability];
+
+      return {
+        label: t(`disabilityTypes.${disability}`),
+        value,
+        data: [
+          {
+            value,
+            label: t(`disabilityTypes.${disability}`),
+            //@ts-ignore
+            color: palette[DisabilityColorsRef[disability]].main,
+          },
+          {
+            value: totalizer - value,
+            label: "",
+            color: palette.color01.main,
+          },
+        ],
+      };
+    });
+  }, [disabilitiesTotals, totalizer]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    ChartService.GetTotals()
+      .then((res) => {
+        console.log(res.data);
+        setDisabilitiesTotals(res.data);
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
 
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
@@ -101,11 +91,15 @@ const Charts = () => {
         </Typography>
 
         <GridContainer>
-          {disabilitiesPerCity.map((disability) => (
+          {pieData.map((disability, index) => (
             <DoughnutCard
-              key={disability.name}
-              title={disability.name}
-              chartData={{ ...chartData, chartId: disability.name }}
+              key={index}
+              title={disability.label}
+              value={disability.value}
+              chartData={{
+                data: disability.data,
+                chartId: index.toString(),
+              }}
             />
           ))}
         </GridContainer>
