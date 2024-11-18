@@ -58,7 +58,9 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
         {DisabilityTypes.map((type) => {
           // @ts-ignore
           const value = data[type];
-          const percent = (value / total) * 100;
+          let percent = (value / total) * 100;
+
+          if (!percent) percent = 0;
 
           // @ts-ignore
           const colorRef = DisabilityColorsRef[type];
@@ -67,7 +69,7 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
 
           return (
             <Row key={type}>
-              <Typography fontSize={fsc.big} color={palette.color10.main}>
+              <Typography fontSize={fsc.medium} color={palette.color10.main}>
                 {t(`disabilityTypes.${type}`)}
               </Typography>
               <IndicatorWrapper>

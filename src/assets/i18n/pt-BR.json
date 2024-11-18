@@ -63,7 +63,7 @@
   },
   "disabilityTypes": {
     "visual": "Visual",
-    "motor": "Física",
+    "physical": "Física",
     "hearing": "Auditiva",
     "intellectual": "Intelectual",
     "psychosocial": "Psicossocial"

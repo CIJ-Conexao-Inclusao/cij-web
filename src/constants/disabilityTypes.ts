@@ -1,6 +1,6 @@
 export const DisabilityTypes = [
   "hearing",
-  "motor",
+  "physical",
   "intellectual",
   "psychosocial",
   "visual",
@@ -8,7 +8,7 @@ export const DisabilityTypes = [
 
 export const DisabilityColorsRef = {
   visual: "color06",
-  motor: "secondary",
+  physical: "secondary",
   hearing: "primary",
   intellectual: "color05",
   psychosocial: "color07",
