@@ -56,7 +56,7 @@ const Charts = () => {
           },
           {
             value: totalizer - value,
-            label: "",
+            label: t("others"),
             color: palette.color01.main,
           },
         ],
