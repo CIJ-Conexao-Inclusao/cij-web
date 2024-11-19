@@ -17,9 +17,14 @@ import { useFontSize } from "../../hooks/useFontSize";
 
 import { useTranslation } from "react-i18next";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
+import { IDataColumnChart } from "../../components/ColumnChart/ColumnChart";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
 import MapCard from "../../components/MapCard/MapCard";
 import { DisabilityColorsRef } from "../../constants/disabilityTypes";
+import ActivityService, {
+  ActivityType,
+  IActivity,
+} from "../../services/ActivityService";
 import ChartService, { IDisabilityData } from "../../services/ChartService";
 
 const Charts = () => {
@@ -31,6 +36,8 @@ const Charts = () => {
   const [disabilitiesTotals, setDisabilitiesTotals] = useState<IDisabilityData>(
     {} as IDisabilityData
   );
+  const [logins, setLogins] = useState<IActivity[]>([]);
+  const [registers, setRegisters] = useState<IActivity[]>([]);
 
   const totalizer = useMemo(() => {
     return Object.values(disabilitiesTotals).reduce(
@@ -64,18 +71,44 @@ const Charts = () => {
     });
   }, [disabilitiesTotals, totalizer]);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const loginsFormatted: IDataColumnChart[] = useMemo(() => [], [logins]);
+  const registersFormatted: IDataColumnChart[] = useMemo(() => [], [registers]);
 
-    ChartService.GetTotals()
-      .then((res) => {
-        console.log(res.data);
-        setDisabilitiesTotals(res.data);
-      })
-      .finally(() => setIsLoading(false));
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      const resDisability = await ChartService.GetTotals();
+      setDisabilitiesTotals(resDisability.data);
+
+      const endDate = new Date().getTime();
+      const startDate = new Date(endDate - 1000 * 60 * 60 * 24 * 30).getTime();
+
+      const resLogins = await ActivityService.GetAll({
+        type: ActivityType.LOGIN,
+        startDate,
+        endDate,
+      });
+      setLogins(resLogins.data);
+
+      const resRegisters = await ActivityService.GetAll({
+        type: ActivityType.REGISTER,
+        startDate,
+        endDate,
+      });
+      setRegisters(resRegisters.data);
+
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Container>
@@ -112,10 +145,10 @@ const Charts = () => {
 
         <ColumnsContainer>
           <ColumnContainer>
-            <ColumnCard title="Homens" />
+            <ColumnCard data={registersFormatted} title="Registros" />
           </ColumnContainer>
           <ColumnContainer>
-            <ColumnCard title="Mulheres" />
+            <ColumnCard data={loginsFormatted} title="Logins" />
           </ColumnContainer>
         </ColumnsContainer>
       </BoxBottomCharts>

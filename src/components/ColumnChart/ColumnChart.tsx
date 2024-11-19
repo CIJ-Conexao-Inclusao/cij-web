@@ -3,27 +3,18 @@ import React, { useEffect, useRef } from "react";
 import { useTheme } from "@mui/material";
 import { Chart } from "chart.js/auto";
 
+export interface IDataColumnChart {
+  data: number[];
+  label: string;
+  backgroundColor?: string;
+}
+
 export interface IColumnChart {
   chartId?: string;
-  data?: {
-    data: number[];
-    label: string;
-    backgroundColor?: string;
-  }[];
+  data?: IDataColumnChart[];
   labels?: string[];
   displayLegend?: boolean;
 }
-
-const fdata = {
-  "2024-10": {
-    Visual: 10,
-    Auditiva: 20,
-  },
-  "2024-11": {
-    Visual: 5,
-    Auditiva: 10,
-  },
-};
 
 const randomNumbers = () =>
   Array.from({ length: 3 }, () => Math.floor(Math.random() * 100));
