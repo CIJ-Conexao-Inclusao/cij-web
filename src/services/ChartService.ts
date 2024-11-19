@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import axios from "../api";
+import AbortService, { Req_Keys } from "./AbortService";
 
 const basePath = "/reports";
 
@@ -16,29 +17,10 @@ export interface IDisabilityResponse {
   data: IDisabilityData;
 }
 
-const Req_Keys = {
-  DisabilityGetTotals: "GetTotals",
-  DisabilityGetNeighborhoodTotals: "GetNeighborhoodTotals",
-};
-
 class ChartService {
-  controllers = new Map();
-
-  controlReq(stringKey: string, controller: AbortController) {
-    if (this.controllers.has(stringKey)) {
-      this.controllers.get(stringKey)?.abort();
-    }
-
-    this.controllers.set(stringKey, controller);
-  }
-
-  deleteReq(stringKey: string) {
-    this.controllers.delete(stringKey);
-  }
-
   async GetTotals(): Promise<IDisabilityResponse> {
     const controller = new AbortController();
-    this.controlReq(Req_Keys.DisabilityGetTotals, controller);
+    AbortService.controlReq(Req_Keys.DisabilityGetTotals, controller);
 
     const config = {
       headers: {
@@ -53,7 +35,7 @@ class ChartService {
       config
     );
 
-    this.deleteReq(Req_Keys.DisabilityGetTotals);
+    AbortService.deleteReq(Req_Keys.DisabilityGetTotals);
 
     return res.data;
   }
@@ -62,13 +44,17 @@ class ChartService {
     neighborhood: string
   ): Promise<IDisabilityResponse> {
     const controller = new AbortController();
-    this.controlReq(Req_Keys.DisabilityGetNeighborhoodTotals, controller);
+    AbortService.controlReq(
+      Req_Keys.DisabilityGetNeighborhoodTotals,
+      controller
+    );
 
     const config = {
       headers: {
         Authorization: Cookies.get("token"),
       },
       withCredentials: false,
+      signal: controller.signal,
     };
 
     const res = await axios.get<IDisabilityResponse>(
@@ -76,7 +62,7 @@ class ChartService {
       config
     );
 
-    this.deleteReq(Req_Keys.DisabilityGetNeighborhoodTotals);
+    AbortService.deleteReq(Req_Keys.DisabilityGetNeighborhoodTotals);
 
     return res.data;
   }
