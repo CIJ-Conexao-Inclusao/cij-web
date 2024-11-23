@@ -14,6 +14,16 @@ export interface IActivityResponse {
   data: IActivity[];
 }
 
+export interface IActivityByPeriod {
+  message: string;
+  data: IActivityByPeriodData;
+}
+
+export interface IActivityByPeriodData {
+  activityType: ActivityType;
+  monthsCount: Record<string, number>;
+}
+
 export enum ActivityType {
   LOGIN = "login",
   LOGOUT = "logout",
@@ -24,6 +34,10 @@ export interface IGetParams {
   type: ActivityType;
   startDate: EpochTimeStamp;
   endDate: EpochTimeStamp;
+}
+
+export interface IGetByPeriod {
+  type: ActivityType;
 }
 
 const basePath = "/activities";
@@ -51,6 +65,30 @@ class ActivityService {
     );
 
     AbortService.deleteReq(Req_Keys.ActivitiesGetAll);
+
+    return res.data;
+  }
+
+  async GetLastSixMonths({ type }: IGetByPeriod): Promise<IActivityByPeriod> {
+    const controller = new AbortController();
+    const key = Req_Keys.ActivitiesGetSixMonths + `_${type}`;
+
+    AbortService.controlReq(key, controller);
+
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+      signal: controller.signal,
+    };
+
+    const res = await api.get<IActivityByPeriod>(
+      `reports/activities/${type}/last_six_months`,
+      config
+    );
+
+    AbortService.deleteReq(key);
 
     return res.data;
   }

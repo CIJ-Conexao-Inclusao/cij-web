@@ -17,7 +17,6 @@ const MapCard = () => {
 
   useEffect(() => {
     ChartService.GetNeighborhoodTotals(selectedNeighborhood).then((res) => {
-      console.log(res);
       setMapaData(res.data);
     });
   }, [selectedNeighborhood]);

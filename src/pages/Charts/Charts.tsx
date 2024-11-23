@@ -23,21 +23,25 @@ import MapCard from "../../components/MapCard/MapCard";
 import { DisabilityColorsRef } from "../../constants/disabilityTypes";
 import ActivityService, {
   ActivityType,
-  IActivity,
+  IActivityByPeriodData,
 } from "../../services/ActivityService";
 import ChartService, { IDisabilityData } from "../../services/ChartService";
 
 const Charts = () => {
   const { palette } = useTheme();
   const { fontSizeConfig } = useFontSize();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disabilitiesTotals, setDisabilitiesTotals] = useState<IDisabilityData>(
     {} as IDisabilityData
   );
-  const [logins, setLogins] = useState<IActivity[]>([]);
-  const [registers, setRegisters] = useState<IActivity[]>([]);
+  const [logins, setLogins] = useState<IActivityByPeriodData>(
+    {} as IActivityByPeriodData
+  );
+  const [registers, setRegisters] = useState<IActivityByPeriodData>(
+    {} as IActivityByPeriodData
+  );
 
   const totalizer = useMemo(() => {
     return Object.values(disabilitiesTotals).reduce(
@@ -71,8 +75,40 @@ const Charts = () => {
     });
   }, [disabilitiesTotals, totalizer]);
 
-  const loginsFormatted: IDataColumnChart[] = useMemo(() => [], [logins]);
-  const registersFormatted: IDataColumnChart[] = useMemo(() => [], [registers]);
+  const loginsFormatted: IDataColumnChart[] | null = useMemo(() => {
+    if (!logins.monthsCount) return null;
+
+    const label = t("charts.login");
+    const data = Object.entries(logins.monthsCount).map(
+      ([_, value]) => Math.random() * 10
+    );
+    const backgroundColor = palette.color07.main;
+
+    return [{ label, data, backgroundColor }];
+  }, [logins]);
+
+  const registersFormatted: IDataColumnChart[] | null = useMemo(() => {
+    if (!logins.monthsCount) return null;
+
+    const label = t("charts.login");
+    const data = Object.entries(logins.monthsCount).map(
+      ([_, value]) => Math.random() * 10
+    );
+    const backgroundColor = palette.color08.main;
+
+    return [{ label, data, backgroundColor }];
+  }, [registers]);
+
+  const labels = useMemo(() => {
+    if (!logins.monthsCount) return null;
+
+    return Object.keys(logins.monthsCount).map((e) =>
+      new Date(e).toLocaleDateString(i18n.language, {
+        month: "numeric",
+        year: "numeric",
+      })
+    );
+  }, [loginsFormatted, registersFormatted]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,20 +117,13 @@ const Charts = () => {
       const resDisability = await ChartService.GetTotals();
       setDisabilitiesTotals(resDisability.data);
 
-      const endDate = new Date().getTime();
-      const startDate = new Date(endDate - 1000 * 60 * 60 * 24 * 30).getTime();
-
-      const resLogins = await ActivityService.GetAll({
+      const resLogins = await ActivityService.GetLastSixMonths({
         type: ActivityType.LOGIN,
-        startDate,
-        endDate,
       });
       setLogins(resLogins.data);
 
-      const resRegisters = await ActivityService.GetAll({
+      const resRegisters = await ActivityService.GetLastSixMonths({
         type: ActivityType.REGISTER,
-        startDate,
-        endDate,
       });
       setRegisters(resRegisters.data);
 
@@ -143,14 +172,24 @@ const Charts = () => {
           <MapCard />
         </BoxDisabilitiesPerNeighborhood>
 
-        <ColumnsContainer>
-          <ColumnContainer>
-            <ColumnCard data={registersFormatted} title="Registros" />
-          </ColumnContainer>
-          <ColumnContainer>
-            <ColumnCard data={loginsFormatted} title="Logins" />
-          </ColumnContainer>
-        </ColumnsContainer>
+        {loginsFormatted && registersFormatted && labels && (
+          <ColumnsContainer>
+            <ColumnContainer>
+              <ColumnCard
+                labels={labels}
+                data={registersFormatted}
+                title="Registros"
+              />
+            </ColumnContainer>
+            <ColumnContainer>
+              <ColumnCard
+                labels={labels}
+                data={loginsFormatted}
+                title={t("charts.logins")}
+              />
+            </ColumnContainer>
+          </ColumnsContainer>
+        )}
       </BoxBottomCharts>
     </Container>
   );

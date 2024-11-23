@@ -50,50 +50,53 @@ const ColumnChart: React.FC<IColumnChart> = ({
 
   useEffect(() => {
     const createChart = async () => {
-      if (!chartRef.current) return;
+      if (!chartRef.current || !data) return;
 
-      data[0].backgroundColor = palette.color05.main;
-      data[1].backgroundColor = palette.color06.main;
-      data[2].backgroundColor = palette.color07.main;
-      data[3].backgroundColor = palette.color08.main;
-      data[4].backgroundColor = palette.color09.main;
+      const dataWithoutColors = data.filter((e) => {
+        return e.backgroundColor === undefined;
+      });
+
+      dataWithoutColors.forEach((e) => {
+        e.backgroundColor = palette["color05"].main;
+      });
 
       new Chart(chartRef.current, {
         type: "bar",
         data: {
           labels,
-          datasets: [
-            {
-              data: randomNumbers(),
-              label: "Auditiva",
-              borderRadius: 8,
-              backgroundColor: palette.color05.main,
-            },
-            {
-              data: randomNumbers(),
-              label: "Visual",
-              borderRadius: 8,
-              backgroundColor: palette.color06.main,
-            },
-            {
-              data: randomNumbers(),
-              label: "Física",
-              borderRadius: 8,
-              backgroundColor: palette.color07.main,
-            },
-            {
-              data: randomNumbers(),
-              label: "Intelectual",
-              borderRadius: 8,
-              backgroundColor: palette.color08.main,
-            },
-            {
-              data: randomNumbers(),
-              label: "Psicossocial",
-              borderRadius: 8,
-              backgroundColor: palette.color09.main,
-            },
-          ],
+          // datasets: [
+          //   {
+          //     data: randomNumbers(),
+          //     label: "Auditiva",
+          //     borderRadius: 8,
+          //     backgroundColor: palette.color05.main,
+          //   },
+          //   {
+          //     data: randomNumbers(),
+          //     label: "Visual",
+          //     borderRadius: 8,
+          //     backgroundColor: palette.color06.main,
+          //   },
+          //   {
+          //     data: randomNumbers(),
+          //     label: "Física",
+          //     borderRadius: 8,
+          //     backgroundColor: palette.color07.main,
+          //   },
+          //   {
+          //     data: randomNumbers(),
+          //     label: "Intelectual",
+          //     borderRadius: 8,
+          //     backgroundColor: palette.color08.main,
+          //   },
+          //   {
+          //     data: randomNumbers(),
+          //     label: "Psicossocial",
+          //     borderRadius: 8,
+          //     backgroundColor: palette.color09.main,
+          //   },
+          // ],
+          datasets: data,
         },
         options: {
           animation: false,

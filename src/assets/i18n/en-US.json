@@ -68,5 +68,9 @@
     "intellectual": "Intelectual",
     "psychosocial": "Psychosocial"
   },
-  "others": "Others"
+  "others": "Others",
+  "charts": {
+    "login": "Entry",
+    "logins": "Entries"
+  }
 }

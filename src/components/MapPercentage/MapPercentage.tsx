@@ -1,5 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DisabilityColorsRef,
@@ -40,10 +40,6 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
     () => Object.values(data).reduce((acc, curr) => acc + curr, 0),
     [data]
   );
-
-  useEffect(() => {
-    console.log(total);
-  }, [total]);
 
   return (
     <Container>

@@ -23,7 +23,6 @@ const MapChart: React.FC<IMapChartProps> = ({
   const [mapData, setMapData] = useState<any>(null);
 
   const getMap = async () => {
-    console.log("passou get");
     const res = await api.get(mapUrl);
     setMapData(res.data);
 
@@ -31,7 +30,6 @@ const MapChart: React.FC<IMapChartProps> = ({
   };
 
   const onSelectNeighbourhood = (neighbourhood: string) => {
-    console.log(neighbourhood);
     onSelect(neighbourhood);
   };
 

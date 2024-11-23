@@ -7,15 +7,16 @@ import { Container } from "./ColumnCard.styled";
 export interface IColumnCard {
   title: string;
   data: IDataColumnChart[];
+  labels: string[];
 }
 
-const ColumnCard: React.FC<IColumnCard> = ({ title, data }) => {
+const ColumnCard: React.FC<IColumnCard> = ({ title, data, labels }) => {
   const { fontSizeConfig: fsc } = useFontSize();
 
   return (
     <Container>
       <Typography fontSize={fsc.medium}>{title}</Typography>
-      <ColumnChart data={data} />
+      <ColumnChart labels={labels} data={data} />
     </Container>
   );
 };
