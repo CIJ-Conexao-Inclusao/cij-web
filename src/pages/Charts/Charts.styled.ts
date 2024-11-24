@@ -5,7 +5,6 @@ export const BoxTopCharts = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "0.8rem",
-  marginBottom: "2rem",
   width: "100%",
 });
 

@@ -137,17 +137,11 @@ const Charts = () => {
 
   return (
     <Container>
-      <p className="title">Gráficos</p>
+      <Typography color="primary.main" fontWeight="600" variant="h5">
+        Gráficos
+      </Typography>
 
       <BoxTopCharts>
-        <Typography
-          variant="h6"
-          fontSize={fontSizeConfig.veryBig}
-          fontWeight={600}
-          color="color04.main">
-          Deficiências por cidade
-        </Typography>
-
         <GridContainer>
           {pieData.map((disability, index) => (
             <DoughnutCard
