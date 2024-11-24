@@ -70,7 +70,7 @@
   },
   "others": "Outros",
   "charts": {
-    "login": "Acesso",
-    "logins": "Acessos"
+    "logins": "Acessos",
+    "registers": "Cadastros"
   }
 }

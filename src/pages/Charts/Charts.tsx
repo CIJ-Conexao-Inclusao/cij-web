@@ -78,10 +78,8 @@ const Charts = () => {
   const loginsFormatted: IDataColumnChart[] | null = useMemo(() => {
     if (!logins.monthsCount) return null;
 
-    const label = t("charts.login");
-    const data = Object.entries(logins.monthsCount).map(
-      ([_, value]) => Math.random() * 10
-    );
+    const label = t("charts.logins");
+    const data = Object.entries(logins.monthsCount).map(([_, value]) => value);
     const backgroundColor = palette.color07.main;
 
     return [{ label, data, backgroundColor }];
@@ -90,9 +88,9 @@ const Charts = () => {
   const registersFormatted: IDataColumnChart[] | null = useMemo(() => {
     if (!logins.monthsCount) return null;
 
-    const label = t("charts.login");
-    const data = Object.entries(logins.monthsCount).map(
-      ([_, value]) => Math.random() * 10
+    const label = t("charts.registers");
+    const data = Object.entries(registers.monthsCount).map(
+      ([_, value]) => value
     );
     const backgroundColor = palette.color08.main;
 
@@ -132,8 +130,6 @@ const Charts = () => {
 
     fetchData();
   }, []);
-
-  //IMPORTANTE: LEMBRAR DE AO FAZER INTEGRAÇÃO COLOCAR LOADING NA TELA INTEIRA PARA NAO TER ELEMENTOS SE MOVIMENTANDO NA TELA AO FAZER FETCH
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -178,7 +174,7 @@ const Charts = () => {
               <ColumnCard
                 labels={labels}
                 data={registersFormatted}
-                title="Registros"
+                title={t("charts.registers")}
               />
             </ColumnContainer>
             <ColumnContainer>

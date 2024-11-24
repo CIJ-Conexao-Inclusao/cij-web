@@ -31,7 +31,6 @@ export const BoxDisabilitiesPerNeighborhood = styled(Box)({
   alignItems: "start",
   backgroundColor: "#EEEEEE",
   borderRadius: "10px",
-  boxShadow: "5px 5px 10px 0 #00000025",
   padding: "1rem",
   flex: 1.5,
 });
@@ -57,7 +56,7 @@ export const BoxHiring = styled(Box)({
 export const GridContainer = styled(Box)(() => ({
   display: "grid",
   width: "100%",
-  gridTemplateColumns: "repeat(auto-fill, minmax(12rem, 1fr))",
+  gridTemplateColumns: "repeat(5, minmax(12rem, 1fr))",
   gap: "2%",
 }));
 
