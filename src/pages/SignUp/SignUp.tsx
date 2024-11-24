@@ -6,14 +6,16 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  SelectChangeEvent,
   Step,
   StepLabel,
   Stepper,
   Typography,
 } from "@mui/material";
-import { Inputs } from "../../App.styled";
+import { Inputs, SelectStyled } from "../../App.styled";
 import {
   BoxBackgroundImage,
   BoxButtons,
@@ -42,12 +44,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast.tsx";
 import { UserService } from "../../services/index.ts";
 
+import { useTranslation } from "react-i18next";
+import { DisabilityTypes } from "../../constants/disabilityTypes.ts";
 import { useFontSize } from "../../hooks/useFontSize";
 import ViaCepService from "../../services/ViaCepService.ts";
 
 const SignUp = () => {
   const toast = useToast();
   const { fontSizeConfig } = useFontSize();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const steps = ["Dados Pessoais", "Deficiência", "Endereço"];
@@ -63,7 +68,7 @@ const SignUp = () => {
     password: "",
   });
   const [userDisability, setUserDisability] = useState<TUserDisability>({
-    disabilityType: "",
+    disabilityType: "Tipo de deficiência",
     disability: "",
     disablityDegree: "",
     adquiredDisability: ADQUIREDDISABILITY.No,
@@ -83,6 +88,7 @@ const SignUp = () => {
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
   const handleUserDisabilityChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -91,8 +97,14 @@ const SignUp = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleUserAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserAddress({ ...userAddress, [e.target.name]: e.target.value });
+  };
+
+  const handleDisabilityTypeChange = (e: SelectChangeEvent<string>) => {
+    console.log("e.target.value: ", e.target.value);
+    setUserDisability({ ...userDisability, disabilityType: e.target.value });
   };
 
   const allFieldsFilled = useMemo(() => {
@@ -104,6 +116,7 @@ const SignUp = () => {
       !user.email ||
       !user.password ||
       !userDisability.disabilityType ||
+      userDisability.disabilityType === "Tipo de deficiência" ||
       !userDisability.disability ||
       !userDisability.disablityDegree ||
       !userAddress.zip_code ||
@@ -306,14 +319,19 @@ const SignUp = () => {
             </>
           ) : activeStep === 1 ? (
             <>
-              <Inputs
-                placeholder={"Tipo de deficiência"}
-                name="disabilityType"
+              <SelectStyled
                 value={userDisability.disabilityType}
-                onChange={handleUserDisabilityChange}
-                size="small"
-                required
-              />
+                onChange={handleDisabilityTypeChange}>
+                <MenuItem value={"Tipo de deficiência"}>
+                  Tipo de deficiência
+                </MenuItem>
+                {DisabilityTypes.map((disabilityType) => (
+                  <MenuItem value={disabilityType}>
+                    {t("disabilityTypes." + disabilityType)}
+                  </MenuItem>
+                ))}
+              </SelectStyled>
+
               <Inputs
                 placeholder={"Deficiência"}
                 name="disability"
