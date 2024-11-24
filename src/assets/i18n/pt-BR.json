@@ -1,64 +1,76 @@
 {
-    "signIn": {
-        "welcome": "Bem vindo(a)!",
-        "signInToContinue": "Insira suas credencias para acessar sua conta",
-        "email": "Email",
-        "password": "Senha",
-        "enter": "Entrar",
-        "doesntHaveAccount": "Não tem uma conta?",
-        "signUp": "Cadastre-se",
-        "companies": {
-            "duasRodas": "Duas Rodas",
-            "grupoMalwee": "Grupo Malwee",
-            "marisol": "Marisol",
-            "prefeitura": "Prefeitura de Jaraguá do Sul",
-            "urbano": "Urbano",
-            "weg": "WEG"
-        },
-        "loginSuccess": "Login efetuado com sucesso"
+  "signIn": {
+    "welcome": "Bem vindo(a)!",
+    "signInToContinue": "Insira suas credencias para acessar sua conta",
+    "email": "Email",
+    "password": "Senha",
+    "enter": "Entrar",
+    "doesntHaveAccount": "Não tem uma conta?",
+    "signUp": "Cadastre-se",
+    "companies": {
+      "duasRodas": "Duas Rodas",
+      "grupoMalwee": "Grupo Malwee",
+      "marisol": "Marisol",
+      "prefeitura": "Prefeitura de Jaraguá do Sul",
+      "urbano": "Urbano",
+      "weg": "WEG"
     },
-    "signUp": {
-        "createdSuccess": "Usuário criado com sucesso",
-        "createYourAccount": "Crie sua conta",
-        "details": "Forneça alguns dados para criar sua conta no CIJ",
-        "signUp": "Cadastrar",
-        "alreadyHasAccount": "Já possui uma conta?",
-        "login": "Login",
-        "phs": {
-            "fullName": "Nome completo",
-            "cpf": "CPF",
-            "gender": "Gênero",
-            "female": "Feminino",
-            "male": "Masculino",
-            "others": "Outros",
-            "cellphone": "Celular",
-            "email": "Email",
-            "password": "Senha",
-            "confirmPassword": "Confirmar senha"
-        },
-        "imgs": {
-            "logo": "Logo",
-            "background": "Background"
-        }
+    "loginSuccess": "Login efetuado com sucesso"
+  },
+  "signUp": {
+    "createdSuccess": "Usuário criado com sucesso",
+    "createYourAccount": "Crie sua conta",
+    "details": "Forneça alguns dados para criar sua conta no CIJ",
+    "signUp": "Cadastrar",
+    "alreadyHasAccount": "Já possui uma conta?",
+    "login": "Login",
+    "phs": {
+      "fullName": "Nome completo",
+      "cpf": "CPF",
+      "gender": "Gênero",
+      "female": "Feminino",
+      "male": "Masculino",
+      "others": "Outros",
+      "cellphone": "Celular",
+      "email": "Email",
+      "password": "Senha",
+      "confirmPassword": "Confirmar senha"
     },
-    "errors": {
-        "invalidCredentials": "Email ou senha incorretos",
-        "passwordNotMatch": "As senhas não coincidem",
-        "errorOnUserCreation": "Erro ao criar usuário"
-    },
-    "validations": {
-        "requiredCPF": "O CPF é obrigatório",
-        "minLengthCPF": "O CPF deve ter 11 dígitos",
-        "requiredName": "O nome é obrigatório",
-        "minLengthName": "Nome muito curto",
-        "validEmail": "Email precisa ser válido",
-        "requiredEmail": "O Email é obrigatório",
-        "requiredPassword": "A senha é obrigatória",
-        "requiredGender": "O gênero é obrigatório",
-        "minLengthPhone": "O telefone deve ter 13 dígitos",
-        "requiredCNPJ": "O CNPJ é obrigatório",
-        "minLengthCNPJ": "O CNPJ deve ter 11 dígitos",
-        "requiredDomain": "O domínio é obrigatório",
-        "minLengthDomain": "Domínio muito curto"
+    "imgs": {
+      "logo": "Logo",
+      "background": "Background"
     }
+  },
+  "errors": {
+    "invalidCredentials": "Email ou senha incorretos",
+    "passwordNotMatch": "As senhas não coincidem",
+    "errorOnUserCreation": "Erro ao criar usuário"
+  },
+  "validations": {
+    "requiredCPF": "O CPF é obrigatório",
+    "minLengthCPF": "O CPF deve ter 11 dígitos",
+    "requiredName": "O nome é obrigatório",
+    "minLengthName": "Nome muito curto",
+    "validEmail": "Email precisa ser válido",
+    "requiredEmail": "O Email é obrigatório",
+    "requiredPassword": "A senha é obrigatória",
+    "requiredGender": "O gênero é obrigatório",
+    "minLengthPhone": "O telefone deve ter 13 dígitos",
+    "requiredCNPJ": "O CNPJ é obrigatório",
+    "minLengthCNPJ": "O CNPJ deve ter 11 dígitos",
+    "requiredDomain": "O domínio é obrigatório",
+    "minLengthDomain": "Domínio muito curto"
+  },
+  "disabilityTypes": {
+    "visual": "Visual",
+    "physical": "Física",
+    "hearing": "Auditiva",
+    "intellectual": "Intelectual",
+    "psychosocial": "Psicossocial"
+  },
+  "others": "Outros",
+  "charts": {
+    "logins": "Acessos",
+    "registers": "Cadastros"
+  }
 }
