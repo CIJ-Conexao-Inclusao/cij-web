@@ -3,6 +3,7 @@ export const Req_Keys = {
   DisabilityGetNeighborhoodTotals: "GetNeighborhoodTotals",
   ActivitiesGetAll: "ActivitiesGetAll",
   ActivitiesGetSixMonths: "ActivitiesGetSixMonths",
+  VacancyCreate: "VacancyCreate",
 };
 
 class AbortService {
