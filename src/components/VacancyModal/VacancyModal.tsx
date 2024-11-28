@@ -16,8 +16,11 @@ import { DisabilitiesTypesDesc } from "../../constants/disabilityTypesDesc";
 import { VacancyAreas } from "../../constants/vacancyAreas";
 import { VacancySections } from "../../constants/vacancySections";
 import { useFontSize } from "../../hooks/useFontSize";
-import {
+import { useToast } from "../../hooks/useToast";
+import { useAppSelector } from "../../redux/hooks";
+import JobService, {
   IVacancyCreate,
+  IVacancyCreateBody,
   VacancyContractType,
   VacancyRequirementType,
 } from "../../services/JobService";
@@ -43,16 +46,14 @@ import {
 export interface IVacancyModalProps {
   open: boolean;
   onClose: any;
-  onSave: () => void;
 }
 
-const VacancyModal: React.FC<IVacancyModalProps> = ({
-  open,
-  onClose,
-  onSave,
-}) => {
+const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
   const { t } = useTranslation();
   const { fontSizeConfig: fsc } = useFontSize();
+  const { showToast } = useToast();
+
+  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
   const [activeStep, setActiveStep] = useState(0);
   const steps = ["geral", "requirements", "responsibilities", "skills"];
@@ -60,12 +61,12 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
   const [vacancy, setVacancy] = useState({
     area: "",
     code: "",
-    contractType: VacancyContractType.clt,
+    contract_type: VacancyContractType.clt,
     department: "",
     description: "",
     disabilities: [],
-    publishDate: "",
-    registrationDate: format(new Date(), "yyyy-MM-dd"),
+    publish_date: "",
+    registration_date: format(new Date(), "yyyy-MM-dd"),
     requirements: [],
     responsibilities: [],
     section: "",
@@ -85,12 +86,12 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
     return (
       !vacancy.area ||
       !vacancy.code ||
-      !vacancy.contractType ||
+      !vacancy.contract_type ||
       !vacancy.department ||
       !vacancy.description ||
       !vacancy.disabilities ||
-      !vacancy.publishDate ||
-      !vacancy.registrationDate ||
+      !vacancy.publish_date ||
+      !vacancy.registration_date ||
       !vacancy.requirements ||
       !vacancy.responsibilities ||
       !vacancy.section ||
@@ -139,6 +140,21 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
       skills: [...vacancy.skills, newSkill],
     });
     setNewSkill("");
+  };
+
+  const onSave = async () => {
+    try {
+      const data: IVacancyCreateBody = { ...vacancy, company_id: 0 };
+      data.publish_date = format(new Date(data.publish_date), "yyyy-MM-dd");
+      data.company_id = user?.id || 0;
+
+      console.log(data);
+
+      await JobService.Create(data);
+      showToast("success", t("successVacancyCreated"));
+    } catch (e: any) {
+      showToast("error", t("errorOnVacancyCreation"));
+    }
   };
 
   return (
@@ -205,7 +221,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
                     onChange={handleSelectChange}>
                     {VacancyAreas.map((area) => (
                       <MenuItem key={area} value={area}>
-                        {t(area)}
+                        {t("areas." + area)}
                       </MenuItem>
                     ))}
                   </SelectStyled>
@@ -221,7 +237,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
                     onChange={handleSelectChange}>
                     {VacancySections.map((section) => (
                       <MenuItem key={section} value={section}>
-                        {t(section)}
+                        {t("sector." + section)}
                       </MenuItem>
                     ))}
                   </SelectStyled>
@@ -260,7 +276,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
                     {t("vacancy.contractType")}
                   </Typography>
                   <SelectStyled
-                    value={vacancy.contractType || ""}
+                    value={vacancy.contract_type || ""}
                     name="contractType"
                     onChange={handleSelectChange}>
                     {Object.values(VacancyContractType).map((type) => (
@@ -313,8 +329,8 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
                   <InputStyled
                     variant="outlined"
                     type="date"
-                    name="publishDate"
-                    value={vacancy.publishDate}
+                    name="publish_date"
+                    value={vacancy.publish_date}
                     onChange={handleVacancyChange}
                     size="small"
                     required

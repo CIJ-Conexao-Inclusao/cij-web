@@ -225,5 +225,7 @@
     "mandatory": "Obrigatório",
     "desirable": "Desejável"
   },
+  "successVacancyCreation": "Vaga criada com sucesso",
+  "errorOnVacancyCreation": "Erro ao criar vaga",
   "add": "Adicionar"
 }

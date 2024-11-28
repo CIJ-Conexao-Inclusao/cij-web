@@ -133,13 +133,7 @@ const Jobs: React.FC = () => {
 
   return (
     <>
-      {showModal && (
-        <VacancyModal
-          open={showModal}
-          onClose={handleClose}
-          onSave={() => {}}
-        />
-      )}
+      {showModal && <VacancyModal open={showModal} onClose={handleClose} />}
       <Box id="container" p={4} sx={{ maxWidth: "xl", margin: "auto" }}>
         <HeaderContainer>
           <h1 className="text-lg font-bold mb-2 text-blue-500">

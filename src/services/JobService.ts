@@ -5,12 +5,12 @@ import AbortService, { Req_Keys } from "./AbortService";
 export interface IVacancyCreate {
   area: string;
   code: string;
-  contractType: VacancyContractType;
+  contract_type: VacancyContractType;
   department: string;
   description: string;
   disabilities: number[];
-  publishDate: string;
-  registrationDate: string;
+  publish_date: string;
+  registration_date: string;
   requirements: IVacancyRequirement[];
   responsibilities: string[];
   section: string;
@@ -41,10 +41,14 @@ export interface IVacancyCreateResponse {
   message: string;
 }
 
+export interface IVacancyCreateBody extends IVacancyCreate {
+  company_id: number;
+}
+
 const basePath = "/vacancies";
 
 class JobService {
-  async Create(vacancy: IVacancyCreate): Promise<IVacancyCreateResponse> {
+  async Create(vacancy: IVacancyCreateBody): Promise<IVacancyCreateResponse> {
     const controller = new AbortController();
     AbortService.controlReq(Req_Keys.VacancyCreate, controller);
 

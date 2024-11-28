@@ -225,5 +225,7 @@
     "mandatory": "Mandatory",
     "desirable": "Desirable"
   },
+  "successVacancyCreation": "Vacancy created successfully",
+  "errorOnVacancyCreation": "Error on vacancy creation",
   "add": "Add"
 }
