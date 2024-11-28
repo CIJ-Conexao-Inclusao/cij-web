@@ -1,4 +1,6 @@
 import {
+  Box,
+  Divider,
   MenuItem,
   Modal,
   SelectChangeEvent,
@@ -8,29 +10,39 @@ import {
   Typography,
 } from "@mui/material";
 import { format } from "date-fns";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { DisabilitiesTypesDesc } from "../../constants/disabilityTypesDesc";
 import { VacancyAreas } from "../../constants/vacancyAreas";
 import { VacancySections } from "../../constants/vacancySections";
 import { useFontSize } from "../../hooks/useFontSize";
-import { IVacancyCreate, VacancyContractType } from "../../services/JobService";
 import {
+  IVacancyCreate,
+  VacancyContractType,
+  VacancyRequirementType,
+} from "../../services/JobService";
+import {
+  BottomRequirement,
   BoxForm,
   BoxInput,
   BoxInputs,
+  BoxRequirements,
   ButtonNavigation,
   ButtonStyled,
+  ContainerRequirement,
   FormContent,
   FormFooter,
   FormHeader,
   InputStyled,
   ModalContainer,
+  ResponsibilitiesField,
+  ResponsibilitiesForm,
   SelectStyled,
 } from "./VacancyModal.styled";
 
 export interface IVacancyModalProps {
   open: boolean;
-  onClose: () => void;
+  onClose: any;
   onSave: () => void;
 }
 
@@ -62,6 +74,13 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
     turn: "",
   } as IVacancyCreate);
 
+  const [newReq, setNewReq] = useState("");
+  const [newReqType, setNewReqType] = useState(
+    VacancyRequirementType.desirable
+  );
+  const [newRes, setNewRes] = useState("");
+  const [newSkill, setNewSkill] = useState("");
+
   const allFieldsFilled = useMemo(() => {
     return (
       !vacancy.area ||
@@ -89,9 +108,38 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
     setVacancy({ ...vacancy, [e.target.name]: e.target.value as string });
   };
 
-  useEffect(() => {
-    console.log(vacancy);
-  }, [vacancy]);
+  const addRequirement = () => {
+    if (!newReq) return;
+
+    setVacancy({
+      ...vacancy,
+      requirements: [
+        ...vacancy.requirements,
+        { requirement: newReq, type: newReqType },
+      ],
+    });
+    setNewReq("");
+  };
+
+  const addResponsibilities = () => {
+    if (!newRes) return;
+
+    setVacancy({
+      ...vacancy,
+      responsibilities: [...vacancy.responsibilities, newRes],
+    });
+    setNewRes("");
+  };
+
+  const addSkill = () => {
+    if (!newSkill) return;
+
+    setVacancy({
+      ...vacancy,
+      skills: [...vacancy.skills, newSkill],
+    });
+    setNewSkill("");
+  };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -247,9 +295,12 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
                     multiple
                     name="disabilities"
                     onChange={handleSelectChange}>
-                    {Object.values(VacancyContractType).map((type) => (
-                      <MenuItem key={type} value={type}>
-                        {t(`contractType.${type}`)}
+                    {Object.values(DisabilitiesTypesDesc).map((type, index) => (
+                      <MenuItem key={index} value={index}>
+                        {t(
+                          "disabilityTypes." + type.Category.toLocaleLowerCase()
+                        )}{" "}
+                        - {type.Description}
                       </MenuItem>
                     ))}
                   </SelectStyled>
@@ -273,14 +324,123 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({
             </BoxForm>
           )}
           {activeStep === 1 && (
-            <div>
-              <Typography>{t("formVacancy.requirements")}</Typography>
-            </div>
+            <BoxForm>
+              <ContainerRequirement>
+                <BoxInput>
+                  <Typography fontSize={fsc.medium}>
+                    {t("vacancy.requirements")}
+                  </Typography>
+                  <InputStyled
+                    variant="outlined"
+                    value={newReq}
+                    onChange={(e) => setNewReq(e.target.value)}
+                    size="small"
+                  />
+                </BoxInput>
+
+                <BottomRequirement>
+                  <SelectStyled
+                    value={newReqType}
+                    onChange={(e) => setNewReqType(e.target.value)}>
+                    {Object.values(VacancyRequirementType).map((type) => (
+                      <MenuItem key={type} value={type}>
+                        {t(`vacancyRequirementType.${type}`)}
+                      </MenuItem>
+                    ))}
+                  </SelectStyled>
+
+                  <ButtonStyled
+                    disableElevation
+                    variant="contained"
+                    onClick={addRequirement}
+                    sx={{}}>
+                    <Typography fontSize={fsc.medium}>{t("add")}</Typography>
+                  </ButtonStyled>
+                </BottomRequirement>
+              </ContainerRequirement>
+
+              <Divider />
+
+              <BoxRequirements>
+                {vacancy.requirements.map((req, index) => (
+                  <Box key={index}>
+                    <Typography fontSize={fsc.medium}>
+                      {req.requirement}
+                    </Typography>
+                    <Typography fontSize={fsc.medium} fontWeight={600}>
+                      {t(`vacancyRequirementType.${req.type}`)}
+                    </Typography>
+                  </Box>
+                ))}
+              </BoxRequirements>
+            </BoxForm>
           )}
           {activeStep === 2 && (
-            <div>
-              <Typography>{t("formVacancy.skills")}</Typography>
-            </div>
+            <BoxForm>
+              <ResponsibilitiesForm>
+                <Typography fontSize={fsc.medium}>
+                  {t("vacancy.responsibilities")}
+                </Typography>
+                <ResponsibilitiesField>
+                  <InputStyled
+                    variant="outlined"
+                    value={newRes}
+                    onChange={(e) => setNewRes(e.target.value)}
+                    size="small"
+                  />
+                  <ButtonStyled
+                    disableElevation
+                    variant="contained"
+                    onClick={addResponsibilities}>
+                    <Typography fontSize={fsc.medium}>{t("add")}</Typography>
+                  </ButtonStyled>
+                </ResponsibilitiesField>
+              </ResponsibilitiesForm>
+
+              <Divider />
+
+              <BoxRequirements>
+                {vacancy.responsibilities.map((value, index) => (
+                  <Box key={index}>
+                    <Typography fontSize={fsc.medium}>{value}</Typography>
+                  </Box>
+                ))}
+              </BoxRequirements>
+            </BoxForm>
+          )}
+
+          {activeStep === 3 && (
+            <BoxForm>
+              <ResponsibilitiesForm>
+                <Typography fontSize={fsc.medium}>
+                  {t("vacancy.skills")}
+                </Typography>
+                <ResponsibilitiesField>
+                  <InputStyled
+                    variant="outlined"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    size="small"
+                  />
+                  <ButtonStyled
+                    disableElevation
+                    variant="contained"
+                    onClick={addSkill}>
+                    <Typography fontSize={fsc.medium}>{t("add")}</Typography>
+                  </ButtonStyled>
+                </ResponsibilitiesField>
+              </ResponsibilitiesForm>
+
+              <Divider />
+
+              <BoxRequirements>
+                {vacancy.skills.map((value, index) => (
+                  <Box key={index}>
+                    <Typography fontSize={fsc.medium}>{value}</Typography>
+                  </Box>
+                ))}
+              </BoxRequirements>
+            </BoxForm>
           )}
         </FormContent>
         <FormFooter>

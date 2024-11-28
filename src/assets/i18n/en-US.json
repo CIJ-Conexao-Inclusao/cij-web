@@ -220,5 +220,10 @@
     "media": "Media",
     "telecommunications": "Telecommunications",
     "culture": "Culture"
-  }
+  },
+  "vacancyRequirementType": {
+    "mandatory": "Mandatory",
+    "desirable": "Desirable"
+  },
+  "add": "Add"
 }

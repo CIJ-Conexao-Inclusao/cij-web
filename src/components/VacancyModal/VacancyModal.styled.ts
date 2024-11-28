@@ -86,3 +86,42 @@ export const BoxInput = styled(Box)({
   gap: "0.2rem",
   width: "100%",
 });
+
+export const ContainerRequirement = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+  width: "100%",
+});
+
+export const BottomRequirement = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "1rem",
+});
+
+export const BoxRequirement = styled(Box)({
+  flex: "5",
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.2rem",
+});
+
+export const BoxRequirements = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+  width: "100%",
+});
+
+export const ResponsibilitiesForm = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+});
+
+export const ResponsibilitiesField = styled(Box)({
+  display: "flex",
+  gap: "1rem",
+  width: "100%",
+});

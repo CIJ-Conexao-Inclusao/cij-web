@@ -124,12 +124,19 @@ const Jobs: React.FC = () => {
     navigate(ROUTES.jobVacancyDetails);
   };
 
+  const handleClose = (_: {}, reason: string) => {
+    if (reason === "backdropClick") {
+      return;
+    }
+    setShowModal(false);
+  };
+
   return (
     <>
       {showModal && (
         <VacancyModal
           open={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={handleClose}
           onSave={() => {}}
         />
       )}
