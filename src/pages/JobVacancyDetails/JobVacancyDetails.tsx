@@ -2,16 +2,31 @@ import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { ROLES, ROLES_ALLOWED_TO_APPLY } from "../../constants/ROLES";
+import { useToast } from "../../hooks/useToast";
+import { useAppSelector } from "../../redux/hooks";
+import { CookieService } from "../../services";
 import JobService, {
   IGetByIdVacancy,
   VacancyRequirementType,
 } from "../../services/JobService";
 
 const DetailsJobs: React.FC = () => {
+  const role = CookieService.getRole();
   const { id } = useParams();
   const { i18n, t } = useTranslation();
+  const { showToast } = useToast();
+  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
 
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
+
+  const userRole = useMemo(() => {
+    let userRoleAux = ROLES.PERSON;
+
+    if (role != null) userRoleAux = role;
+
+    return userRoleAux;
+  }, [role]);
 
   const isOpen = useMemo(() => {
     if (!data.registration_date) return false;
@@ -30,6 +45,18 @@ const DetailsJobs: React.FC = () => {
 
     return new Date(data.registration_date).toLocaleDateString(i18n.language);
   }, [data]);
+
+  const applyJob = async () => {
+    if (!id || !user?.id) return;
+
+    try {
+      await JobService.ApplyJob(parseInt(id), user.id);
+      showToast("success", t("vacancyDetails.successfullyApplied"));
+    } catch (error) {
+      console.log(error);
+      showToast("error", t("vacancyDetails.errorApplying"));
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -197,10 +224,11 @@ const DetailsJobs: React.FC = () => {
           </Box>
         </Box>
 
-        <Box>
+        {ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
           <Box className="fixed bottom-0 right-0 m-4">
             <Button
               variant="contained"
+              onClick={applyJob}
               style={{
                 backgroundColor: "#004AAD",
                 color: "#fff",
@@ -209,7 +237,7 @@ const DetailsJobs: React.FC = () => {
               {t("vacancyDetails.apply")}
             </Button>
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   );

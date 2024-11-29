@@ -244,5 +244,24 @@
     "disability": "Disability",
     "noDisability": "No disability"
   },
-  "noRowsToShow": "No data"
+  "noRowsToShow": "No data",
+  "vacancyDetails": {
+    "vacancies": "Job Vacancies",
+    "applicationsOpen": "Applications Open",
+    "applicationsClosed": "Applications Closed",
+    "vacancyPublishDate": "Job Posted On",
+    "applicationsOpenUntil": "Applications Open Until",
+    "description": "Job Description",
+    "responsabilities": "Duties and Responsibilities",
+    "requirements": "Requirements and Qualifications",
+    "skills": "Personal Skills",
+    "mandatoryRequirements": "Mandatory Requirements",
+    "desirableRequirements": "Desirable Requirements",
+    "additionalInformation": "Additional Information",
+    "department": "Department",
+    "shift": "Shift",
+    "apply": "Apply",
+    "successfullyApplied": "Application Submitted Successfully",
+    "errorApplying": "Error Applying"
+  }
 }

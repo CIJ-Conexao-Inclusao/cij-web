@@ -100,6 +100,11 @@ export interface IGetVacancyParams {
   search_text?: string;
 }
 
+export interface IApplyJobBody {
+  vacancy_id: number;
+  candidate_id: number;
+}
+
 const basePath = "/vacancies";
 
 class JobService {
@@ -173,6 +178,24 @@ class JobService {
     AbortService.deleteReq(Req_Keys.VacancyGetById);
 
     return res.data;
+  }
+
+  async ApplyJob(vacancyId: number, candidateId: number): Promise<void> {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    await api.post(
+      `${basePath}/apply`,
+      {
+        vacancy_id: vacancyId,
+        candidate_id: candidateId,
+      },
+      config
+    );
   }
 }
 

@@ -260,6 +260,8 @@
     "additionalInformation": "Informações Adicionais",
     "department": "Departamento",
     "shift": "Turno",
-    "apply": "Candidatar-se"
+    "apply": "Candidatar-se",
+    "successfullyApplied": "Candidatura realizada com sucesso",
+    "errorApplying": "Erro ao se candidatar"
   }
 }
