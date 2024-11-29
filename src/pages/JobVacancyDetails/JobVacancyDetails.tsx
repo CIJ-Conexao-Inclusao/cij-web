@@ -1,20 +1,42 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import JobService, { IGetByIdVacancy } from "../../services/JobService";
-import weg from "./assets/weg.png";
-import { BoxCompanies } from "./JobVacancyDetails.styled";
+import JobService, {
+  IGetByIdVacancy,
+  VacancyRequirementType,
+} from "../../services/JobService";
 
 const DetailsJobs: React.FC = () => {
   const { id } = useParams();
+  const { i18n, t } = useTranslation();
 
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
+
+  const isOpen = useMemo(() => {
+    if (!data.registration_date) return false;
+
+    return new Date(data.registration_date) > new Date();
+  }, [data]);
+
+  const publishDate = useMemo(() => {
+    if (!data.publish_date) return "";
+
+    return new Date(data.publish_date).toLocaleDateString(i18n.language);
+  }, [data]);
+
+  const registrationDate = useMemo(() => {
+    if (!data.registration_date) return "";
+
+    return new Date(data.registration_date).toLocaleDateString(i18n.language);
+  }, [data]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // JobService.GetById(id ? parseInt(id) : 6);
         const res = await JobService.GetById(6);
+        console.log(res.data);
         setData(res.data);
       } catch (error) {
         console.error(error);
@@ -22,7 +44,7 @@ const DetailsJobs: React.FC = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, []);
 
   return (
     <Box>
@@ -36,7 +58,7 @@ const DetailsJobs: React.FC = () => {
               fontWeight: 600,
               marginLeft: 2,
             }}>
-            Vagas de emprego /
+            {t("vacancyDetails.vacancies")} /
           </Typography>
           <Typography
             variant="h5"
@@ -46,25 +68,41 @@ const DetailsJobs: React.FC = () => {
               fontWeight: 700,
               marginLeft: 2,
             }}>
-            12345 - Projetista
+            {data.code} - {data.title}
           </Typography>
         </Typography>
       </Box>
 
       <Box>
         <Typography className="flex" sx={{ margin: 3 }}>
-          <Box
-            sx={{ marginRight: 2.5 }}
-            className="bg-green-200 w-40 h-10 rounded-full flex items-center justify-center">
-            <Typography
-              sx={{ color: "#1C5B25", fontWeight: 600 }}
-              variant="caption">
-              Inscrições Abertas
-            </Typography>
-          </Box>
+          {isOpen ? (
+            <Box
+              sx={{ marginRight: 2.5 }}
+              className="bg-green-200 w-40 h-10 rounded-full flex items-center justify-center">
+              <Typography
+                sx={{ color: "color07.main", fontWeight: 600 }}
+                variant="caption">
+                {t("vacancyDetails.applicationsOpen")}
+              </Typography>
+            </Box>
+          ) : (
+            <Box
+              sx={{ marginRight: 2.5 }}
+              className="bg-red-200 w-40 h-10 rounded-full flex items-center justify-center">
+              <Typography
+                sx={{ color: "color08.main", fontWeight: 600 }}
+                variant="caption">
+                {t("vacancyDetails.applicationsClosed")}
+              </Typography>
+            </Box>
+          )}
           <Box className="grid">
-            <p style={{ fontSize: 12 }}>Vaga publicada em 05/11/2023</p>
-            <p style={{ fontSize: 12 }}>Inscrições abertas até 05/12/2023</p>
+            <p style={{ fontSize: 12 }}>
+              {t("vacancyDetails.vacancyPublishDate")} {publishDate}
+            </p>
+            <p style={{ fontSize: 12 }}>
+              {t("vacancyDetails.applicationsOpenUntil")} {registrationDate}
+            </p>
           </Box>
         </Typography>
       </Box>
@@ -74,17 +112,13 @@ const DetailsJobs: React.FC = () => {
           margin: "auto",
         }}>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-          Descrição da Vaga
+          {t("vacancyDetails.description")}
         </Typography>
         <Typography
           paragraph
           variant="body2"
           sx={{ marginLeft: 5, fontWeight: 600, margin: 2.5 }}>
-          Responsável tecnicamente pela elaboração de soluções digitais/visão
-          baseado em especificações; auxiliar no desenvolvimento e testes dos
-          produtos em conformidade com normas e padronizações internas,
-          garantindo o desempenho satisfatório do produto; auxiliar na aplicação
-          dos programas de qualidade.
+          {data.description}
         </Typography>
 
         <Box sx={{ marginTop: 2 }}>
@@ -92,103 +126,55 @@ const DetailsJobs: React.FC = () => {
             variant="h6"
             gutterBottom
             sx={{ fontWeight: 600, marginBottom: 3 }}>
-            Atribuições e Responsabilidades
+            {t("vacancyDetails.responsabilities")}
           </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Elaborar soluções digitais envolvendo diferentes soluções de
-            software, hardware e redes de comunicação conforme definido na
-            especificação.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Auxiliar e ou participar em testes de pré-operação das soluções
-            digitais desenvolvidas.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Desenvolver softwares de acordo com a especificação.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Executar planos de testes de acordo com especificações.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Realizar atividades de pesquisa e desenvolvimento.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Auxiliar na análise de novos desenvolvimentos.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Contribuir na elaboração da documentação das diversas fases do
-            projeto (estruturação, fluxogramação, diagramas lógicos, interfaces,
-            lay-outs, etc...).
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Participar da elaboração da documentação para clientes internos e
-            externos, em Português ou Inglês.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Contribuir tecnicamente nos contatos com clientes, em Português ou
-            Inglês, com o objetivo de atender da melhor forma as soluções
-            digitais aprovadas na especificação.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Interpretar textos, catálogos e manuais, afim de obter subsídios
-            para o desenvolvimento de soluções digitais.
-          </Typography>
-          <Typography sx={{ marginLeft: 5 }} paragraph variant="body2">
-            - Ministrar treinamento para clientes internos e externos.
-          </Typography>
+          {data.responsabilities?.map((item) => (
+            <Typography
+              key={item}
+              sx={{ marginLeft: 5 }}
+              paragraph
+              variant="body2">
+              - {item}
+            </Typography>
+          ))}
         </Box>
 
         <Box sx={{ marginTop: "16px" }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-            Requisitos e Qualificações
+            {t("vacancyDetails.requirements")}
           </Typography>
 
           <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-            Habilidades Pessoais
+            {t("vacancyDetails.skills")}
           </Typography>
-
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Facilidade de trabalho em equipe, bom relacionamento interpessoal,
-            facilidade para comunicação, atenção aos detalhes, facilidade com
-            números/cálculos, boa capacidade analítica e organização.
-          </Typography>
-
-          <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-            Requisitos Obrigatórios
-          </Typography>
-
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Técnico completo em Automação Controle Industrial, Automação
-            Controle Processos, Eletrônica, Instrumentação, Automação
-            Industrial, Mecatrônica, Telecomunicações ou Sistemas da Informação.
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Cloud e Redes de comunicação industriais.
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Ferramentas de Apoio ao Desenvolvimento (JIRA,
-            PMD, Maven, Mocks, DBUnit).
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Banco de Dados.
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Sistemas Operacionais.
-          </Typography>
+          {data.skills?.map((item) => (
+            <Typography sx={{ marginLeft: 10 }} variant="body2">
+              - {item}
+            </Typography>
+          ))}
 
           <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-            Requisitos Desejáveis
+            {t("vacancyDetails.mandatoryRequirements")}
+          </Typography>
+          {data.requirements
+            ?.filter((e) => e.type === VacancyRequirementType.mandatory)
+            .map((item) => (
+              <Typography sx={{ marginLeft: 10 }} variant="body2">
+                - {item.requirement}
+              </Typography>
+            ))}
+
+          <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
+            {t("vacancyDetails.desirableRequirements")}
           </Typography>
 
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Programação orientada a objetos Intermediário.
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Programação de CLP (ladder, FBD, SFC, IEC 61131).
-          </Typography>
-          <Typography sx={{ marginLeft: 10 }} variant="body2">
-            - Conhecimento em Sistemas de Automação Industrial.
-          </Typography>
+          {data.requirements
+            ?.filter((e) => e.type === VacancyRequirementType.desirable)
+            .map((item) => (
+              <Typography sx={{ marginLeft: 10 }} variant="body2">
+                - {item.requirement}
+              </Typography>
+            ))}
         </Box>
 
         <Box sx={{ marginTop: "16px" }}>
@@ -196,20 +182,17 @@ const DetailsJobs: React.FC = () => {
             variant="h6"
             gutterBottom
             sx={{ fontWeight: 600, marginBottom: 3 }}>
-            Informações Adicionais
+            {t("vacancyDetails.additionalInformation")}
           </Typography>
           <Box className="flex">
-            <BoxCompanies>
-              <img className="companies" src={weg} alt="Marisol" />
-            </BoxCompanies>
             <Box>
               <Typography variant="body2">
-                Departamento: Desenvolvimento Ev Chargers e Edge Devices
+                {t("vacancyDetails.department")}: {data.department}
               </Typography>
+              <Typography variant="body2">{data.section}</Typography>
               <Typography variant="body2">
-                Seção: Desenv. de Gateways e Medidores Inteligentes
+                {t("vacancyDetails.shift")}: {data.turn}
               </Typography>
-              <Typography variant="body2">Turno: Horário Normal</Typography>
             </Box>
           </Box>
         </Box>
@@ -221,8 +204,9 @@ const DetailsJobs: React.FC = () => {
               style={{
                 backgroundColor: "#004AAD",
                 color: "#fff",
+                textDecoration: "none",
               }}>
-              Candidatar-se
+              {t("vacancyDetails.apply")}
             </Button>
           </Box>
         </Box>

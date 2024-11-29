@@ -244,5 +244,22 @@
     "disability": "Deficiência",
     "noDisability": "Sem deficiência"
   },
-  "noRowsToShow": "Sem dados"
+  "noRowsToShow": "Sem dados",
+  "vacancyDetails": {
+    "vacancies": "Vagas de emprego",
+    "applicationsOpen": "Inscrições abertas",
+    "applicationsClosed": "Inscrições encerradas",
+    "vacancyPublishDate": "Vaga publicada em",
+    "applicationsOpenUntil": "Inscrições abertas até",
+    "description": "Descrição da vaga",
+    "responsabilities": "Atribuições e Responsabilidades",
+    "requirements": "Requisitos e Qualificações",
+    "skills": "Habilidades Pessoais",
+    "mandatoryRequirements": "Requisitos Obrigatórios",
+    "desirableRequirements": "Requisitos Desejáveis",
+    "additionalInformation": "Informações Adicionais",
+    "department": "Departamento",
+    "shift": "Turno",
+    "apply": "Candidatar-se"
+  }
 }
