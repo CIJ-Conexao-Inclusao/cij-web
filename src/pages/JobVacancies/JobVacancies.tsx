@@ -55,6 +55,7 @@ const Jobs: React.FC = () => {
   const [companies, setCompanies] = useState<TCompany[]>([]);
 
   const [name, setName] = useState<string>("");
+  const [debouncedName, setDebouncedName] = useState<string>(name);
   const [type, setType] = useState<string>("");
   const [deficiency, setDeficiency] = useState<string>("");
   const [area, setArea] = useState<string>("");
@@ -116,7 +117,7 @@ const Jobs: React.FC = () => {
       page: 0,
     };
 
-    if (name) filters.search_text = name;
+    if (name) filters.search_text = debouncedName;
     if (type) filters.contract_type = type;
     if (deficiency) filters.disability = deficiency;
     if (area) filters.area = area;
@@ -180,7 +181,17 @@ const Jobs: React.FC = () => {
 
   useEffect(() => {
     getVacancies();
-  }, [name, type, deficiency, area, company]);
+  }, [debouncedName, type, deficiency, area, company]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedName(name);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [name]);
 
   return (
     <>
