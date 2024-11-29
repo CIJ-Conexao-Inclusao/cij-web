@@ -28,7 +28,10 @@ import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import { useToast } from "../../hooks/useToast";
 import { CookieService } from "../../services";
 import CompanyService from "../../services/CompanyService";
-import JobService, { IGetVacancyParams } from "../../services/JobService";
+import JobService, {
+  IGetVacancyParams,
+  VacancyContractType,
+} from "../../services/JobService";
 import { TCompany } from "../../types/TCompany";
 
 interface IVacancyRowData {
@@ -36,6 +39,7 @@ interface IVacancyRowData {
   company: string;
   area: string;
   title: string;
+  contract_type: string;
   disabilities: string[];
 }
 
@@ -64,6 +68,7 @@ const Jobs: React.FC = () => {
       { headerName: t("vacancyScreen.company"), field: "company" },
       { headerName: t("vacancyScreen.area"), field: "area" },
       { headerName: t("vacancyScreen.vacancy"), field: "title" },
+      { headerName: t("vacancyScreen.type"), field: "contract_type" },
       {
         headerName: t("vacancyScreen.disability"),
         field: "disabilities",
@@ -105,12 +110,26 @@ const Jobs: React.FC = () => {
     navigate(`/vacancy/${data.id}`);
   };
 
+  const getVacancyFilters = () => {
+    const filters: IGetVacancyParams = {
+      perPage: 100,
+      page: 0,
+    };
+
+    if (name) filters.search_text = name;
+    if (type) filters.contract_type = type;
+    if (deficiency) filters.disability = deficiency;
+    if (area) filters.area = area;
+    if (company) filters.company_id = company;
+
+    return filters;
+  };
+
   const getVacancies = async () => {
     try {
-      const res = await JobService.Get({
-        area,
-        company_id: company,
-      } as IGetVacancyParams);
+      const filters = getVacancyFilters();
+
+      const res = await JobService.Get(filters);
       console.log(res.data);
 
       const data = res.data.map((e) => {
@@ -159,6 +178,10 @@ const Jobs: React.FC = () => {
     getVacancies();
   }, []);
 
+  useEffect(() => {
+    getVacancies();
+  }, [name, type, deficiency, area, company]);
+
   return (
     <>
       {showModal && <VacancyModal open={showModal} onClose={handleClose} />}
@@ -174,7 +197,7 @@ const Jobs: React.FC = () => {
           {userRole == ROLES.COMPANY && (
             <ButtonStyled
               disableElevation
-              variant="outlined"
+              variant="contained"
               onClick={() => setShowModal(true)}>
               <Typography fontSize={fsc.medium}>{t("add")}</Typography>
             </ButtonStyled>
@@ -203,7 +226,13 @@ const Jobs: React.FC = () => {
                 <SelectStyled
                   value={type}
                   onChange={(e) => setType(e.target.value)}
-                  size="small"></SelectStyled>
+                  size="small">
+                  {Object.values(VacancyContractType).map((type: string) => (
+                    <MenuItem key={type} value={type}>
+                      {t("contractType." + type)}
+                    </MenuItem>
+                  ))}
+                </SelectStyled>
               </BoxInput>
             </Box>
             <Box flex="1">

@@ -240,6 +240,7 @@
     "company": "Empresa",
     "area": "Área",
     "vacancy": "Vaga",
+    "type": "Tipo",
     "disability": "Deficiência",
     "noDisability": "Sem deficiência"
   },

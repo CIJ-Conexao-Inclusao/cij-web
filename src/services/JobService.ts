@@ -71,11 +71,11 @@ export interface IVacancyCreateBody extends IVacancyCreate {
 export interface IGetVacancyParams {
   perPage: number;
   page: number;
-  disability: string;
-  company_id: number;
-  area: string;
-  contract_type: string;
-  search_text: string;
+  disability?: string;
+  company_id?: number;
+  area?: string;
+  contract_type?: string;
+  search_text?: string;
 }
 
 const basePath = "/vacancies";
@@ -119,9 +119,14 @@ class JobService {
     const query = new URLSearchParams(params as any);
     console.log(query.toString());
 
-    const res = await api.get<IVacancyGetResponse>(`${basePath}`, config);
+    const res = await api.get<IVacancyGetResponse>(
+      `${basePath}?${query}`,
+      config
+    );
 
     AbortService.deleteReq(Req_Keys.VacancyGet);
+
+    if (res.data.data == null) res.data.data = [];
 
     return res.data;
   }
