@@ -61,7 +61,6 @@ const Jobs: React.FC = () => {
   const userRole = useMemo(() => {
     let userRoleAux = ROLES.PERSON;
 
-    console.log("role", role);
     if (role != null) userRoleAux = role;
 
     return userRoleAux;

@@ -222,10 +222,13 @@
     "culture": "Cultura"
   },
   "vacancyRequirementType": {
-    "mandatory": "Obrigatório",
+    "obligatory": "Obrigatório",
     "desirable": "Desejável"
   },
   "successVacancyCreation": "Vaga criada com sucesso",
   "errorOnVacancyCreation": "Erro ao criar vaga",
-  "add": "Adicionar"
+  "add": "Adicionar",
+  "vacancyRequirementsError": "Adicione pelo menos um requisito",
+  "vacancyResponsibilitiesError": "Adicione pelo menos uma responsabilidade",
+  "vacancySkillsError": "Adicione pelo menos uma habilidade"
 }

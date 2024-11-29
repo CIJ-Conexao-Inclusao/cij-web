@@ -52,15 +52,15 @@ export const ButtonNavigation = styled(Box)({
 export const InputStyled = styled(TextField)({
   backgroundColor: "#EEEEEE",
   borderRadius: "4px",
-  boxShadow: "5px 5px 10px 0 #00000020",
+  // boxShadow: "5px 5px 10px 0 #00000020",
   "& fieldset": { border: "none" },
   width: "100%",
 });
 
 export const SelectStyled = styled(Select<any>)({
   backgroundColor: "#EEEEEE",
-  borderRadius: "10px",
-  boxShadow: "5px 5px 10px 0 #00000025",
+  borderRadius: "4px",
+  // boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" },
   "& div": { paddingTop: "8.5px", paddingBottom: "8.5px" },
   width: "100%",
@@ -124,4 +124,11 @@ export const ResponsibilitiesField = styled(Box)({
   display: "flex",
   gap: "1rem",
   width: "100%",
+});
+
+export const BoxItem = styled(Box)({
+  display: "flex",
+  gap: "0.5rem",
+  width: "100%",
+  justifyContent: "space-between",
 });

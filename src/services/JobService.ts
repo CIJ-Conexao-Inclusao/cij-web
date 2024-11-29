@@ -12,7 +12,7 @@ export interface IVacancyCreate {
   publish_date: string;
   registration_date: string;
   requirements: IVacancyRequirement[];
-  responsibilities: string[];
+  responsabilities: string[];
   section: string;
   skills: string[];
   title: string;
@@ -25,7 +25,7 @@ export interface IVacancyRequirement {
 }
 
 export enum VacancyRequirementType {
-  mandatory = "mandatory",
+  mandatory = "obligatory",
   desirable = "desirable",
 }
 

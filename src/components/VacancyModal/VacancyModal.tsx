@@ -1,6 +1,8 @@
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Divider,
+  IconButton,
   MenuItem,
   Modal,
   SelectChangeEvent,
@@ -29,6 +31,7 @@ import {
   BoxForm,
   BoxInput,
   BoxInputs,
+  BoxItem,
   BoxRequirements,
   ButtonNavigation,
   ButtonStyled,
@@ -68,7 +71,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
     publish_date: "",
     registration_date: format(new Date(), "yyyy-MM-dd"),
     requirements: [],
-    responsibilities: [],
+    responsabilities: [],
     section: "",
     skills: [],
     title: "",
@@ -93,7 +96,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
       !vacancy.publish_date ||
       !vacancy.registration_date ||
       !vacancy.requirements ||
-      !vacancy.responsibilities ||
+      !vacancy.responsabilities ||
       !vacancy.section ||
       !vacancy.skills ||
       !vacancy.title ||
@@ -127,7 +130,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
 
     setVacancy({
       ...vacancy,
-      responsibilities: [...vacancy.responsibilities, newRes],
+      responsabilities: [...vacancy.responsabilities, newRes],
     });
     setNewRes("");
   };
@@ -144,17 +147,36 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
 
   const onSave = async () => {
     try {
+      if (!fieldsValid()) return;
+
       const data: IVacancyCreateBody = { ...vacancy, company_id: 0 };
       data.publish_date = format(new Date(data.publish_date), "yyyy-MM-dd");
       data.company_id = user?.id || 0;
 
-      console.log(data);
-
       await JobService.Create(data);
-      showToast("success", t("successVacancyCreated"));
+      showToast("success", t("successVacancyCreation"));
     } catch (e: any) {
       showToast("error", t("errorOnVacancyCreation"));
     }
+  };
+
+  const fieldsValid = () => {
+    if (vacancy.requirements.length === 0) {
+      showToast("error", t("vacancyRequirementsError"));
+      return false;
+    }
+
+    if (vacancy.responsabilities.length === 0) {
+      showToast("error", t("vacancyResponsibilitiesError"));
+      return false;
+    }
+
+    if (vacancy.skills.length === 0) {
+      showToast("error", t("vacancySkillsError"));
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -277,7 +299,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
                   </Typography>
                   <SelectStyled
                     value={vacancy.contract_type || ""}
-                    name="contractType"
+                    name="contract_type"
                     onChange={handleSelectChange}>
                     {Object.values(VacancyContractType).map((type) => (
                       <MenuItem key={type} value={type}>
@@ -302,7 +324,6 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
                 </BoxInput>
 
                 <BoxInput>
-                  {/* TODO: Disability types */}
                   <Typography fontSize={fsc.medium}>
                     {t("vacancy.disabilities")}
                   </Typography>
@@ -379,14 +400,28 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
 
               <BoxRequirements>
                 {vacancy.requirements.map((req, index) => (
-                  <Box key={index}>
-                    <Typography fontSize={fsc.medium}>
-                      {req.requirement}
-                    </Typography>
-                    <Typography fontSize={fsc.medium} fontWeight={600}>
-                      {t(`vacancyRequirementType.${req.type}`)}
-                    </Typography>
-                  </Box>
+                  <BoxItem key={index}>
+                    <Box>
+                      <Typography fontSize={fsc.medium}>
+                        {req.requirement}
+                      </Typography>
+                      <Typography fontSize={fsc.medium} fontWeight={600}>
+                        {t(`vacancyRequirementType.${req.type}`)}
+                      </Typography>
+                    </Box>
+
+                    <IconButton
+                      onClick={() => {
+                        setVacancy({
+                          ...vacancy,
+                          requirements: vacancy.requirements.filter(
+                            (_, i) => i !== index
+                          ),
+                        });
+                      }}>
+                      <CloseIcon />
+                    </IconButton>
+                  </BoxItem>
                 ))}
               </BoxRequirements>
             </BoxForm>
@@ -416,10 +451,21 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
               <Divider />
 
               <BoxRequirements>
-                {vacancy.responsibilities.map((value, index) => (
-                  <Box key={index}>
+                {vacancy.responsabilities.map((value, index) => (
+                  <BoxItem key={index}>
                     <Typography fontSize={fsc.medium}>{value}</Typography>
-                  </Box>
+                    <IconButton
+                      onClick={() => {
+                        setVacancy({
+                          ...vacancy,
+                          responsabilities: vacancy.responsabilities.filter(
+                            (_, i) => i !== index
+                          ),
+                        });
+                      }}>
+                      <CloseIcon />
+                    </IconButton>
+                  </BoxItem>
                 ))}
               </BoxRequirements>
             </BoxForm>
@@ -451,9 +497,18 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
 
               <BoxRequirements>
                 {vacancy.skills.map((value, index) => (
-                  <Box key={index}>
+                  <BoxItem key={index}>
                     <Typography fontSize={fsc.medium}>{value}</Typography>
-                  </Box>
+                    <IconButton
+                      onClick={() => {
+                        setVacancy({
+                          ...vacancy,
+                          skills: vacancy.skills.filter((_, i) => i !== index),
+                        });
+                      }}>
+                      <CloseIcon />
+                    </IconButton>
+                  </BoxItem>
                 ))}
               </BoxRequirements>
             </BoxForm>
