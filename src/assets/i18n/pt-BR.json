@@ -230,5 +230,18 @@
   "add": "Adicionar",
   "vacancyRequirementsError": "Adicione pelo menos um requisito",
   "vacancyResponsibilitiesError": "Adicione pelo menos uma responsabilidade",
-  "vacancySkillsError": "Adicione pelo menos uma habilidade"
+  "vacancySkillsError": "Adicione pelo menos uma habilidade",
+  "jobVacancies": "Vagas de Emprego",
+  "vacancyType": "Tipo de Vaga",
+  "disabilityType": "Tipo de Deficiência",
+  "company": "Empresa",
+  "name": "Nome",
+  "vacancyScreen": {
+    "company": "Empresa",
+    "area": "Área",
+    "vacancy": "Vaga",
+    "disability": "Deficiência",
+    "noDisability": "Sem deficiência"
+  },
+  "noRowsToShow": "Sem dados"
 }

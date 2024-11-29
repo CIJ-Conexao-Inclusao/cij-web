@@ -19,6 +19,29 @@ export interface IVacancyCreate {
   turn: string;
 }
 
+export interface IVacancy {
+  id: number;
+  code: string;
+  title: string;
+  area: string;
+  company: string;
+  contract_type: VacancyContractType;
+  disabilities: IVacancyDisabilityDetails[];
+}
+
+export interface IVacancyGetResponse {
+  message: string;
+  data: IVacancy[];
+}
+
+export interface IVacancyDisabilityDetails {
+  id: number;
+  category: string;
+  description: string;
+  rate: number;
+  acquired: boolean;
+}
+
 export interface IVacancyRequirement {
   requirement: string;
   type: VacancyRequirementType;
@@ -45,6 +68,16 @@ export interface IVacancyCreateBody extends IVacancyCreate {
   company_id: number;
 }
 
+export interface IGetVacancyParams {
+  perPage: number;
+  page: number;
+  disability: string;
+  company_id: number;
+  area: string;
+  contract_type: string;
+  search_text: string;
+}
+
 const basePath = "/vacancies";
 
 class JobService {
@@ -67,6 +100,28 @@ class JobService {
     );
 
     AbortService.deleteReq(Req_Keys.VacancyCreate);
+
+    return res.data;
+  }
+
+  async Get(params: IGetVacancyParams): Promise<IVacancyGetResponse> {
+    const controller = new AbortController();
+    AbortService.controlReq(Req_Keys.VacancyGet, controller);
+
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+      signal: controller.signal,
+    };
+
+    const query = new URLSearchParams(params as any);
+    console.log(query.toString());
+
+    const res = await api.get<IVacancyGetResponse>(`${basePath}`, config);
+
+    AbortService.deleteReq(Req_Keys.VacancyGet);
 
     return res.data;
   }

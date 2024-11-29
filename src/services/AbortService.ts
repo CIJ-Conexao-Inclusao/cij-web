@@ -4,6 +4,7 @@ export const Req_Keys = {
   ActivitiesGetAll: "ActivitiesGetAll",
   ActivitiesGetSixMonths: "ActivitiesGetSixMonths",
   VacancyCreate: "VacancyCreate",
+  VacancyGet: "VacancyGet",
 };
 
 class AbortService {

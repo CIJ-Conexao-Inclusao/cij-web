@@ -230,5 +230,18 @@
   "add": "Add",
   "vacancyRequirementsError": "Add at least one requirement",
   "vacancyResponsibilitiesError": "Add at least one responsibility",
-  "vacancySkillsError": "Add at least one skill"
+  "vacancySkillsError": "Add at least one skill",
+  "jobVacancies": "Job Vacancies",
+  "vacancyType": "Vacancy Type",
+  "disabilityType": "Disability Type",
+  "company": "Company",
+  "name": "Name",
+  "vacancyScreen": {
+    "company": "Company",
+    "area": "Area",
+    "vacancy": "Vacancy",
+    "disability": "Disability",
+    "noDisability": "No disability"
+  },
+  "noRowsToShow": "No data"
 }
