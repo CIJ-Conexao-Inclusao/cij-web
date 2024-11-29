@@ -29,6 +29,30 @@ export interface IVacancy {
   disabilities: IVacancyDisabilityDetails[];
 }
 
+export interface IGetByIdVacancy {
+  id: number;
+  code: string;
+  title: string;
+  description: string;
+  department: string;
+  section: string;
+  turn: string;
+  publish_date: string;
+  registration_date: string;
+  area: string;
+  contract_type: VacancyContractType;
+  company: string;
+  disabilities: IVacancyDisabilityDetails[];
+  skills: string[];
+  responsabilities: string[];
+  requirements: IVacancyRequirement[];
+}
+
+export interface IGetByIdVacancyResponse {
+  message: string;
+  data: IGetByIdVacancy;
+}
+
 export interface IVacancyGetResponse {
   message: string;
   data: IVacancy[];
@@ -55,8 +79,6 @@ export enum VacancyRequirementType {
 export enum VacancyContractType {
   clt = "clt",
   pj = "pj",
-  internship = "internship",
-  temporary = "temporary",
   trainee = "trainee",
 }
 
@@ -127,6 +149,28 @@ class JobService {
     AbortService.deleteReq(Req_Keys.VacancyGet);
 
     if (res.data.data == null) res.data.data = [];
+
+    return res.data;
+  }
+
+  async GetById(id: number): Promise<IGetByIdVacancyResponse> {
+    const controller = new AbortController();
+    AbortService.controlReq(Req_Keys.VacancyGetById, controller);
+
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+      signal: controller.signal,
+    };
+
+    const res = await api.get<IGetByIdVacancyResponse>(
+      `${basePath}/${id}`,
+      config
+    );
+
+    AbortService.deleteReq(Req_Keys.VacancyGetById);
 
     return res.data;
   }

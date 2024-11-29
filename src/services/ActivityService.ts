@@ -27,7 +27,7 @@ export interface IActivityByPeriodData {
 export enum ActivityType {
   LOGIN = "login",
   LOGOUT = "logout",
-  REGISTER = "register",
+  REGISTER = "register_person",
 }
 
 export interface IGetParams {

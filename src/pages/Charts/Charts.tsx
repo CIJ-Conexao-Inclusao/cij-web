@@ -13,8 +13,6 @@ import {
 
 import "./Charts.scss";
 
-import { useFontSize } from "../../hooks/useFontSize";
-
 import { useTranslation } from "react-i18next";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import { IDataColumnChart } from "../../components/ColumnChart/ColumnChart";
@@ -29,7 +27,6 @@ import ChartService, { IDisabilityData } from "../../services/ChartService";
 
 const Charts = () => {
   const { palette } = useTheme();
-  const { fontSizeConfig } = useFontSize();
   const { t, i18n } = useTranslation();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);

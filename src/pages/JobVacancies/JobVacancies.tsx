@@ -20,6 +20,7 @@ import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useTranslation } from "react-i18next";
 import VacancyModal from "../../components/VacancyModal/VacancyModal";
+import { ROUTES } from "../../constants";
 import { DisabilityTypes } from "../../constants/disabilityTypes";
 import { ROLES } from "../../constants/ROLES";
 import { VacancyAreas } from "../../constants/vacancyAreas";
@@ -108,7 +109,7 @@ const Jobs: React.FC = () => {
   const handleRowClick = (data: IVacancyRowData | undefined) => {
     console.log(data);
     if (!data) return;
-    navigate(`/vacancy/${data.id}`);
+    navigate(`${ROUTES.jobVacancies}/${data.id}`);
   };
 
   const getVacancyFilters = () => {
@@ -175,11 +176,6 @@ const Jobs: React.FC = () => {
   }, [rowData]);
 
   useEffect(() => {
-    getCompanies();
-    getVacancies();
-  }, []);
-
-  useEffect(() => {
     getVacancies();
   }, [debouncedName, type, deficiency, area, company]);
 
@@ -192,6 +188,11 @@ const Jobs: React.FC = () => {
       clearTimeout(timer);
     };
   }, [name]);
+
+  useEffect(() => {
+    getCompanies();
+    getVacancies();
+  }, []);
 
   return (
     <>

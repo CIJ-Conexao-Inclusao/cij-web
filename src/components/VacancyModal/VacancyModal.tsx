@@ -69,7 +69,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
     description: "",
     disabilities: [],
     publish_date: "",
-    registration_date: format(new Date(), "yyyy-MM-dd"),
+    registration_date: "",
     requirements: [],
     responsabilities: [],
     section: "",
@@ -151,6 +151,10 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
 
       const data: IVacancyCreateBody = { ...vacancy, company_id: 0 };
       data.publish_date = format(new Date(data.publish_date), "yyyy-MM-dd");
+      data.registration_date = format(
+        new Date(data.registration_date),
+        "yyyy-MM-dd"
+      );
       data.company_id = user?.id || 0;
 
       await JobService.Create(data);
@@ -352,6 +356,21 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
                     type="date"
                     name="publish_date"
                     value={vacancy.publish_date}
+                    onChange={handleVacancyChange}
+                    size="small"
+                    required
+                  />
+                </BoxInput>
+
+                <BoxInput>
+                  <Typography fontSize={fsc.medium}>
+                    {t("vacancy.registrationDate")}
+                  </Typography>
+                  <InputStyled
+                    variant="outlined"
+                    type="date"
+                    name="registration_date"
+                    value={vacancy.registration_date}
                     onChange={handleVacancyChange}
                     size="small"
                     required
