@@ -196,7 +196,13 @@ const Jobs: React.FC = () => {
 
   return (
     <>
-      {showModal && <VacancyModal open={showModal} onClose={handleClose} />}
+      {showModal && (
+        <VacancyModal
+          open={showModal}
+          onClose={handleClose}
+          onSaveAction={() => setShowModal(false)}
+        />
+      )}
       <ContainerAll>
         <HeaderContainer>
           <Typography

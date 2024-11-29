@@ -62,7 +62,7 @@ const DetailsJobs: React.FC = () => {
     const fetchData = async () => {
       try {
         // JobService.GetById(id ? parseInt(id) : 6);
-        const res = await JobService.GetById(6);
+        const res = await JobService.GetById(7);
         console.log(res.data);
         setData(res.data);
       } catch (error) {
@@ -216,7 +216,9 @@ const DetailsJobs: React.FC = () => {
               <Typography variant="body2">
                 {t("vacancyDetails.department")}: {data.department}
               </Typography>
-              <Typography variant="body2">{data.section}</Typography>
+              <Typography variant="body2">
+                {t("vacancyDetails.sector")}: {t("sector." + data.section)}
+              </Typography>
               <Typography variant="body2">
                 {t("vacancyDetails.shift")}: {data.turn}
               </Typography>

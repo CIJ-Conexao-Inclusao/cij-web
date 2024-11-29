@@ -49,9 +49,14 @@ import {
 export interface IVacancyModalProps {
   open: boolean;
   onClose: any;
+  onSaveAction: () => void;
 }
 
-const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
+const VacancyModal: React.FC<IVacancyModalProps> = ({
+  open,
+  onClose,
+  onSaveAction,
+}) => {
   const { t } = useTranslation();
   const { fontSizeConfig: fsc } = useFontSize();
   const { showToast } = useToast();
@@ -158,6 +163,7 @@ const VacancyModal: React.FC<IVacancyModalProps> = ({ open, onClose }) => {
       data.company_id = user?.id || 0;
 
       await JobService.Create(data);
+      onSaveAction();
       showToast("success", t("successVacancyCreation"));
     } catch (e: any) {
       showToast("error", t("errorOnVacancyCreation"));

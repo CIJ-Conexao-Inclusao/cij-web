@@ -138,7 +138,7 @@ const SignUp = () => {
           return;
         }
 
-        UserService.create({
+        UserService.Create({
           name: user.name,
           cpf: user.cpf,
           birthDate: user.birthDate,

@@ -262,6 +262,31 @@
     "shift": "Turno",
     "apply": "Candidatar-se",
     "successfullyApplied": "Candidatura realizada com sucesso",
-    "errorApplying": "Erro ao se candidatar"
+    "errorApplying": "Erro ao se candidatar",
+    "sector": "Setor"
+  },
+  "profile": {
+    "geral": "Geral",
+    "fullName": "Nome completo",
+    "cpf": "CPF",
+    "gender": "Gênero",
+    "phone": "Celular",
+    "email": "Email",
+    "address": "Endereço",
+    "cep": "CEP",
+    "country": "País",
+    "state": "Estado",
+    "city": "Cidade",
+    "neighborhood": "Bairro",
+    "street": "Rua",
+    "number": "Número",
+    "complement": "Complemento",
+    "disabilityType": "Tipo de Deficiência",
+    "disability": "Deficiência",
+    "grau": "Grau/Subdivisão",
+    "resume:": "Currículo",
+    "attachPDF": "Anexar documento PDF",
+    "attachPdfMessage": "Arraste e solte aqui o arquivo para enviá-lo",
+    "or": "ou"
   }
 }
