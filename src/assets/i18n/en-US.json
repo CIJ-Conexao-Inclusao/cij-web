@@ -296,7 +296,9 @@
     "male": "Male",
     "female": "Female",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "successUpdate": "Profile updated successfully",
+    "errorUpdate": "Error updating profile"
   },
   "fileTypePdf": "File type needs to be PDF"
 }

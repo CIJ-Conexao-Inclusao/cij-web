@@ -86,6 +86,7 @@ const PersonalData = () => {
     if (!user?.id) return;
 
     try {
+      setIsLoading(true);
       await Promise.all([
         UserService.UpdatePerson(user.id, userData),
         UserService.UpdateAddress(user.id, userData.address),
@@ -94,8 +95,13 @@ const PersonalData = () => {
           ? UserService.UploadResume(user.id, curriculum as File)
           : () => {},
       ]);
+
+      showToast("success", t("profile.successUpdate"));
     } catch (err) {
+      showToast("error", t("profile.errorUpdate"));
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -296,7 +296,9 @@
     "male": "Masculino",
     "female": "Feminino",
     "save": "Salvar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "successUpdate": "Perfil atualizado com sucesso",
+    "errorUpdate": "Erro ao atualizar perfil"
   },
   "fileTypePdf": "Apenas arquivos PDF são permitidos"
 }
