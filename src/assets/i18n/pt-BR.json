@@ -284,9 +284,12 @@
     "disabilityType": "Tipo de Deficiência",
     "disability": "Deficiência",
     "grau": "Grau/Subdivisão",
-    "resume:": "Currículo",
+    "resume": "Currículo",
     "attachPDF": "Anexar documento PDF",
     "attachPdfMessage": "Arraste e solte aqui o arquivo para enviá-lo",
-    "or": "ou"
+    "or": "ou",
+    "chooseFile": "Escolha um arquivo",
+    "male": "Masculino",
+    "female": "Feminino"
   }
 }

@@ -10,7 +10,7 @@ import Settings from "./Tabs/Settings/Settings";
 const Profile = () => {
   const { fontSizeConfig: fsc } = useFontSize();
 
-  const [tabSelected, setTabSelected] = useState(1);
+  const [tabSelected, setTabSelected] = useState(0);
 
   return (
     <Box className="px-4 mt-10">

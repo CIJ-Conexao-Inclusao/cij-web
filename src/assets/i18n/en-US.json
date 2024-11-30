@@ -284,9 +284,12 @@
     "disabilityType": "Disability Type",
     "disability": "Disability",
     "grau": "Degree/Subdivision",
-    "resume:": "Resume",
+    "resume": "Resume",
     "attachPDF": "Attach PDF doc",
     "attachPdfMessage": "Drag and drop a file here to send",
-    "or": "or"
+    "or": "or",
+    "chooseFile": "Choose a file",
+    "male": "Male",
+    "female": "Female"
   }
 }

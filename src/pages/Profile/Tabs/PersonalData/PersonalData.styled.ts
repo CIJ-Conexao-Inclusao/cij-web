@@ -1,4 +1,15 @@
-import { Box, Select, styled, TextField } from "@mui/material";
+import { Box, Button, Select, styled, TextField } from "@mui/material";
+
+export const Grid = styled(Box)({
+  display: "grid",
+  gap: "1rem",
+  gridTemplateColumns: "1fr 1fr",
+  width: "100%",
+
+  "@media (max-width: 1360px)": {
+    gridTemplateColumns: "1fr",
+  },
+});
 
 export const FieldsSection = styled(Box)({
   display: "flex",
@@ -40,4 +51,21 @@ export const ContainerFieldsSameLine = styled(Box)({
   display: "flex",
   gap: "1rem",
   width: "100%",
+});
+
+export const ResumeBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+  width: "100%",
+  border: `1px dashed ${theme.palette.color03.main}`,
+  borderRadius: "6px",
+  padding: "2rem",
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
+export const ButtonStyled = styled(Button)({
+  textTransform: "none",
+  padding: "0.5rem 1rem",
 });
