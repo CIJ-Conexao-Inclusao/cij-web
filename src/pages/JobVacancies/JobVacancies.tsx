@@ -36,6 +36,7 @@ import JobService, {
   VacancyContractType,
 } from "../../services/JobService";
 import { TCompany } from "../../types/TCompany";
+import { useAppSelector } from "../../redux/hooks";
 
 interface IVacancyRowData {
   id: number;
@@ -50,6 +51,7 @@ interface IVacancyRowData {
 }
 
 const Jobs: React.FC = () => {
+  const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
   const navigate = useNavigate();
   const role = CookieService.getRole();
   const { fontSizeConfig: fsc } = useFontSize();
@@ -151,7 +153,7 @@ const Jobs: React.FC = () => {
     setType("");
     setDeficiency({ id: 0, name: "" });
     setArea("");
-    setCompany(0);
+    setCompany(userRole === ROLES.COMPANY && user?.id ? user.id : 0);
   };
 
   const getVacancyFilters = () => {
@@ -167,6 +169,8 @@ const Jobs: React.FC = () => {
     if (area) filters.area = area;
     if (typeof company === "number" && company) filters.company_id = company;
 
+    if (userRole === ROLES.COMPANY && user?.id) filters.company_id = user.id;
+
     return filters;
   };
 
@@ -175,7 +179,6 @@ const Jobs: React.FC = () => {
       const filters = getVacancyFilters();
 
       const res = await JobService.Get(filters);
-      console.log(res.data);
 
       const data = res.data.map((e) => {
         return {
@@ -207,6 +210,13 @@ const Jobs: React.FC = () => {
 
   const getCompanies = async () => {
     try {
+      if (userRole === ROLES.COMPANY && user?.id) {
+        const res = await CompanyService.getById(user.id);
+        setCompanies([res.data.data]);
+        setCompany(user.id);
+        return;
+      };
+
       const res = await CompanyService.get();
       setCompanies(res.data.data);
     } catch (error: any) {
@@ -239,7 +249,7 @@ const Jobs: React.FC = () => {
   useEffect(() => {
     getCompanies();
     getVacancies();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -348,6 +358,7 @@ const Jobs: React.FC = () => {
                 <SelectStyled
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
+                  disabled={userRole === ROLES.COMPANY}
                   size="small">
                   {companies.map((item: TCompany) => (
                     <MenuItem key={item.id} value={item.id}>
