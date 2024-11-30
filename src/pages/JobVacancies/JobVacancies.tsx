@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, MenuItem, Typography } from "@mui/material";
+import { Box, IconButton, MenuItem, Tooltip, Typography } from "@mui/material";
 import {
   AgGridContainer,
   BoxInput,
   ButtonStyled,
+  ContainerActions,
   ContainerAll,
   Content,
   FieldsContainer,
@@ -16,12 +17,13 @@ import {
 
 import "tailwindcss/tailwind.css";
 
+import { Close, Refresh } from "@mui/icons-material";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useTranslation } from "react-i18next";
 import VacancyModal from "../../components/VacancyModal/VacancyModal";
 import { ROUTES } from "../../constants";
-import { DisabilityTypes } from "../../constants/disabilityTypes";
+import { DisabilitiesTypesDesc } from "../../constants/disabilityTypesDesc";
 import { ROLES } from "../../constants/ROLES";
 import { VacancyAreas } from "../../constants/vacancyAreas";
 import { useFontSize } from "../../hooks/useFontSize";
@@ -41,7 +43,10 @@ interface IVacancyRowData {
   area: string;
   title: string;
   contract_type: string;
-  disabilities: string[];
+  disabilities: {
+    category: string;
+    description: string;
+  }[];
 }
 
 const Jobs: React.FC = () => {
@@ -58,9 +63,9 @@ const Jobs: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [debouncedName, setDebouncedName] = useState<string>(name);
   const [type, setType] = useState<string>("");
-  const [deficiency, setDeficiency] = useState<string>("");
+  const [deficiency, setDeficiency] = useState({ id: 0, name: "" });
   const [area, setArea] = useState<string>("");
-  const [company, setCompany] = useState(0);
+  const [company, setCompany] = useState<string | number>("");
 
   const [rowData, setRowData] = useState<IVacancyRowData[]>([]);
   const [gridApi, setGridApi] = useState<any>(null);
@@ -74,10 +79,25 @@ const Jobs: React.FC = () => {
       {
         headerName: t("vacancyScreen.disability"),
         field: "disabilities",
-        cellRenderer: (params: any) =>
-          params.value
-            .map((e: string) => t("disabilityTypes." + e.toLowerCase()))
-            .join(", ") || t("vacancyScreen.noDisability"),
+        cellRenderer: (params: any) => {
+          const list = params.value.map((e: any) =>
+            t("disabilityTypes." + e.category.toLowerCase())
+          );
+
+          const uniqueList = [...new Set(list)].filter(Boolean);
+
+          return (
+            <Tooltip
+              title={
+                params.value.map((e: any) => e.description).join(", ") ||
+                t("vacancyScreen.noDisability")
+              }>
+              <span>
+                {uniqueList.join(", ") || t("vacancyScreen.noDisability")}
+              </span>
+            </Tooltip>
+          );
+        },
       },
     ],
     [t]
@@ -112,6 +132,29 @@ const Jobs: React.FC = () => {
     navigate(`${ROUTES.jobVacancies}/${data.id}`);
   };
 
+  const hanldeOnDisabilityChange = (e: any) => {
+    const index = DisabilitiesTypesDesc.findIndex(
+      (f) => f.Description === e.target.value
+    );
+
+    setDeficiency({
+      id: index + 1,
+      name: e.target.value,
+    });
+  };
+
+  const onRefresh = () => {
+    getVacancies();
+  };
+
+  const onClear = () => {
+    setName("");
+    setType("");
+    setDeficiency({ id: 0, name: "" });
+    setArea("");
+    setCompany(0);
+  };
+
   const getVacancyFilters = () => {
     const filters: IGetVacancyParams = {
       perPage: 100,
@@ -120,9 +163,10 @@ const Jobs: React.FC = () => {
 
     if (name) filters.search_text = debouncedName;
     if (type) filters.contract_type = type;
-    if (deficiency) filters.disability = deficiency;
+    if (typeof deficiency === "object" && deficiency.id != 0)
+      filters.disability_id = deficiency.id;
     if (area) filters.area = area;
-    if (company) filters.company_id = company;
+    if (typeof company === "number" && company) filters.company_id = company;
 
     return filters;
   };
@@ -140,8 +184,12 @@ const Jobs: React.FC = () => {
           company: e.company,
           area: e.area,
           title: e.title,
+          contract_type: t("contractType." + e.contract_type),
           disabilities: e.disabilities
-            ? e.disabilities.map((d) => d.category)
+            ? e.disabilities.map((d) => ({
+                category: d.category,
+                description: d.description,
+              }))
             : [],
         } as IVacancyRowData;
       });
@@ -256,17 +304,19 @@ const Jobs: React.FC = () => {
             <Box flex="1">
               <BoxInput>
                 <Typography fontSize={fsc.default} fontWeight={600}>
-                  {t("disabilityType")}
+                  {t("disability")}
                 </Typography>
                 <SelectStyled
-                  value={deficiency}
-                  onChange={(e) => setDeficiency(e.target.value)}
+                  value={deficiency.name || ""}
+                  onChange={hanldeOnDisabilityChange}
                   size="small">
-                  {Object.values(DisabilityTypes).map((disability: string) => (
-                    <MenuItem key={disability} value={disability}>
-                      {t("disabilityTypes." + disability)}
-                    </MenuItem>
-                  ))}
+                  {Object.values(DisabilitiesTypesDesc).map(
+                    (disability, index) => (
+                      <MenuItem key={index} value={disability.Description}>
+                        {disability.Description}
+                      </MenuItem>
+                    )
+                  )}
                 </SelectStyled>
               </BoxInput>
             </Box>
@@ -308,6 +358,16 @@ const Jobs: React.FC = () => {
                 </SelectStyled>
               </BoxInput>
             </Box>
+
+            <ContainerActions>
+              <IconButton onClick={onRefresh} color="primary">
+                <Refresh />
+              </IconButton>
+
+              <IconButton onClick={onClear} color="primary">
+                <Close />
+              </IconButton>
+            </ContainerActions>
           </Box>
         </FieldsContainer>
 

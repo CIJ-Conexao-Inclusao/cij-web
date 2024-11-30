@@ -66,3 +66,10 @@ export const AgGridContainer = styled(Box)({
 export const Content = styled(Box)({
   width: "100%",
 });
+
+export const ContainerActions = styled(Box)({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "flex-end",
+  gap: "1rem",
+});
