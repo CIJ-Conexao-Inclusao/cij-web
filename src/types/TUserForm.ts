@@ -11,6 +11,7 @@ export type TUserForm = {
 };
 
 export type TUserDisability = {
+  id: number;
   disabilityType: string;
   disability: string;
   disablityDegree: string;
@@ -38,7 +39,10 @@ export type TUserFull = {
     email: string;
     password: string;
   };
-  disabilities: [];
+  disabilities: {
+    id: number;
+    acquired: boolean;
+  }[];
   address: {
     street: string;
     number: string;

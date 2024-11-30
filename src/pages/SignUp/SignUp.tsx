@@ -45,7 +45,7 @@ import { useToast } from "../../hooks/useToast.tsx";
 import { UserService } from "../../services/index.ts";
 
 import { useTranslation } from "react-i18next";
-import { DisabilityTypes } from "../../constants/disabilityTypes.ts";
+import { DisabilitiesTypesDesc } from "../../constants/disabilityTypesDesc.ts";
 import { useFontSize } from "../../hooks/useFontSize";
 import ViaCepService from "../../services/ViaCepService.ts";
 
@@ -68,6 +68,7 @@ const SignUp = () => {
     password: "",
   });
   const [userDisability, setUserDisability] = useState<TUserDisability>({
+    id: 0,
     disabilityType: "Tipo de deficiência",
     disability: "",
     disablityDegree: "",
@@ -103,8 +104,20 @@ const SignUp = () => {
   };
 
   const handleDisabilityTypeChange = (e: SelectChangeEvent<string>) => {
-    console.log("e.target.value: ", e.target.value);
-    setUserDisability({ ...userDisability, disabilityType: e.target.value });
+    const value = parseInt(e.target.value);
+
+    const index = value + 1;
+    const disability = DisabilitiesTypesDesc[index];
+
+    setUserDisability({
+      ...userDisability,
+      id: index,
+      disabilityType: e.target.value,
+      disability: t(
+        "disabilityTypes." + disability.Category.toLocaleLowerCase()
+      ),
+      disablityDegree: disability.Rate.toString(),
+    });
   };
 
   const allFieldsFilled = useMemo(() => {
@@ -148,7 +161,13 @@ const SignUp = () => {
             email: user.email,
             password: user.password,
           },
-          disabilities: [],
+          disabilities: [
+            {
+              id: userDisability.id,
+              acquired:
+                userDisability.adquiredDisability === ADQUIREDDISABILITY.Yes,
+            },
+          ],
           address: {
             street: userAddress.street,
             number: userAddress.number,
@@ -325,9 +344,9 @@ const SignUp = () => {
                 <MenuItem value={"Tipo de deficiência"}>
                   Tipo de deficiência
                 </MenuItem>
-                {DisabilityTypes.map((disabilityType) => (
-                  <MenuItem value={disabilityType}>
-                    {t("disabilityTypes." + disabilityType)}
+                {DisabilitiesTypesDesc.map((disabilityType, index) => (
+                  <MenuItem value={index}>
+                    {disabilityType.Description}
                   </MenuItem>
                 ))}
               </SelectStyled>
@@ -338,16 +357,20 @@ const SignUp = () => {
                 value={userDisability.disability}
                 onChange={handleUserDisabilityChange}
                 size="small"
+                disabled
                 required
               />
+
               <Inputs
                 placeholder={"Grau/Subdivisão"}
                 name="disablityDegree"
                 value={userDisability.disablityDegree}
                 onChange={handleUserDisabilityChange}
                 size="small"
+                disabled
                 required
               />
+
               <FormControl
                 sx={{
                   color: "#999",

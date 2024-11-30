@@ -24,7 +24,6 @@ export const BoxInput = styled(Box)({
 export const InputStyled = styled(TextField)({
   backgroundColor: "#EEEEEE",
   borderRadius: "4px",
-  // boxShadow: "5px 5px 10px 0 #00000020",
   "& fieldset": { border: "none" },
   width: "100%",
 });
@@ -32,7 +31,6 @@ export const InputStyled = styled(TextField)({
 export const SelectStyled = styled(Select<any>)({
   backgroundColor: "#EEEEEE",
   borderRadius: "4px",
-  // boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" },
   "& div": { paddingTop: "8.5px", paddingBottom: "8.5px" },
   width: "100%",

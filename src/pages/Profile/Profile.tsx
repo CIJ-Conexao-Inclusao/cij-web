@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { BoxLeftColumn, BoxRightColumn, BoxTab } from "./Profile.styled";
 
+import { useFontSize } from "../../hooks/useFontSize";
 import PersonalData from "./Tabs/PersonalData/PersonalData";
 import Settings from "./Tabs/Settings/Settings";
 
 const Profile = () => {
-  const [tabSelected, setTabSelected] = useState(0);
+  const { fontSizeConfig: fsc } = useFontSize();
+
+  const [tabSelected, setTabSelected] = useState(1);
 
   return (
     <Box className="px-4 mt-10">
@@ -20,9 +23,11 @@ const Profile = () => {
               setTabSelected(0);
             }}>
             {tabSelected == 0 ? (
-              <p style={{ color: "#004AAD" }}>Dados pessoais</p>
+              <Typography color="primary" fontSize={fsc.big}>
+                Dados pessoais
+              </Typography>
             ) : (
-              <p>Dados pessoais</p>
+              <Typography fontSize={fsc.big}>Dados pessoais</Typography>
             )}
           </BoxTab>
 
@@ -31,9 +36,11 @@ const Profile = () => {
               setTabSelected(1);
             }}>
             {tabSelected == 1 ? (
-              <p style={{ color: "#004AAD" }}>Configurações</p>
+              <Typography color="primary" fontSize={fsc.big}>
+                Configurações
+              </Typography>
             ) : (
-              <p>Configurações</p>
+              <Typography fontSize={fsc.big}>Configurações</Typography>
             )}
           </BoxTab>
         </BoxLeftColumn>
