@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
-import { ROLES, ROLES_ALLOWED_TO_APPLY } from "../../constants/ROLES";
+import { useNavigate, useParams } from "react-router-dom";
+import { ROLES } from "../../constants/ROLES";
 import { useToast } from "../../hooks/useToast";
 import { useAppSelector } from "../../redux/hooks";
 import { CookieService } from "../../services";
@@ -10,13 +10,18 @@ import JobService, {
   IGetByIdVacancy,
   VacancyRequirementType,
 } from "../../services/JobService";
+import { ROUTES } from "../../constants";
 
 const DetailsJobs: React.FC = () => {
+  const navigate = useNavigate();
   const role = CookieService.getRole();
   const { id } = useParams();
   const { i18n, t } = useTranslation();
   const { showToast } = useToast();
   const user = useAppSelector((rootReducer) => rootReducer.userReducer.user);
+
+  const ROLES_ALLOWED_TO_DELETE = [ROLES.ADMIN, ROLES.COMPANY];
+  const ROLES_ALLOWED_TO_APPLY = [ROLES.PERSON];
 
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
 
@@ -58,11 +63,25 @@ const DetailsJobs: React.FC = () => {
     }
   };
 
+  const deleteVacancy = async () => {
+    if (!id) return;
+
+    try {
+      await JobService.Delete(parseInt(id));
+      showToast("success", t("vacancyDetails.successfullyDeleted"));
+      navigate(ROUTES.jobVacancies);
+    } catch (error) {
+      console.log(error);
+      showToast("error", t("vacancyDetails.errorDeleting"));
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
+      if (!id) return;
+
       try {
-        // JobService.GetById(id ? parseInt(id) : 6);
-        const res = await JobService.GetById(7);
+        const res = await JobService.GetById(parseInt(id));
         console.log(res.data);
         setData(res.data);
       } catch (error) {
@@ -180,9 +199,14 @@ const DetailsJobs: React.FC = () => {
             </Typography>
           ))}
 
-          <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-            {t("vacancyDetails.mandatoryRequirements")}
-          </Typography>
+          {
+            data.requirements?.filter(req => req.type === VacancyRequirementType.mandatory).length ? (
+              <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
+                {t("vacancyDetails.mandatoryRequirements")}
+              </Typography>
+            ) : (<></>)
+          }
+
           {data.requirements
             ?.filter((e) => e.type === VacancyRequirementType.mandatory)
             .map((item) => (
@@ -191,9 +215,13 @@ const DetailsJobs: React.FC = () => {
               </Typography>
             ))}
 
-          <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-            {t("vacancyDetails.desirableRequirements")}
-          </Typography>
+          {
+            data.requirements?.filter(req => req.type === VacancyRequirementType.desirable).length ? (
+              <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
+                {t("vacancyDetails.desirableRequirements")}
+              </Typography>
+            ) : (<></>)
+          }
 
           {data.requirements
             ?.filter((e) => e.type === VacancyRequirementType.desirable)
@@ -226,8 +254,21 @@ const DetailsJobs: React.FC = () => {
           </Box>
         </Box>
 
-        {ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
-          <Box className="fixed bottom-0 right-0 m-4">
+        <Box className="fixed flex gap-2 bottom-0 right-0 m-4">
+          {ROLES_ALLOWED_TO_DELETE.includes(userRole) && (
+            <Button
+              variant="contained"
+              onClick={deleteVacancy}
+              style={{
+                backgroundColor: "#c21e1e",
+                color: "#fff",
+                textDecoration: "none",
+              }}>
+              {t("vacancyDetails.delete")}
+            </Button>
+          )}
+
+          {ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
             <Button
               variant="contained"
               onClick={applyJob}
@@ -238,8 +279,8 @@ const DetailsJobs: React.FC = () => {
               }}>
               {t("vacancyDetails.apply")}
             </Button>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </Box>
   );

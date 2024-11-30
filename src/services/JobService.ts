@@ -180,6 +180,17 @@ class JobService {
     return res.data;
   }
 
+  async Delete(id: number): Promise<void> {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    await api.delete(`${basePath}/${id}`, config);
+  }
+
   async ApplyJob(vacancyId: number, candidateId: number): Promise<void> {
     const config = {
       headers: {

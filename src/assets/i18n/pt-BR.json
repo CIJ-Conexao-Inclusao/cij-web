@@ -264,6 +264,9 @@
     "apply": "Candidatar-se",
     "successfullyApplied": "Candidatura realizada com sucesso",
     "errorApplying": "Erro ao se candidatar",
+    "delete": "Remover",
+    "successfullyDeleted": "Vaga removida com sucesso",
+    "errorDeleting": "Erro ao remover vaga",
     "sector": "Setor"
   },
   "profile": {

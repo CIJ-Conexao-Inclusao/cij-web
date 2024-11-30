@@ -3,5 +3,3 @@ export enum ROLES {
   ADMIN = "admin",
   COMPANY = "company",
 }
-
-export const ROLES_ALLOWED_TO_APPLY = [ROLES.PERSON];
