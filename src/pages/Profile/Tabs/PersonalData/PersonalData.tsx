@@ -1,4 +1,4 @@
-import { Close, UploadFile } from "@mui/icons-material";
+import { Close, Download, UploadFile } from "@mui/icons-material";
 import {
   Box,
   IconButton,
@@ -192,6 +192,18 @@ const PersonalData = () => {
   const removeCurriculum = () => {
     setCurriculum(null);
     if (fileInput.current) fileInput.current.value = "";
+  };
+
+  const downloadFile = () => {
+    if (!curriculum) return;
+
+    const url = URL.createObjectURL(curriculum);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = curriculum.name;
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   useEffect(() => {
@@ -517,6 +529,10 @@ const PersonalData = () => {
                   <Typography fontSize={fsc.medium} color="color03.main">
                     {curriculum.type}
                   </Typography>
+
+                  <IconButton onClick={downloadFile}>
+                    <Download />
+                  </IconButton>
 
                   <IconButton onClick={removeCurriculum}>
                     <Close />
