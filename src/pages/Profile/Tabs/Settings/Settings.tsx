@@ -49,7 +49,7 @@ const Settings = () => {
   const [screenReader, setScreenReader] = useState(false);
 
   // Voice Input
-  const [voiceInput, setVoiceInput] = useState(false);
+  // const [voiceInput, setVoiceInput] = useState(false);
 
   // Theme
   const [themeSelected, setThemeSelected] = useState(themeMode);
@@ -92,12 +92,12 @@ const Settings = () => {
     setChangedValues(true);
   };
 
-  const handleVoiceInputChange = (newValue: boolean) => {
-    if (voiceInput === newValue) return;
+  // const handleVoiceInputChange = (newValue: boolean) => {
+  //   if (voiceInput === newValue) return;
 
-    setVoiceInput(newValue);
-    setChangedValues(true);
-  };
+  //   setVoiceInput(newValue);
+  //   setChangedValues(true);
+  // };
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (themeSelected === event.target.value) return;
@@ -205,7 +205,7 @@ const Settings = () => {
         </Switch>
       </Item>
 
-      <Item title="Captura de voz">
+      {/* <Item title="Captura de voz">
         <Switch>
           <Switch.Option
             selected={!voiceInput}
@@ -228,7 +228,7 @@ const Settings = () => {
             </Typography>
           </Switch.Option>
         </Switch>
-      </Item>
+      </Item> */}
 
       <Item title="Tema">
         <FormControl>
