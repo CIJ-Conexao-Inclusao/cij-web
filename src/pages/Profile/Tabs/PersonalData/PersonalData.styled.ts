@@ -1,4 +1,4 @@
-import { Box, Button, Select, styled, TextField } from "@mui/material";
+import { Box, Button, Paper, Select, styled, TextField } from "@mui/material";
 
 export const Grid = styled(Box)({
   display: "grid",
@@ -69,3 +69,20 @@ export const ButtonStyled = styled(Button)({
   textTransform: "none",
   padding: "0.5rem 1rem",
 });
+
+export const ActionsContainer = styled(Box)({
+  display: "flex",
+  gap: "1rem",
+  justifyContent: "flex-end",
+  width: "100%",
+});
+
+export const PaperCurriculum = styled(Paper)(({ theme }) => ({
+  padding: "0.5rem",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: "1rem",
+  width: "100%",
+  border: `1px dashed ${theme.palette.color03.main}`,
+}));

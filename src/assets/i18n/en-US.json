@@ -291,6 +291,9 @@
     "or": "or",
     "chooseFile": "Choose a file",
     "male": "Male",
-    "female": "Female"
-  }
+    "female": "Female",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "fileTypePdf": "File type needs to be PDF"
 }

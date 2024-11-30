@@ -70,6 +70,76 @@ class UserService {
 
     return res.data.data;
   }
+
+  async UpdatePerson(id: number, user: Partial<TUserById>): Promise<any> {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    const userToSend = {
+      ...user,
+      disabilities: user.disabilities?.map((disability) => ({
+        id: disability.id,
+        acquired: disability.acquired,
+      })),
+    };
+
+    const res = await axios.put(`${basePath}/${id}`, userToSend, config);
+
+    return res.data;
+  }
+
+  async UpdateAddress(id: number, address: TUserById["address"]) {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    const res = await axios.put(`${basePath}/${id}/address`, address, config);
+
+    return res.data;
+  }
+
+  async UpdateDisabilities(
+    id: number,
+    disabilities: TUserById["disabilities"]
+  ) {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    const res = await axios.put(
+      `${basePath}/${id}/disabilities`,
+      disabilities,
+      config
+    );
+
+    return res.data;
+  }
+
+  async UploadResume(id: number, file: File) {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    const form = new FormData();
+    form.append("file", file);
+
+    const res = await axios.post(`${basePath}/${id}/curriculum`, form, config);
+
+    return res.data;
+  }
 }
 
 export default new UserService();
