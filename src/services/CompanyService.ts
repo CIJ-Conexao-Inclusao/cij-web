@@ -17,6 +17,10 @@ class CompanyService {
 	async get() {
 		return await axios.get(`${basePath}`);
 	}
+
+	async getById(id: number) {
+		return await axios.get(`${basePath}/${id}`);
+	}
 }
 
 export default new CompanyService();
