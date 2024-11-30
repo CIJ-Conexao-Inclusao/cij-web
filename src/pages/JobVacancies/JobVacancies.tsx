@@ -127,7 +127,6 @@ const Jobs: React.FC = () => {
   };
 
   const handleRowClick = (data: IVacancyRowData | undefined) => {
-    console.log(data);
     if (!data) return;
     navigate(`${ROUTES.jobVacancies}/${data.id}`);
   };

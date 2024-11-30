@@ -264,6 +264,9 @@
     "apply": "Apply",
     "successfullyApplied": "Application Submitted Successfully",
     "errorApplying": "Error Applying",
+    "delete": "Delete",
+    "successfullyDeleted": "Successfully Deleted",
+    "errorDeleting": "Error Deleting",
     "sector": "Sector"
   },
   "profile": {

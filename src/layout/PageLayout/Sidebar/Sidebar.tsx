@@ -28,12 +28,14 @@ type TSideBarItem = {
 
 const Sidebar: React.FC = () => {
   const { open, setChanged } = useSidebar();
+  const [selectedPage, setSelectedPage] = React.useState<string>("");
 
   const navigate = useNavigate();
   const role = CookieService.getRole();
 
   const handleNavigate = (path: string) => {
     navigate(path);
+    setSelectedPage(path);
   };
 
   const sidebarItems: TSideBarItem[] = useMemo(() => {
@@ -56,7 +58,10 @@ const Sidebar: React.FC = () => {
         <List sx={{ paddingLeft: "0" }} id="teste">
           {sidebarItems.map((item: TSideBarItem, index: number) => {
             return (
-              <ListItemStyled sx={{ height: "4rem" }} key={index}>
+              <ListItemStyled sx={{
+                height: "4rem",
+                background: selectedPage === item.path ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
+              }} key={index}>
                 <ListItemButton
                   sx={{
                     padding: "12px",
