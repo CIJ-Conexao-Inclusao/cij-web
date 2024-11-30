@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -10,11 +9,16 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+import NewsModal from "../../components/NewsModal/NewsModal";
+import { ROLES } from "../../constants/ROLES";
+import { CookieService } from "../../services";
 import NewsService from "../../services/NewsService";
 import cadeirante from "./assets/cadeirante.png";
 import filmagens from "./assets/filmagens.png";
 import prefeitura from "./assets/prefeitura.png";
 import trabalho from "./assets/trabalho.png";
+import { ButtonStyled, ContainerActions } from "./Home.styled";
 
 // import NewsService from "../../services/NewsService";
 
@@ -46,27 +50,44 @@ const Company = [
   },
 ];
 
-const onSave = async () => {
-  try {
-    const res = await NewsService.Create({
-      author: "teste",
-      date: "2024-11-22",
-      description: "teste",
-      title: "teste",
-      banner: new File(["foo"], "foo.txt", {
-        type: "text/plain",
-      }),
-    });
-
-    console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const Home = () => {
+  const { t } = useTranslation();
   // const [news, setNews] = useState<[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const role = CookieService.getRole();
+  const userRole = useMemo(() => {
+    let userRoleAux = ROLES.PERSON;
+
+    if (role != null) userRoleAux = role;
+
+    return userRoleAux;
+  }, [role]);
+
+  const onSave = async () => {
+    try {
+      const res = await NewsService.Create({
+        author: "teste",
+        date: "2024-11-22",
+        description: "teste",
+        title: "teste",
+        banner: new File(["foo"], "foo.txt", {
+          type: "text/plain",
+        }),
+      });
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClose = (_: {}, reason: string) => {
+    if (reason === "backdropClick") return;
+
+    setShowModal(false);
+  };
 
   useEffect(() => {
     // NewsService.list()
@@ -82,6 +103,10 @@ const Home = () => {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    console.log("sim", showModal);
+  }, [showModal]);
+
   if (isLoading) {
     return (
       <div className="w-full mt-4 flex gap-2 items-center justify-center">
@@ -92,8 +117,24 @@ const Home = () => {
   }
 
   return (
-    <Box>
-      <Button onClick={onSave}>teste</Button>
+    <>
+      {showModal && (
+        <NewsModal
+          open={showModal}
+          onClose={handleClose}
+          onSaveAction={() => setShowModal(false)}
+        />
+      )}
+      <ContainerActions>
+        {userRole === ROLES.ADMIN && (
+          <ButtonStyled
+            onClick={() => setShowModal(true)}
+            variant="contained"
+            disableElevation>
+            {t("home.create")}
+          </ButtonStyled>
+        )}
+      </ContainerActions>
       <Container>
         <Card sx={{ marginTop: 4 }}>
           <CardContent sx={{ display: "flex", alignItems: "center" }}>
@@ -156,7 +197,7 @@ const Home = () => {
           ))}
         </Box>
       </Container>
-    </Box>
+    </>
   );
 };
 

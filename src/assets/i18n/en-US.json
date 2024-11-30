@@ -300,5 +300,17 @@
     "successUpdate": "Profile updated successfully",
     "errorUpdate": "Error updating profile"
   },
-  "fileTypePdf": "File type needs to be PDF"
+  "fileTypePdf": "File type needs to be PDF",
+  "home": {
+    "create": "Create news",
+    "successNewsCreation": "News created successfully",
+    "errorOnNewsCreation": "Error on news creation",
+    "title": "Title",
+    "author": "Author",
+    "description": "Description",
+    "date": "Date",
+    "banner": "Banner",
+    "attachImg": "Attach image",
+    "fileTypeImg": "File type needs to be image"
+  }
 }

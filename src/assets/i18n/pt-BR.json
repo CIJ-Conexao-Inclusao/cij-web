@@ -300,5 +300,17 @@
     "successUpdate": "Perfil atualizado com sucesso",
     "errorUpdate": "Erro ao atualizar perfil"
   },
-  "fileTypePdf": "Apenas arquivos PDF são permitidos"
+  "fileTypePdf": "Apenas arquivos PDF são permitidos",
+  "home": {
+    "create": "Criar notícia",
+    "successNewsCreation": "Notícia criada com sucesso",
+    "errorOnNewsCreation": "Erro ao criar notícia",
+    "title": "Título",
+    "author": "Autor",
+    "description": "Descrição",
+    "date": "Data",
+    "banner": "Banner",
+    "attachImg": "Anexar imagem",
+    "fileTypeImg": "Apenas arquivos de imagem são permitidos"
+  }
 }
