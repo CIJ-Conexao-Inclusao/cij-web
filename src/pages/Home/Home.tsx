@@ -9,9 +9,6 @@ import { ROLES } from "../../constants/ROLES";
 import { useFontSize } from "../../hooks/useFontSize";
 import { CookieService } from "../../services";
 import NewsService, { INews } from "../../services/NewsService";
-import cadeirante from "./assets/cadeirante.png";
-import filmagens from "./assets/filmagens.png";
-import prefeitura from "./assets/prefeitura.png";
 import {
   ButtonStyled,
   ContainerActions,
@@ -19,34 +16,6 @@ import {
   GridNews,
   MainNewsInfoContainer,
 } from "./Home.styled";
-
-const imagens = [prefeitura, cadeirante, filmagens];
-
-const Titles = [
-  {
-    title: "Vem aí a 1ª Imersão Inclusiva PCD e Trabalho de Jaraguá do Sul",
-  },
-  {
-    title:
-      "Conselho do Trabalho promove palestras sobre inclusão em Jaraguá do Sul",
-  },
-  {
-    title:
-      "História de estilista surdo de Jaraguá do Sul é contada no Caldeirão do Huck",
-  },
-];
-
-const Company = [
-  {
-    company: "SINDMET | 19/08/2023",
-  },
-  {
-    company: "OCP News | 13/08/2023",
-  },
-  {
-    company: "NSC Total | 07/08/2023",
-  },
-];
 
 const Home = () => {
   const { t } = useTranslation();
