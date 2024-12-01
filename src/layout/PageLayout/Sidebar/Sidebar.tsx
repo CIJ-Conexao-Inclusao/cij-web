@@ -12,9 +12,8 @@ import {
 import { SpaceHeader } from "../PageLayout.styled";
 import { Drawer, ListItemStyled } from "./Sidebar.styled";
 
-import { CONSTS, ROUTES } from "../../../constants";
+import { CONSTS } from "../../../constants";
 
-import SupportOutlinedIcon from "@mui/icons-material/SupportOutlined";
 import { ROLES } from "../../../constants/ROLES";
 import { useSidebar } from "../../../hooks/useSidebar";
 import { CookieService } from "../../../services";
@@ -58,10 +57,15 @@ const Sidebar: React.FC = () => {
         <List sx={{ paddingLeft: "0" }} id="teste">
           {sidebarItems.map((item: TSideBarItem, index: number) => {
             return (
-              <ListItemStyled sx={{
-                height: "4rem",
-                background: selectedPage === item.path ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
-              }} key={index}>
+              <ListItemStyled
+                sx={{
+                  height: "4rem",
+                  background:
+                    selectedPage === item.path
+                      ? "rgba(0, 0, 0, 0.04)"
+                      : "transparent",
+                }}
+                key={index}>
                 <ListItemButton
                   sx={{
                     padding: "12px",
@@ -90,7 +94,7 @@ const Sidebar: React.FC = () => {
           })}
         </List>
       </Box>
-      <Box sx={{ marginBottom: "1rem" }}>
+      {/* <Box sx={{ marginBottom: "1rem" }}>
         <ListItemButton
           sx={{ padding: "12px", height: "4rem" }}
           onClick={() => handleNavigate(ROUTES.help)}>
@@ -111,7 +115,7 @@ const Sidebar: React.FC = () => {
             </ListItemText>
           )}
         </ListItemButton>
-      </Box>
+      </Box> */}
     </Drawer>
   );
 };
