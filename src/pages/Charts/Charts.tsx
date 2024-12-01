@@ -77,7 +77,7 @@ const Charts = () => {
 
     const label = t("charts.logins");
     const data = Object.entries(logins.monthsCount).map(([_, value]) => value);
-    const backgroundColor = palette.color07.main;
+    const backgroundColor = palette.color05.main;
 
     return [{ label, data, backgroundColor }];
   }, [logins]);
@@ -89,7 +89,7 @@ const Charts = () => {
     const data = Object.entries(registers.monthsCount).map(
       ([_, value]) => value
     );
-    const backgroundColor = palette.color08.main;
+    const backgroundColor = palette.color07.main;
 
     return [{ label, data, backgroundColor }];
   }, [registers]);
@@ -135,7 +135,7 @@ const Charts = () => {
   return (
     <Container>
       <Typography color="primary.main" fontWeight="600" variant="h5">
-        Gráficos
+        {t("charts.charts")}
       </Typography>
 
       <BoxTopCharts>

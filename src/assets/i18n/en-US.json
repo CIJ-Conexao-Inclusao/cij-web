@@ -71,7 +71,8 @@
   "others": "Others",
   "charts": {
     "logins": "Entries",
-    "registers": "Registers"
+    "registers": "Registers",
+    "charts": "Charts"
   },
   "addVacancy": "Add Vacancy",
   "formVacancy": {

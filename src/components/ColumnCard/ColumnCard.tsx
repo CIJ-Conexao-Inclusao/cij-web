@@ -15,7 +15,9 @@ const ColumnCard: React.FC<IColumnCard> = ({ title, data, labels }) => {
 
   return (
     <Container>
-      <Typography fontSize={fsc.medium}>{title}</Typography>
+      <Typography fontSize={fsc.veryBig} fontWeight={400} color="color04.main">
+        {title}
+      </Typography>
       <ColumnChart labels={labels} data={data} />
     </Container>
   );

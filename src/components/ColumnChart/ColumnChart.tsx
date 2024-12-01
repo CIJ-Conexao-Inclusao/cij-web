@@ -64,38 +64,6 @@ const ColumnChart: React.FC<IColumnChart> = ({
         type: "bar",
         data: {
           labels,
-          // datasets: [
-          //   {
-          //     data: randomNumbers(),
-          //     label: "Auditiva",
-          //     borderRadius: 8,
-          //     backgroundColor: palette.color05.main,
-          //   },
-          //   {
-          //     data: randomNumbers(),
-          //     label: "Visual",
-          //     borderRadius: 8,
-          //     backgroundColor: palette.color06.main,
-          //   },
-          //   {
-          //     data: randomNumbers(),
-          //     label: "Física",
-          //     borderRadius: 8,
-          //     backgroundColor: palette.color07.main,
-          //   },
-          //   {
-          //     data: randomNumbers(),
-          //     label: "Intelectual",
-          //     borderRadius: 8,
-          //     backgroundColor: palette.color08.main,
-          //   },
-          //   {
-          //     data: randomNumbers(),
-          //     label: "Psicossocial",
-          //     borderRadius: 8,
-          //     backgroundColor: palette.color09.main,
-          //   },
-          // ],
           datasets: data,
         },
         options: {
@@ -103,6 +71,7 @@ const ColumnChart: React.FC<IColumnChart> = ({
           plugins: {
             legend: {
               position: "bottom",
+              display: false,
             },
           },
         },

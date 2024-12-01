@@ -44,9 +44,9 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
   return (
     <Container>
       <Typography
-        fontSize={fsc.big}
+        fontSize={fsc.veryBig}
         fontWeight="bold"
-        color={palette.color10.main}>
+        color={palette.color04.main}>
         {neighborhood}
       </Typography>
 
@@ -65,7 +65,7 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
 
           return (
             <Row key={type}>
-              <Typography fontSize={fsc.medium} color={palette.color10.main}>
+              <Typography fontSize={fsc.medium} color={palette.color04.main}>
                 {t(`disabilityTypes.${type}`)}
               </Typography>
               <IndicatorWrapper>
@@ -75,7 +75,7 @@ const MapPercentage: React.FC<IMapPercentageProps> = ({
                 <Typography
                   sx={{ whiteSpace: "nowrap" }}
                   fontSize={fsc.small}
-                  color={palette.color10.main}>
+                  color={palette.color04.main}>
                   {value} ({percent.toFixed(2)}%)
                 </Typography>
               </IndicatorWrapper>

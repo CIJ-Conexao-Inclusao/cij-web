@@ -71,7 +71,8 @@
   "others": "Outros",
   "charts": {
     "logins": "Acessos",
-    "registers": "Cadastros"
+    "registers": "Cadastros",
+    "charts": "Gráficos"
   },
   "addVacancy": "Adiconar Vaga",
   "formVacancy": {

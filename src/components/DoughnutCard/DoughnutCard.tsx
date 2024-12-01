@@ -18,9 +18,9 @@ const DoughnutCard: React.FC<IDoughnutCard> = ({ title, chartData, value }) => {
     <Container>
       <Typography
         variant="h6"
-        fontSize={fontSizeConfig.big}
+        fontSize={fontSizeConfig.veryBig}
         fontWeight={400}
-        color="color03.main">
+        color="color04.main">
         {title}
       </Typography>
 
@@ -31,7 +31,7 @@ const DoughnutCard: React.FC<IDoughnutCard> = ({ title, chartData, value }) => {
             variant="h5"
             fontSize={fontSizeConfig.smallTitle}
             fontWeight={600}
-            color="color03.main">
+            color="color04.main">
             {value}
           </Typography>
         </Totalizer>

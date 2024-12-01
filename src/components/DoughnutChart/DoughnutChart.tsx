@@ -33,7 +33,7 @@ const DoughnutChart: React.FC<IDoughnutChart> = ({
             {
               data: data.map((row) => row.value),
               backgroundColor: data.map((row) => row.color ?? ""),
-              borderWidth: 1,
+              borderWidth: 0,
               borderColor: "#F6F6F6",
             },
           ],
