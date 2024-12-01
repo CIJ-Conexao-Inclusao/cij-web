@@ -311,6 +311,7 @@
     "date": "Date",
     "banner": "Banner",
     "attachImg": "Attach image",
-    "fileTypeImg": "File type needs to be image"
+    "fileTypeImg": "File type needs to be image",
+    "noNews": "No news"
   }
 }

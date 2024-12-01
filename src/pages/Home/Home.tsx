@@ -1,26 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import {
-  Box,
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
+import Loading from "../../components/Loading/Loading";
 import NewsModal from "../../components/NewsModal/NewsModal";
 import { ROLES } from "../../constants/ROLES";
+import { useFontSize } from "../../hooks/useFontSize";
 import { CookieService } from "../../services";
-import NewsService from "../../services/NewsService";
+import NewsService, { INews } from "../../services/NewsService";
 import cadeirante from "./assets/cadeirante.png";
 import filmagens from "./assets/filmagens.png";
 import prefeitura from "./assets/prefeitura.png";
-import trabalho from "./assets/trabalho.png";
-import { ButtonStyled, ContainerActions } from "./Home.styled";
-
-// import NewsService from "../../services/NewsService";
+import {
+  ButtonStyled,
+  ContainerActions,
+  ContainerNews,
+  GridNews,
+  MainNewsInfoContainer,
+} from "./Home.styled";
 
 const imagens = [prefeitura, cadeirante, filmagens];
 
@@ -52,11 +50,59 @@ const Company = [
 
 const Home = () => {
   const { t } = useTranslation();
-  // const [news, setNews] = useState<[]>([]);
+  const { i18n } = useTranslation();
+  const { fontSizeConfig: fsc } = useFontSize();
+  const [news, setNews] = useState<INews[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const role = CookieService.getRole();
+
+  const handleClose = (_: {}, reason: string) => {
+    if (reason === "backdropClick") return;
+
+    setShowModal(false);
+  };
+
+  const chunkArray = (array: INews[], size: number = 4) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+      const arrAux = array.slice(i, i + size);
+
+      arrAux.forEach((item) => {
+        console.log(
+          new Date(item.date),
+          new Date(item.date).toLocaleDateString(i18n.language)
+        );
+        item.date = new Date(item.date).toLocaleDateString(i18n.language);
+
+        return item;
+      });
+
+      result.push(arrAux);
+    }
+
+    console.log(result);
+    return result;
+  };
+
+  const getNews = async () => {
+    try {
+      const res = await NewsService.List();
+
+      if (res.data && res.data.length > 0) setNews(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onCreateNews = () => {
+    setShowModal(false);
+    getNews();
+  };
+
   const userRole = useMemo(() => {
     let userRoleAux = ROLES.PERSON;
 
@@ -65,55 +111,17 @@ const Home = () => {
     return userRoleAux;
   }, [role]);
 
-  const onSave = async () => {
-    try {
-      const res = await NewsService.Create({
-        author: "teste",
-        date: "2024-11-22",
-        description: "teste",
-        title: "teste",
-        banner: new File(["foo"], "foo.txt", {
-          type: "text/plain",
-        }),
-      });
-
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleClose = (_: {}, reason: string) => {
-    if (reason === "backdropClick") return;
-
-    setShowModal(false);
-  };
+  const newsFormatted = useMemo(() => {
+    const arrCopy = JSON.parse(JSON.stringify(news));
+    return chunkArray(arrCopy);
+  }, [news, i18n]);
 
   useEffect(() => {
-    // NewsService.list()
-    // 	.then((res) => {
-    // 		setNews(res.data);
-    // 		console.log(news);
-    // 		setIsLoading(false);
-    // 	})
-    // 	.catch((err) => {
-    // 		console.log(err);
-    // 		setIsLoading(false);
-    // 	});
-    setIsLoading(false);
+    getNews();
   }, []);
 
-  useEffect(() => {
-    console.log("sim", showModal);
-  }, [showModal]);
-
   if (isLoading) {
-    return (
-      <div className="w-full mt-4 flex gap-2 items-center justify-center">
-        <CircularProgress />
-        Carregando...
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -122,7 +130,7 @@ const Home = () => {
         <NewsModal
           open={showModal}
           onClose={handleClose}
-          onSaveAction={() => setShowModal(false)}
+          onSaveAction={onCreateNews}
         />
       )}
       <ContainerActions>
@@ -135,68 +143,96 @@ const Home = () => {
           </ButtonStyled>
         )}
       </ContainerActions>
-      <Container>
-        <Card sx={{ marginTop: 4 }}>
-          <CardContent sx={{ display: "flex", alignItems: "center" }}>
-            <img src={trabalho} alt="News" />
+      <ContainerNews>
+        {newsFormatted.length == 0 && (
+          <Box sx={{ width: "100%", textAlign: "center" }}>
+            <Typography fontSize={fsc.medium}>{t("home.noNews")}</Typography>
+          </Box>
+        )}
+        {newsFormatted.map((arr) => (
+          <>
+            {arr[0] && (
+              <Card sx={{ marginTop: 4 }}>
+                <CardContent sx={{ display: "flex", gap: "1rem" }}>
+                  <img
+                    src={arr[0].banner}
+                    alt="News"
+                    style={{
+                      width: "500px",
+                      height: "300px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
 
-            <Box sx={{ display: "grid" }}>
-              <Typography variant="h6">
-                WEG Equipamentos assina acordo para contratar mais de 200
-                pessoas com deficiência
-              </Typography>
+                  <MainNewsInfoContainer>
+                    <Box>
+                      <Typography fontSize={fsc.veryBig} fontWeight={600}>
+                        {arr[0].title}
+                      </Typography>
 
-              <Typography variant="body2" sx={{ marginTop: 5 }}>
-                A WEG Equipamentos Elétricos S/A, com sede em Jaraguá do Sul/SC,
-                assinou um acordo com a Justiça do Trabalho comprometendo-se a
-                contratar trabalhadores com deficiência ou reabilitados pelo
-                INSS, no importe de, no mínimo 5%, da totalidade de seus
-                empregados.
-              </Typography>
+                      <Typography fontSize={fsc.medium}>
+                        {arr[0].description}
+                      </Typography>
+                    </Box>
 
-              <Typography
-                sx={{
-                  color: "grey",
-                  fontSize: 12,
-                  marginTop: 5,
-                }}>
-                CUT-SC | 22/11/2023
-              </Typography>
-            </Box>
-          </CardContent>
-        </Card>
+                    <Typography fontSize={fsc.small} color="color10.main">
+                      {arr[0].author} | {arr[0].date}
+                    </Typography>
+                  </MainNewsInfoContainer>
+                </CardContent>
+              </Card>
+            )}
 
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "16px",
-          }}>
-          {imagens.map((imagem, index) => (
-            <Card key={index} sx={{ width: "30%", boxShadow: 3 }}>
-              <CardContent>
-                <img
-                  src={imagem}
-                  alt={`News ${index}`}
-                  style={{ objectFit: "cover" }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {Titles[index].title}
-                </Typography>
+            {arr[1] && (
+              <GridNews>
+                {arr.slice(1).map((e, index) => (
+                  <Card key={index}>
+                    <CardContent
+                      sx={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                      }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}>
+                        <img
+                          src={e.banner}
+                          alt={`News ${index}`}
+                          style={{
+                            width: "300px",
+                            height: "200px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                          }}
+                        />
+                        <Typography fontSize={fsc.veryBig} fontWeight={600}>
+                          {e.title}
+                        </Typography>
 
-                <Typography
-                  sx={{
-                    color: "grey",
-                    fontSize: 12,
-                    marginTop: 5,
-                  }}>
-                  {Company[index].company}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </Box>
-      </Container>
+                        <Typography fontSize={fsc.medium}>
+                          {e.description}
+                        </Typography>
+                      </Box>
+
+                      <Box sx={{ marginTop: "1rem", width: "100%" }}>
+                        <Typography fontSize={fsc.small} color="color10.main">
+                          {e.author} | {e.date}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                ))}
+              </GridNews>
+            )}
+          </>
+        ))}
+      </ContainerNews>
     </>
   );
 };

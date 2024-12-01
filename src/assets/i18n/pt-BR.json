@@ -311,6 +311,7 @@
     "date": "Data",
     "banner": "Banner",
     "attachImg": "Anexar imagem",
-    "fileTypeImg": "Apenas arquivos de imagem são permitidos"
+    "fileTypeImg": "Apenas arquivos de imagem são permitidos",
+    "noNews": "Sem notícias"
   }
 }

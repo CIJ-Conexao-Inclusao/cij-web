@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import axios from "../api";
+import AbortService, { Req_Keys } from "./AbortService";
 
 const basePath = "/news";
 
@@ -11,16 +12,38 @@ export interface ICreateNews {
   banner: File;
 }
 
-class LoginService {
-  private config = {
-    headers: {
-      Authorization: Cookies.get("token"),
-    },
-    withCredentials: false,
-  };
+export interface INews {
+  id: number;
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+  banner: string;
+  author_image: string;
+}
 
-  async List() {
-    return await axios.get(`${basePath}/list`, this.config);
+export interface IGetNewsResponse {
+  message: string;
+  data: INews[];
+}
+
+class LoginService {
+  async List(): Promise<IGetNewsResponse> {
+    const controller = new AbortController();
+    AbortService.controlReq(Req_Keys.GetNews, controller);
+
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+      signal: controller.signal,
+    };
+
+    const res = await axios.get<IGetNewsResponse>(`${basePath}`, config);
+    AbortService.deleteReq(Req_Keys.GetNews);
+
+    return res.data;
   }
 
   async Create(data: ICreateNews) {

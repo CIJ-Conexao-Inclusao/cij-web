@@ -47,13 +47,13 @@ const NewsModal: React.FC<INewsModalProps> = ({
 
   const allFieldsFilled: boolean = useMemo(() => {
     return (
-      !!news.author &&
-      !!news.date &&
-      !!news.description &&
-      !!news.title &&
+      news.author != "" &&
+      news.date != "" &&
+      news.description != "" &&
+      news.title != "" &&
       image != null
     );
-  }, [news]);
+  }, [news, image]);
 
   const onChooseFile = () => {
     fileInput.current?.click();
@@ -269,7 +269,7 @@ const NewsModal: React.FC<INewsModalProps> = ({
             </ButtonStyled>
             <ButtonStyled
               disableElevation
-              disabled={allFieldsFilled}
+              disabled={!allFieldsFilled}
               variant="contained"
               onClick={onSave}>
               <Typography fontSize={fsc.medium}>{t("create")}</Typography>
