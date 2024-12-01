@@ -13,11 +13,15 @@ interface ISidebarProviderProps {
   children: React.ReactNode;
 }
 
+const sideBarKey = "sidebar-open";
+
 const SidebarProvider: React.FC<ISidebarProviderProps> = ({ children }) => {
-  const [open, setOpen] = useState(true);
+  const localOpen = localStorage.getItem(sideBarKey) || "true";
+  const [open, setOpen] = useState(localOpen === "true");
   const [changed, setChanged] = useState(0);
 
   const handleSidebarChange = () => {
+    localStorage.setItem(sideBarKey, (!open).toString());
     setOpen(!open);
   };
 
