@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
+import { ROUTES } from "../../constants";
 import { ROLES } from "../../constants/ROLES";
 import { useToast } from "../../hooks/useToast";
 import { useAppSelector } from "../../redux/hooks";
@@ -10,7 +11,6 @@ import JobService, {
   IGetByIdVacancy,
   VacancyRequirementType,
 } from "../../services/JobService";
-import { ROUTES } from "../../constants";
 
 const DetailsJobs: React.FC = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const DetailsJobs: React.FC = () => {
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
 
   const userRole = useMemo(() => {
-    let userRoleAux = ROLES.PERSON;
+    let userRoleAux = null;
 
     if (role != null) userRoleAux = role;
 
@@ -199,13 +199,15 @@ const DetailsJobs: React.FC = () => {
             </Typography>
           ))}
 
-          {
-            data.requirements?.filter(req => req.type === VacancyRequirementType.mandatory).length ? (
-              <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-                {t("vacancyDetails.mandatoryRequirements")}
-              </Typography>
-            ) : (<></>)
-          }
+          {data.requirements?.filter(
+            (req) => req.type === VacancyRequirementType.mandatory
+          ).length ? (
+            <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
+              {t("vacancyDetails.mandatoryRequirements")}
+            </Typography>
+          ) : (
+            <></>
+          )}
 
           {data.requirements
             ?.filter((e) => e.type === VacancyRequirementType.mandatory)
@@ -215,13 +217,15 @@ const DetailsJobs: React.FC = () => {
               </Typography>
             ))}
 
-          {
-            data.requirements?.filter(req => req.type === VacancyRequirementType.desirable).length ? (
-              <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
-                {t("vacancyDetails.desirableRequirements")}
-              </Typography>
-            ) : (<></>)
-          }
+          {data.requirements?.filter(
+            (req) => req.type === VacancyRequirementType.desirable
+          ).length ? (
+            <Typography variant="body1" sx={{ margin: 3, fontWeight: 600 }}>
+              {t("vacancyDetails.desirableRequirements")}
+            </Typography>
+          ) : (
+            <></>
+          )}
 
           {data.requirements
             ?.filter((e) => e.type === VacancyRequirementType.desirable)
@@ -255,7 +259,7 @@ const DetailsJobs: React.FC = () => {
         </Box>
 
         <Box className="fixed flex gap-2 bottom-0 right-0 m-4">
-          {ROLES_ALLOWED_TO_DELETE.includes(userRole) && (
+          {userRole && ROLES_ALLOWED_TO_DELETE.includes(userRole) && (
             <Button
               variant="contained"
               onClick={deleteVacancy}
@@ -268,7 +272,7 @@ const DetailsJobs: React.FC = () => {
             </Button>
           )}
 
-          {ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
+          {userRole && ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
             <Button
               variant="contained"
               onClick={applyJob}
