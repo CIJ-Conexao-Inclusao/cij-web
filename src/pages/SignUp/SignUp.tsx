@@ -45,6 +45,7 @@ import { useToast } from "../../hooks/useToast.tsx";
 import { UserService } from "../../services/index.ts";
 
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 import { DisabilitiesTypesDesc } from "../../constants/disabilityTypesDesc.ts";
 import { useFontSize } from "../../hooks/useFontSize";
 import ViaCepService from "../../services/ViaCepService.ts";
@@ -87,6 +88,10 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (["cpf", "birthDate", "phone"].includes(e.target.name)) {
+      e.target.value = e.target.value.replace(/\D/g, "");
+    }
+
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -100,6 +105,10 @@ const SignUp = () => {
   };
 
   const handleUserAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (["zip_code"].includes(e.target.name)) {
+      e.target.value = e.target.value.replace(/\D/g, "");
+    }
+
     setUserAddress({ ...userAddress, [e.target.name]: e.target.value });
   };
 
@@ -189,6 +198,7 @@ const SignUp = () => {
           });
       })
       .catch((err) => {
+        console.log(user);
         toast.showToast("error", err.errors[0]);
       });
   };
@@ -255,22 +265,40 @@ const SignUp = () => {
                 size="small"
                 required
               />
-              <Inputs
-                placeholder={"CPF"}
-                name="cpf"
+              <ReactInputMask
+                mask={"999.999.999-99"}
                 value={user.cpf}
                 onChange={handleUserChange}
-                size="small"
-                required
-              />
-              <Inputs
-                placeholder={"Data de nascimento"}
-                name="birthDate"
+                alwaysShowMask={false}>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <Inputs
+                      placeholder={"CPF"}
+                      name="cpf"
+                      size="small"
+                      required
+                    />
+                  )
+                }
+              </ReactInputMask>
+              <ReactInputMask
+                mask={"99/99/9999"}
                 value={user.birthDate}
                 onChange={handleUserChange}
-                size="small"
-                required
-              />
+                alwaysShowMask={false}>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <Inputs
+                      placeholder={"Data de nascimento"}
+                      name="birthDate"
+                      size="small"
+                      required
+                    />
+                  )
+                }
+              </ReactInputMask>
               <FormControl
                 sx={{
                   color: "#999",
@@ -301,14 +329,22 @@ const SignUp = () => {
                 </RadioGroup>
               </FormControl>
 
-              <Inputs
-                placeholder={"Celular"}
-                name="phone"
+              <ReactInputMask
+                mask={"(99) 99 99999-9999"}
                 value={user.phone}
-                onChange={handleUserChange}
-                size="small"
-                required
-              />
+                onChange={handleUserChange}>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <Inputs
+                      placeholder={"Celular"}
+                      name="phone"
+                      size="small"
+                      required
+                    />
+                  )
+                }
+              </ReactInputMask>
               <Inputs
                 placeholder={"E-mail"}
                 name="email"
@@ -400,15 +436,23 @@ const SignUp = () => {
             </>
           ) : activeStep === 2 ? (
             <>
-              <Inputs
-                placeholder={"CEP"}
-                name="zip_code"
+              <ReactInputMask
+                mask={"99999-999"}
                 value={userAddress.zip_code}
                 onChange={handleUserAddressChange}
-                onBlur={handleCepBlur}
-                size="small"
-                required
-              />
+                onBlur={handleCepBlur}>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <Inputs
+                      placeholder={"CEP"}
+                      name="zip_code"
+                      size="small"
+                      required
+                    />
+                  )
+                }
+              </ReactInputMask>
               <Inputs
                 placeholder={"País"}
                 name="country"
