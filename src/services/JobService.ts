@@ -144,8 +144,6 @@ class JobService {
     };
 
     const query = new URLSearchParams(params as any);
-    console.log(query.toString());
-
     const res = await api.get<IVacancyGetResponse>(
       `${basePath}?${query}`,
       config

@@ -82,7 +82,6 @@ const DetailsJobs: React.FC = () => {
 
       try {
         const res = await JobService.GetById(parseInt(id));
-        console.log(res.data);
         setData(res.data);
       } catch (error) {
         console.error(error);

@@ -64,10 +64,6 @@ const Company = () => {
 
   const [rowData, setRowData] = useState<TCompany[]>([]);
 
-  useEffect(() => {
-    console.log(rowData);
-  }, [rowData]);
-
   const colDefs: ColDef<TCompany>[] = [
     { headerName: "CNPJ", field: "cnpj" },
     { headerName: "Nome", field: "name" },

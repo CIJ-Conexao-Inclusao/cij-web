@@ -1,7 +1,7 @@
 import { Close, UploadFile } from "@mui/icons-material";
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import { format } from "date-fns";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useFontSize } from "../../hooks/useFontSize";
 import { useToast } from "../../hooks/useToast";
@@ -68,8 +68,6 @@ const NewsModal: React.FC<INewsModalProps> = ({
     e.preventDefault();
     e.stopPropagation();
 
-    console.log(e);
-
     const file = e.dataTransfer.files[0];
     if (!file) return;
 
@@ -122,10 +120,6 @@ const NewsModal: React.FC<INewsModalProps> = ({
       showToast("error", t("home.errorOnNewsCreation"));
     }
   };
-
-  useEffect(() => {
-    console.log("akllsjafd");
-  }, []);
 
   return (
     <>

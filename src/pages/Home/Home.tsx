@@ -39,10 +39,6 @@ const Home = () => {
       const arrAux = array.slice(i, i + size);
 
       arrAux.forEach((item) => {
-        console.log(
-          new Date(item.date),
-          new Date(item.date).toLocaleDateString(i18n.language)
-        );
         item.date = new Date(item.date).toLocaleDateString(i18n.language);
 
         return item;
@@ -51,7 +47,6 @@ const Home = () => {
       result.push(arrAux);
     }
 
-    console.log(result);
     return result;
   };
 
