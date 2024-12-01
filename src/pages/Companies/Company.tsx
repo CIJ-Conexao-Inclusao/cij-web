@@ -12,6 +12,7 @@ import "ag-grid-enterprise/styles/ag-theme-quartz.css";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useState } from "react";
+import ReactInputMask from "react-input-mask";
 import { useFontSize } from "../../hooks/useFontSize";
 import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import { useToast } from "../../hooks/useToast";
@@ -97,6 +98,10 @@ const Company = () => {
   };
 
   const handleCompanyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (["cnpj", "phone"].includes(e.target.name)) {
+      e.target.value = e.target.value.replace(/\D/g, "");
+    }
+
     setCompanyForm({ ...companyForm, [e.target.name]: e.target.value });
   };
 
@@ -105,6 +110,10 @@ const Company = () => {
   };
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (["zip_code"].includes(e.target.name)) {
+      e.target.value = e.target.value.replace(/\D/g, "");
+    }
+
     setAdressForm({ ...addressForm, [e.target.name]: e.target.value });
   };
 
@@ -256,15 +265,24 @@ const Company = () => {
             <FormContent>
               {activeStep === 0 ? (
                 <>
-                  <InputStyled
-                    variant="outlined"
-                    placeholder={"CNPJ"}
-                    name="cnpj"
+                  <ReactInputMask
+                    mask={"99.999.999/9999-99"}
                     value={companyForm.cnpj}
-                    onChange={handleCompanyChange}
-                    size="small"
-                    required
-                  />
+                    onChange={handleCompanyChange}>
+                    {
+                      /* @ts-ignore */
+                      (inputProps) => (
+                        <InputStyled
+                          {...inputProps}
+                          variant="outlined"
+                          placeholder={"CNPJ"}
+                          name="cnpj"
+                          size="small"
+                          required
+                        />
+                      )
+                    }
+                  </ReactInputMask>
 
                   <InputStyled
                     variant="outlined"
@@ -276,28 +294,46 @@ const Company = () => {
                     required
                   />
 
-                  <InputStyled
-                    variant="outlined"
-                    placeholder={"Número"}
-                    name="phone"
+                  <ReactInputMask
+                    mask={"(99) 99 99999-9999"}
                     value={companyForm.phone}
-                    onChange={handleCompanyChange}
-                    size="small"
-                    required
-                  />
+                    onChange={handleCompanyChange}>
+                    {
+                      /* @ts-ignore */
+                      (inputProps) => (
+                        <InputStyled
+                          {...inputProps}
+                          variant="outlined"
+                          placeholder={"Número"}
+                          name="phone"
+                          size="small"
+                          required
+                        />
+                      )
+                    }
+                  </ReactInputMask>
                 </>
               ) : activeStep === 1 ? (
                 <>
-                  <InputStyled
-                    variant="outlined"
-                    placeholder={"CEP"}
-                    name="zip_code"
+                  <ReactInputMask
+                    mask={"99999-999"}
                     value={addressForm.zip_code}
                     onChange={handleAddressChange}
-                    onBlur={handleCepChange}
-                    size="small"
-                    required
-                  />
+                    onBlur={handleCepChange}>
+                    {
+                      /* @ts-ignore */
+                      (inputProps) => (
+                        <InputStyled
+                          {...inputProps}
+                          variant="outlined"
+                          placeholder={"CEP"}
+                          name="zip_code"
+                          size="small"
+                          required
+                        />
+                      )
+                    }
+                  </ReactInputMask>
 
                   <InputStyled
                     variant="outlined"

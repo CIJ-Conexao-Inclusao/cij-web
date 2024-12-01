@@ -274,6 +274,7 @@ const SignUp = () => {
                   /* @ts-ignore */
                   (inputProps: any) => (
                     <Inputs
+                      {...inputProps}
                       placeholder={"CPF"}
                       name="cpf"
                       size="small"
@@ -291,6 +292,7 @@ const SignUp = () => {
                   /* @ts-ignore */
                   (inputProps: any) => (
                     <Inputs
+                      {...inputProps}
                       placeholder={"Data de nascimento"}
                       name="birthDate"
                       size="small"
@@ -337,6 +339,7 @@ const SignUp = () => {
                   /* @ts-ignore */
                   (inputProps: any) => (
                     <Inputs
+                      {...inputProps}
                       placeholder={"Celular"}
                       name="phone"
                       size="small"
@@ -445,6 +448,7 @@ const SignUp = () => {
                   /* @ts-ignore */
                   (inputProps: any) => (
                     <Inputs
+                      {...inputProps}
                       placeholder={"CEP"}
                       name="zip_code"
                       size="small"

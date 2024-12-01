@@ -250,7 +250,12 @@ const PersonalData = () => {
                 {
                   /* @ts-ignore */
                   (inputProps: any) => (
-                    <InputStyled variant="outlined" size="small" disabled />
+                    <InputStyled
+                      {...inputProps}
+                      variant="outlined"
+                      size="small"
+                      disabled
+                    />
                   )
                 }
               </ReactInputMask>
@@ -284,7 +289,11 @@ const PersonalData = () => {
                 {
                   /*@ts-ignore */
                   (inputProps: any) => (
-                    <InputStyled variant="outlined" size="small" />
+                    <InputStyled
+                      {...inputProps}
+                      variant="outlined"
+                      size="small"
+                    />
                   )
                 }
               </ReactInputMask>
@@ -326,7 +335,11 @@ const PersonalData = () => {
                 {
                   /* @ts-ignore */
                   (inputProps: any) => (
-                    <InputStyled variant="outlined" size="small" />
+                    <InputStyled
+                      {...inputProps}
+                      variant="outlined"
+                      size="small"
+                    />
                   )
                 }
               </ReactInputMask>
