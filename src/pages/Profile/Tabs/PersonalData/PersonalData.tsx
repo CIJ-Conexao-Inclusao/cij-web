@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 import api from "../../../../api";
 import Loading from "../../../../components/Loading/Loading";
 import { DisabilitiesTypesDesc } from "../../../../constants/disabilityTypesDesc";
@@ -242,12 +243,17 @@ const PersonalData = () => {
 
             <BoxInput>
               <Typography fontSize={fsc.medium}>{t("profile.cpf")}</Typography>
-              <InputStyled
+              <ReactInputMask
+                mask={"999.999.999-99"}
                 value={userData.cpf}
-                variant="outlined"
-                size="small"
-                disabled
-              />
+                disabled>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <InputStyled variant="outlined" size="small" disabled />
+                  )
+                }
+              </ReactInputMask>
             </BoxInput>
 
             <BoxInput>
@@ -266,14 +272,22 @@ const PersonalData = () => {
               <Typography fontSize={fsc.medium}>
                 {t("profile.phone")}
               </Typography>
-              <InputStyled
+              <ReactInputMask
+                mask={"(99) 99 99999-9999"}
                 value={userData.phone}
                 onChange={(e) =>
-                  setUserData({ ...userData, phone: e.target.value })
+                  setUserData({
+                    ...userData,
+                    phone: e.target.value.replace(/\D/g, ""),
+                  })
+                }>
+                {
+                  /*@ts-ignore */
+                  (inputProps: any) => (
+                    <InputStyled variant="outlined" size="small" />
+                  )
                 }
-                variant="outlined"
-                size="small"
-              />
+              </ReactInputMask>
             </BoxInput>
 
             <BoxInput>
@@ -296,18 +310,26 @@ const PersonalData = () => {
 
             <BoxInput>
               <Typography fontSize={fsc.medium}>{t("profile.cep")}</Typography>
-              <InputStyled
+              <ReactInputMask
+                mask={"99999-999"}
                 value={userData.address.zip_code}
                 onChange={(e) =>
                   setUserData({
                     ...userData,
-                    address: { ...userData.address, zip_code: e.target.value },
+                    address: {
+                      ...userData.address,
+                      zip_code: e.target.value.replace(/\D/g, ""),
+                    },
                   })
                 }
-                onBlur={onCepBlur}
-                variant="outlined"
-                size="small"
-              />
+                onBlur={onCepBlur}>
+                {
+                  /* @ts-ignore */
+                  (inputProps: any) => (
+                    <InputStyled variant="outlined" size="small" />
+                  )
+                }
+              </ReactInputMask>
             </BoxInput>
 
             <BoxInput>
