@@ -3,18 +3,20 @@ import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { BoxLeftColumn, BoxRightColumn, BoxTab } from "./Profile.styled";
 
+import { useTranslation } from "react-i18next";
 import { useFontSize } from "../../hooks/useFontSize";
 import PersonalData from "./Tabs/PersonalData/PersonalData";
 import Settings from "./Tabs/Settings/Settings";
 
 const Profile = () => {
   const { fontSizeConfig: fsc } = useFontSize();
+  const { t } = useTranslation();
 
   const [tabSelected, setTabSelected] = useState(0);
 
   return (
     <Box className="px-4 mt-10">
-      <p className="title">Meu perfil</p>
+      <p className="title">{t("modalUser.profile")}</p>
 
       <Box sx={{ display: "flex", width: "100%" }}>
         <BoxLeftColumn>
@@ -24,10 +26,12 @@ const Profile = () => {
             }}>
             {tabSelected == 0 ? (
               <Typography color="primary" fontSize={fsc.big}>
-                Dados pessoais
+                {t("profile.personalData")}
               </Typography>
             ) : (
-              <Typography fontSize={fsc.big}>Dados pessoais</Typography>
+              <Typography fontSize={fsc.big}>
+                {t("profile.personalData")}
+              </Typography>
             )}
           </BoxTab>
 
@@ -37,10 +41,12 @@ const Profile = () => {
             }}>
             {tabSelected == 1 ? (
               <Typography color="primary" fontSize={fsc.big}>
-                Configurações
+                {t("profile.settings")}
               </Typography>
             ) : (
-              <Typography fontSize={fsc.big}>Configurações</Typography>
+              <Typography fontSize={fsc.big}>
+                {t("profile.settings")}
+              </Typography>
             )}
           </BoxTab>
         </BoxLeftColumn>

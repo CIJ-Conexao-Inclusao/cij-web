@@ -299,7 +299,9 @@
     "save": "Salvar",
     "cancel": "Cancelar",
     "successUpdate": "Perfil atualizado com sucesso",
-    "errorUpdate": "Erro ao atualizar perfil"
+    "errorUpdate": "Erro ao atualizar perfil",
+    "personalData": "Dados Pessoais",
+    "settings": "Configurações"
   },
   "fileTypePdf": "Apenas arquivos PDF são permitidos",
   "home": {
@@ -314,5 +316,28 @@
     "attachImg": "Anexar imagem",
     "fileTypeImg": "Apenas arquivos de imagem são permitidos",
     "noNews": "Sem notícias"
+  },
+  "modalUser": {
+    "logout": "Sair",
+    "login": "Entrar",
+    "profile": "Meu perfil",
+    "lang": "Idioma"
+  },
+  "settings": {
+    "fontSize": "Tamanho da fonte",
+    "heightWillBe": "O tamanho ficará assim",
+    "screenReader": "Leitor de tela",
+    "off": "Desligado",
+    "on": "Ligado",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "daltonismMode": "Modo de daltonismo",
+    "deuteranopia": "Deuteranopia",
+    "protanopia": "Protanopia",
+    "tritaonopia": "Tritaonopia",
+    "systemColors": "Cores do sistema",
+    "reset": "Voltar ao padrão",
+    "save": "Salvar configurações"
   }
 }

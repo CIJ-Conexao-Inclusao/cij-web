@@ -49,22 +49,33 @@ export const ButtonNavigation = styled(Box)({
   width: "40%",
 });
 
-export const InputStyled = styled(TextField)({
-  backgroundColor: "#EEEEEE",
+export const InputStyled = styled(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.color02.main,
   borderRadius: "4px",
-  // boxShadow: "5px 5px 10px 0 #00000020",
   "& fieldset": { border: "none" },
+  "& input": { color: theme.palette.color04.main },
+  "& .Mui-disabled": {
+    "-webkit-text-fill-color": theme.palette.color04.main,
+    opacity: 0.7,
+  },
   width: "100%",
-});
+}));
 
-export const SelectStyled = styled(Select<any>)({
-  backgroundColor: "#EEEEEE",
+export const SelectStyled = styled(Select<any>)(({ theme }) => ({
+  backgroundColor: theme.palette.color02.main,
   borderRadius: "4px",
-  // boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" },
-  "& div": { paddingTop: "8.5px", paddingBottom: "8.5px" },
+  "& div": {
+    paddingTop: "8.5px",
+    paddingBottom: "8.5px",
+    color: theme.palette.color04.main,
+  },
+  "& .Mui-disabled": {
+    "-webkit-text-fill-color": theme.palette.color04.main,
+    opacity: 0.7,
+  },
   width: "100%",
-});
+}));
 
 export const BoxForm = styled(Box)({
   display: "flex",

@@ -29,6 +29,7 @@ import { VacancyAreas } from "../../constants/vacancyAreas";
 import { useFontSize } from "../../hooks/useFontSize";
 import { useSwitchTheme } from "../../hooks/useSwitchTheme";
 import { useToast } from "../../hooks/useToast";
+import { useAppSelector } from "../../redux/hooks";
 import { CookieService } from "../../services";
 import CompanyService from "../../services/CompanyService";
 import JobService, {
@@ -36,7 +37,6 @@ import JobService, {
   VacancyContractType,
 } from "../../services/JobService";
 import { TCompany } from "../../types/TCompany";
-import { useAppSelector } from "../../redux/hooks";
 
 interface IVacancyRowData {
   id: number;
@@ -215,7 +215,7 @@ const Jobs: React.FC = () => {
         setCompanies([res.data.data]);
         setCompany(user.id);
         return;
-      };
+      }
 
       const res = await CompanyService.get();
       setCompanies(res.data.data);
@@ -226,6 +226,11 @@ const Jobs: React.FC = () => {
       }
       showToast("error", "Falha ao listar empresas");
     }
+  };
+
+  const handleOnSaveVacancy = () => {
+    getVacancies();
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -257,7 +262,7 @@ const Jobs: React.FC = () => {
         <VacancyModal
           open={showModal}
           onClose={handleClose}
-          onSaveAction={() => setShowModal(false)}
+          onSaveAction={handleOnSaveVacancy}
         />
       )}
       <ContainerAll>

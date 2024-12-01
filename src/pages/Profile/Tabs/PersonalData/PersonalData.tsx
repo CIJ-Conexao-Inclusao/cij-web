@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../../../api";
+import Loading from "../../../../components/Loading/Loading";
 import { DisabilitiesTypesDesc } from "../../../../constants/disabilityTypesDesc";
 import { useFontSize } from "../../../../hooks/useFontSize";
 import { useToast } from "../../../../hooks/useToast";
@@ -58,7 +59,7 @@ const PersonalData = () => {
     setUserData(res);
 
     if (res.curriculum) {
-      getResume(res.curriculum);
+      await getResume(res.curriculum);
     }
 
     setIsLoading(false);
@@ -208,7 +209,7 @@ const PersonalData = () => {
     fetchData();
   }, [user]);
 
-  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isLoading) return <Loading />;
 
   return (
     <>

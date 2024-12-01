@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import ColumnCard from "../../components/ColumnCard/ColumnCard";
 import { IDataColumnChart } from "../../components/ColumnChart/ColumnChart";
 import DoughnutCard from "../../components/DoughnutCard/DoughnutCard";
+import Loading from "../../components/Loading/Loading";
 import MapCard from "../../components/MapCard/MapCard";
 import { DisabilityColorsRef } from "../../constants/disabilityTypes";
 import ActivityService, {
@@ -128,9 +129,7 @@ const Charts = () => {
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <Loading />;
 
   return (
     <Container>

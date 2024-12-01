@@ -37,4 +37,7 @@ export const themeDark: IPaletteOptions = {
   color09: {
     main: "#FBD2D3",
   },
+  color10: {
+    main: "#6C757D",
+  },
 };

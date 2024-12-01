@@ -13,6 +13,7 @@ import {
   useTheme,
 } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
 import ButtonCIJ from "../../../../components/ButtonCIJ/ButtonCIJ";
 import Item from "../../../../components/Item/Item";
 import Switch from "../../../../components/Switch/Switch";
@@ -37,6 +38,7 @@ const Settings = () => {
   const { themeMode, switchTheme, changeThemeColors } = useSwitchTheme();
   const { palette } = useTheme();
   const { isReadActive, setIsReadActive } = useTextReader();
+  const { t } = useTranslation();
 
   // Control form
   const [changedValues, setChangedValues] = useState(false);
@@ -162,7 +164,7 @@ const Settings = () => {
 
   return (
     <SettingsContainer>
-      <Item title="Tamanho da fonte">
+      <Item title={t("settings.fontSize")}>
         <SliderContainer>
           <TextDecreaseIcon />
           <Slider
@@ -176,11 +178,13 @@ const Settings = () => {
         </SliderContainer>
 
         <Box className="h-8">
-          <Typography fontSize={newFontSize}>O tamanho ficará assim</Typography>
+          <Typography fontSize={newFontSize}>
+            {t("settings.heightWillBe")}
+          </Typography>
         </Box>
       </Item>
 
-      <Item title="Leitor de tela">
+      <Item title={t("settings.screenReader")}>
         <Switch>
           <Switch.Option
             selected={!screenReader}
@@ -189,7 +193,7 @@ const Settings = () => {
               color={!screenReader ? "color01.main" : "color04.main"}
               fontSize={fontSizeConfig.medium}
               overflow={"auto"}>
-              Desligado
+              {t("settings.off")}
             </Typography>
           </Switch.Option>
           <Switch.Option
@@ -199,7 +203,7 @@ const Settings = () => {
               color={screenReader ? "color01.main" : "color04.main"}
               fontSize={fontSizeConfig.medium}
               overflow={"auto"}>
-              Ligado
+              {t("settings.on")}
             </Typography>
           </Switch.Option>
         </Switch>
@@ -230,60 +234,60 @@ const Settings = () => {
         </Switch>
       </Item> */}
 
-      <Item title="Tema">
+      <Item title={t("settings.theme")}>
         <FormControl>
           <RadioGroup row value={themeSelected} onChange={handleThemeChange}>
             <FormControlLabel
               value={THEME_OPTIONS.LIGHT}
               control={<Radio />}
-              label="Claro"
+              label={t("settings.light")}
             />
             <FormControlLabel
               value={THEME_OPTIONS.DARK}
               control={<Radio />}
-              label="Escuro"
+              label={t("settings.dark")}
             />
           </RadioGroup>
         </FormControl>
       </Item>
 
-      <Item title="Modo daltonismo">
+      {/* <Item title={t("settings.daltonismMode")}>
         <FormControl>
           <RadioGroup row value={daltonism} onChange={handleDaltonismChange}>
             <FormControlLabel
               value={DALTONISM_TYPES.DEUTERANOPIA}
               control={<Radio />}
-              label="Deuteranopia"
+              label={t("settings.deuteranopia")}
             />
             <FormControlLabel
               value={DALTONISM_TYPES.PROTANOPIA}
               control={<Radio />}
-              label="Protanopia"
+              label={t("settings.protanopia")}
             />
             <FormControlLabel
               value={DALTONISM_TYPES.TRITANOPIA}
               control={<Radio />}
-              label="Tritaonopia"
+              label={t("settings.tritanopia")}
             />
           </RadioGroup>
         </FormControl>
-      </Item>
+      </Item> */}
 
-      <Item title="Cores do sistema">
+      <Item title={t("settings.systemColors")}>
         <Colors colors={systemColors} onColorChange={handleColorChange} />
       </Item>
 
       <ActionsContainer>
         <ButtonCIJ
           variant="outlined"
-          text="Voltar ao padrão"
+          text={t("settings.reset")}
           enabled={changedValues}
           onClick={handleResetButton}
         />
 
         <ButtonCIJ
           variant="contained"
-          text="Salvar configurações"
+          text={t("settings.save")}
           enabled={changedValues}
           onClick={handleSaveButton}
         />

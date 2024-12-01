@@ -299,7 +299,9 @@
     "save": "Save",
     "cancel": "Cancel",
     "successUpdate": "Profile updated successfully",
-    "errorUpdate": "Error updating profile"
+    "errorUpdate": "Error updating profile",
+    "personalData": "Personal Data",
+    "settings": "Settings"
   },
   "fileTypePdf": "File type needs to be PDF",
   "home": {
@@ -314,5 +316,28 @@
     "attachImg": "Attach image",
     "fileTypeImg": "File type needs to be image",
     "noNews": "No news"
+  },
+  "modalUser": {
+    "logout": "Logout",
+    "login": "Login",
+    "profile": "My profile",
+    "lang": "Language"
+  },
+  "settings": {
+    "fontSize": "Font size",
+    "heightWillBe": "The height will be like this",
+    "screenReader": "Screen reader",
+    "off": "Off",
+    "on": "On",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "daltonismMode": "Daltonism mode",
+    "deuteranopia": "Deuteranopia",
+    "protanopia": "Protanopia",
+    "tritaonopia": "Tritanopia",
+    "systemColors": "System colors",
+    "reset": "Reset to default",
+    "save": "Save configuration"
   }
 }
