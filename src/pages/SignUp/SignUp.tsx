@@ -332,7 +332,7 @@ const SignUp = () => {
               </FormControl>
 
               <ReactInputMask
-                mask={"(99) 99 99999-9999"}
+                mask={"+99 (99) 99999-9999"}
                 value={user.phone}
                 onChange={handleUserChange}>
                 {

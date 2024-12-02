@@ -295,7 +295,7 @@ const Company = () => {
                   />
 
                   <ReactInputMask
-                    mask={"(99) 99 99999-9999"}
+                    mask={"+99 (99) 99999-9999"}
                     value={companyForm.phone}
                     onChange={handleCompanyChange}>
                     {

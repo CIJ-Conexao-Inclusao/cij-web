@@ -58,6 +58,7 @@ const Jobs: React.FC = () => {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const { themeMode } = useSwitchTheme();
+  const { i18n } = useTranslation();
 
   const [showModal, setShowModal] = useState(false);
   const [companies, setCompanies] = useState<TCompany[]>([]);
@@ -239,7 +240,7 @@ const Jobs: React.FC = () => {
 
   useEffect(() => {
     getVacancies();
-  }, [debouncedName, type, deficiency, area, company]);
+  }, [debouncedName, type, deficiency, area, company, i18n.language]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

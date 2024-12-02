@@ -278,7 +278,7 @@ const PersonalData = () => {
                 {t("profile.phone")}
               </Typography>
               <ReactInputMask
-                mask={"(99) 99 99999-9999"}
+                mask={"+99 (99) 99999-9999"}
                 value={userData.phone}
                 onChange={(e) =>
                   setUserData({
