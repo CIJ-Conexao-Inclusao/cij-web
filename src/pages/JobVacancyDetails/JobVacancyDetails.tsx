@@ -61,6 +61,7 @@ const DetailsJobs: React.FC = () => {
     try {
       await JobService.ApplyJob(parseInt(id), user.id);
       showToast("success", t("vacancyDetails.successfullyApplied"));
+      navigate(ROUTES.jobVacancies);
     } catch (error) {
       console.log(error);
       showToast("error", t("vacancyDetails.errorApplying"));

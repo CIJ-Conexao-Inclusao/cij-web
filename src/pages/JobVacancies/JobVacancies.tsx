@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, IconButton, MenuItem, Tooltip, Typography } from "@mui/material";
+import { Box, IconButton, MenuItem, Switch, Tooltip, Typography } from "@mui/material";
 import {
   AgGridContainer,
   BoxInput,
@@ -69,6 +69,7 @@ const Jobs: React.FC = () => {
   const [deficiency, setDeficiency] = useState({ id: 0, name: "" });
   const [area, setArea] = useState<string>("");
   const [company, setCompany] = useState<string | number>("");
+  const [myApplies, setMyApplies] = useState<boolean>(false);
 
   const [rowData, setRowData] = useState<IVacancyRowData[]>([]);
   const [gridApi, setGridApi] = useState<any>(null);
@@ -155,6 +156,7 @@ const Jobs: React.FC = () => {
     setDeficiency({ id: 0, name: "" });
     setArea("");
     setCompany(userRole === ROLES.COMPANY && user?.id ? user.id : 0);
+    setMyApplies(false);
   };
 
   const getVacancyFilters = () => {
@@ -169,6 +171,7 @@ const Jobs: React.FC = () => {
       filters.disability_id = deficiency.id;
     if (area) filters.area = area;
     if (typeof company === "number" && company) filters.company_id = company;
+    if (myApplies && user?.id) filters.candidate_id = user.id;
 
     if (userRole === ROLES.COMPANY && user?.id) filters.company_id = user.id;
 
@@ -240,7 +243,7 @@ const Jobs: React.FC = () => {
 
   useEffect(() => {
     getVacancies();
-  }, [debouncedName, type, deficiency, area, company, i18n.language]);
+  }, [debouncedName, type, deficiency, area, company, i18n.language, myApplies]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -373,6 +376,18 @@ const Jobs: React.FC = () => {
                   ))}
                 </SelectStyled>
               </BoxInput>
+            </Box>
+
+            <Box>
+              <BoxInput>
+                <Typography fontSize={fsc.default} fontWeight={600}>
+                  {t("myApplies")}
+                </Typography>
+                <Switch
+                  checked={myApplies}
+                  onChange={() => setMyApplies(!myApplies)}
+                />
+            </BoxInput>
             </Box>
 
             <ContainerActions>
