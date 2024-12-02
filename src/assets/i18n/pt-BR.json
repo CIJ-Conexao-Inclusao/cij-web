@@ -264,11 +264,13 @@
     "shift": "Turno",
     "apply": "Candidatar-se",
     "successfullyApplied": "Candidatura realizada com sucesso",
-    "errorApplying": "Erro ao se candidatar",
+    "errorApplying": "Já candidatado a esta vaga",
     "delete": "Remover",
     "successfullyDeleted": "Vaga removida com sucesso",
     "errorDeleting": "Erro ao remover vaga",
-    "sector": "Setor"
+    "sector": "Setor",
+    "errorDownloadingResume": "Erro ao baixar currículo",
+    "applications": "Candidaturas"
   },
   "profile": {
     "geral": "Geral",

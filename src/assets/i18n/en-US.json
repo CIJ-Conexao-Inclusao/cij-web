@@ -264,11 +264,13 @@
     "shift": "Shift",
     "apply": "Apply",
     "successfullyApplied": "Application Submitted Successfully",
-    "errorApplying": "Error Applying",
+    "errorApplying": "Error Submitting Application",
     "delete": "Delete",
     "successfullyDeleted": "Successfully Deleted",
     "errorDeleting": "Error Deleting",
-    "sector": "Sector"
+    "sector": "Sector",
+    "errorDownloadingResume": "Error downloading resume",
+    "applications": "Applications"
   },
   "profile": {
     "geral": "Geral",

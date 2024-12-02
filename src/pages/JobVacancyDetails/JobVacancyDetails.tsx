@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Download } from "@mui/icons-material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,8 +10,10 @@ import { useAppSelector } from "../../redux/hooks";
 import { CookieService } from "../../services";
 import JobService, {
   IGetByIdVacancy,
+  IVacancyApply,
   VacancyRequirementType,
 } from "../../services/JobService";
+import { CandidateBox } from "./JobVacancyDetails.styled";
 
 const DetailsJobs: React.FC = () => {
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ const DetailsJobs: React.FC = () => {
   const ROLES_ALLOWED_TO_APPLY = [ROLES.PERSON];
 
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
+  const [applies, setApplies] = useState<IVacancyApply[]>([]);
 
   const userRole = useMemo(() => {
     let userRoleAux = null;
@@ -63,6 +67,23 @@ const DetailsJobs: React.FC = () => {
     }
   };
 
+  const downloadResume = async (url: string | null) => {
+    if (!url) return;
+
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const urlAux = new Blob([blob]);
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(urlAux);
+      link.download = "curriculum.pdf";
+      link.click();
+    } catch (error) {
+      console.log(error);
+      showToast("error", t("vacancyDetails.errorDownloadingResume"));
+    }
+  };
+
   const deleteVacancy = async () => {
     if (!id) return;
 
@@ -83,6 +104,9 @@ const DetailsJobs: React.FC = () => {
       try {
         const res = await JobService.GetById(parseInt(id));
         setData(res.data);
+
+        const applications = await JobService.GetApplies(parseInt(id));
+        if (applications.data) setApplies(applications.data);
       } catch (error) {
         console.error(error);
       }
@@ -257,6 +281,46 @@ const DetailsJobs: React.FC = () => {
           </Box>
         </Box>
 
+        {userRole &&
+          ROLES_ALLOWED_TO_DELETE.includes(userRole) &&
+          applies.length > 0 && (
+            <>
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{ fontWeight: 600, marginTop: "16px" }}>
+                {t("vacancyDetails.applications")}
+              </Typography>
+              <Box
+                sx={{
+                  marginTop: "16px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}>
+                {applies.map((item, index) => (
+                  <CandidateBox key={index}>
+                    <Box flex={1}>
+                      <Typography>{item.candidate.name}</Typography>
+                    </Box>
+                    <Box display={"flex"} flex={1} justifyContent={"center"}>
+                      <Typography>{item.candidate.phone}</Typography>
+                    </Box>
+                    <Box display={"flex"} flex={1} justifyContent={"end"}>
+                      <IconButton
+                        disabled={!item.candidate.curriculum}
+                        onClick={() =>
+                          downloadResume(item.candidate.curriculum)
+                        }>
+                        <Download />
+                      </IconButton>
+                    </Box>
+                  </CandidateBox>
+                ))}
+              </Box>
+            </>
+          )}
+
         <Box className="fixed flex gap-2 bottom-0 right-0 m-4">
           {userRole && ROLES_ALLOWED_TO_DELETE.includes(userRole) && (
             <Button
@@ -271,7 +335,7 @@ const DetailsJobs: React.FC = () => {
             </Button>
           )}
 
-          {userRole && ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
+          {isOpen && userRole && ROLES_ALLOWED_TO_APPLY.includes(userRole) && (
             <Button
               variant="contained"
               onClick={applyJob}

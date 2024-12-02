@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import api from "../api";
+import { GENDER } from "../constants";
 import AbortService, { Req_Keys } from "./AbortService";
 
 export interface IVacancyCreate {
@@ -105,6 +106,41 @@ export interface IApplyJobBody {
   candidate_id: number;
 }
 
+export interface IVacancyApply {
+  id: number;
+  candidate: {
+    name: string;
+    cpf: string;
+    phone: string;
+    gender: GENDER;
+    curriculum: string;
+    address: {
+      id: number;
+      street: string;
+      number: string;
+      neighborhood: string;
+      city: string;
+      state: string;
+      country: string;
+      zip_code: string;
+      complement: string;
+    };
+    disabilities: {
+      id: number;
+      category: string;
+      description: string;
+      rate: number;
+      acquired: boolean;
+    }[];
+  };
+  status: string;
+}
+
+export interface IGetAppliesResponse {
+  message: string;
+  data: IVacancyApply[] | null;
+}
+
 const basePath = "/vacancies";
 
 class JobService {
@@ -205,6 +241,22 @@ class JobService {
       },
       config
     );
+  }
+
+  async GetApplies(vacancyId: number): Promise<IGetAppliesResponse> {
+    const config = {
+      headers: {
+        Authorization: Cookies.get("token"),
+      },
+      withCredentials: false,
+    };
+
+    const res = await api.get<IGetAppliesResponse>(
+      `${basePath}/apply/${vacancyId}`,
+      config
+    );
+
+    return res.data;
   }
 }
 
