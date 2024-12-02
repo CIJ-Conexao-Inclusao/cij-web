@@ -158,7 +158,7 @@ const Jobs: React.FC = () => {
 
   const getVacancyFilters = () => {
     const filters: IGetVacancyParams = {
-      perPage: 100,
+      per_page: 100,
       page: 0,
     };
 
@@ -184,7 +184,7 @@ const Jobs: React.FC = () => {
         return {
           id: e.id || 0,
           company: e.company,
-          area: e.area,
+          area: t("areas." + e.area),
           title: e.title,
           contract_type: t("contractType." + e.contract_type),
           disabilities: e.disabilities

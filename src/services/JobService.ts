@@ -91,7 +91,7 @@ export interface IVacancyCreateBody extends IVacancyCreate {
 }
 
 export interface IGetVacancyParams {
-  perPage: number;
+  per_page: number;
   page: number;
   disability_id?: number;
   company_id?: number;
