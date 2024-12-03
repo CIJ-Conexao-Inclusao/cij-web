@@ -100,6 +100,7 @@ export interface IGetVacancyParams {
   area?: string;
   contract_type?: string;
   search_text?: string;
+  candidate_id?: number;
 }
 
 export interface IApplyJobBody {
