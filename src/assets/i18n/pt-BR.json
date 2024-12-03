@@ -81,7 +81,8 @@
     "registers": "Cadastros",
     "charts": "Gráficos"
   },
-  "addVacancy": "Adiconar Vaga",
+  "addVacancy": "Adicionar Vaga",
+  "addNews": "Criar Notícia",
   "formVacancy": {
     "geral": "Geral",
     "requirements": "Requisitos",

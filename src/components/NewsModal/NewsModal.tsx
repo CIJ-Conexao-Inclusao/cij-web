@@ -138,7 +138,7 @@ const NewsModal: React.FC<INewsModalProps> = ({
               component="h2"
               color={"primary"}
               fontWeight={700}>
-              {t("addVacancy")}
+              {t("addNews")}
             </Typography>
           </FormHeader>
 
