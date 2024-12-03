@@ -47,6 +47,7 @@ export interface IGetByIdVacancy {
   skills: string[];
   responsabilities: string[];
   requirements: IVacancyRequirement[];
+  candidate_already_applied?: boolean;
 }
 
 export interface IGetByIdVacancyResponse {
@@ -192,7 +193,10 @@ class JobService {
     return res.data;
   }
 
-  async GetById(id: number): Promise<IGetByIdVacancyResponse> {
+  async GetById(
+    id: number,
+    candidateId: number
+  ): Promise<IGetByIdVacancyResponse> {
     const controller = new AbortController();
     AbortService.controlReq(Req_Keys.VacancyGetById, controller);
 
@@ -205,7 +209,7 @@ class JobService {
     };
 
     const res = await api.get<IGetByIdVacancyResponse>(
-      `${basePath}/${id}`,
+      `${basePath}/${id}?candidate_id=${candidateId}`,
       config
     );
 

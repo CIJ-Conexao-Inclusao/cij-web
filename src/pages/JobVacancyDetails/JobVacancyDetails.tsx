@@ -28,6 +28,7 @@ const DetailsJobs: React.FC = () => {
 
   const [data, setData] = useState<IGetByIdVacancy>({} as IGetByIdVacancy);
   const [applies, setApplies] = useState<IVacancyApply[]>([]);
+  const [alreadyApplied, setAreadyApllied] = useState(false);
 
   const userRole = useMemo(() => {
     let userRoleAux = null;
@@ -61,6 +62,7 @@ const DetailsJobs: React.FC = () => {
     try {
       await JobService.ApplyJob(parseInt(id), user.id);
       showToast("success", t("vacancyDetails.successfullyApplied"));
+      fetchData();
     } catch (error) {
       console.log(error);
       showToast("error", t("vacancyDetails.errorApplying"));
@@ -97,23 +99,28 @@ const DetailsJobs: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!id) return;
+  const fetchData = async () => {
+    if (!id) return;
 
-      try {
-        const res = await JobService.GetById(parseInt(id));
-        setData(res.data);
+    try {
+      const res = await JobService.GetById(parseInt(id), user?.id || 0);
+      setData(res.data);
 
+      if (res.data.candidate_already_applied) setAreadyApllied(true);
+
+      if (userRole == ROLES.COMPANY) {
         const applications = await JobService.GetApplies(parseInt(id));
-        if (applications.data) setApplies(applications.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
+        if (applications.data) setApplies(applications.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [user, userRole]);
 
   return (
     <Box>
@@ -339,9 +346,9 @@ const DetailsJobs: React.FC = () => {
             <Button
               variant="contained"
               onClick={applyJob}
+              disabled={alreadyApplied}
+              color="primary"
               style={{
-                backgroundColor: "#004AAD",
-                color: "#fff",
                 textDecoration: "none",
               }}>
               {t("vacancyDetails.apply")}
