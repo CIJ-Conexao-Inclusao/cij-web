@@ -27,7 +27,7 @@ type TSideBarItem = {
 
 const Sidebar: React.FC = () => {
   const { open, setChanged } = useSidebar();
-  const [selectedPage, setSelectedPage] = React.useState<string>("");
+  const [selectedPage, setSelectedPage] = React.useState<string>(window.location.pathname);
 
   const navigate = useNavigate();
   const role = CookieService.getRole();
