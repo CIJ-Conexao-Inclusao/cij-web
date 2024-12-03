@@ -378,17 +378,19 @@ const Jobs: React.FC = () => {
               </BoxInput>
             </Box>
 
-            <Box>
-              <BoxInput>
-                <Typography fontSize={fsc.default} fontWeight={600}>
-                  {t("myApplies")}
-                </Typography>
-                <Switch
-                  checked={myApplies}
-                  onChange={() => setMyApplies(!myApplies)}
-                />
-            </BoxInput>
-            </Box>
+            {userRole === ROLES.PERSON && user?.id && (
+              <Box>
+                <BoxInput>
+                  <Typography fontSize={fsc.default} fontWeight={600}>
+                    {t("myApplies")}
+                  </Typography>
+                  <Switch
+                    checked={myApplies}
+                    onChange={() => setMyApplies(!myApplies)}
+                  />
+                </BoxInput>
+              </Box>
+            )}
 
             <ContainerActions>
               <IconButton onClick={onRefresh} color="primary">
