@@ -11,25 +11,25 @@ import {
 } from "./Supporters.styled";
 import { Typography, Box } from "@mui/material";
 import vetor from "./assets/supporters-background.png";
-
-const listCards = [
-	{
-		title: "+20",
-		subtitle: "Empresas que são parceiras e apoiam a causa CIJ",
-	},
-	{
-		title: "+350",
-		subtitle:
-			"Pessoas com deficiência contratadas através do nosso sistema",
-	},
-	{
-		title: "+500",
-		subtitle:
-			"Mil reais doados para realizar melhorias de acessibilidade na cidade",
-	},
-];
+import { useTranslation } from "react-i18next";
 
 const Backing: React.FC = () => {
+	const { t } = useTranslation();
+	const listCards = [
+		{
+			title: "+20",
+			subtitle: t("supporters.companies"),
+		},
+		{
+			title: "+350",
+			subtitle: t("supporters.accepted_jobs"),
+		},
+		{
+			title: "+500",
+			subtitle: t("supporters.donated"),
+		},
+	];
+
 	return (
 		<BoxCompanies sx={{ maxWidth: "lg", margin: "auto" }}>
 			{/* Seção do cabeçalho */}
@@ -44,15 +44,10 @@ const Backing: React.FC = () => {
 								marginBottom: 4,
 							}}
 						>
-							PARCERIAS E APOIADORES
+							{ t("supporters.title") }
 						</Typography>
 						<Typography variant="body1" sx={{ fontWeight: 600 }}>
-							Nossas parcerias e nossos apoiadores desempenham um
-							papel fundamental na realização de nossa missão de
-							promover a acessibilidade na cidade e a inclusão de
-							pessoas com deficiência no mercado de trabalho.
-							Estamos profundamente gratos por sua confiança e
-							compromisso nesta jornada.
+							{ t("supporters.text") }
 						</Typography>
 					</StyledCardContentTitle>
 				</Box>

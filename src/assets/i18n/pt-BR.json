@@ -1,4 +1,11 @@
 {
+  "supporters": {
+    "title": "PARCERIAS E APOIADORES",
+    "text": "Nossas parcerias e nossos apoiadores desempenham um papel fundamental na realização de nossa missão de promover a acessibilidade na cidade e a inclusão de pessoas com deficiência no mercado de trabalho. Estamos profundamente gratos por sua confiança e compromisso nesta jornada.",
+    "companies": "Empresas que são parceiras e apoiam a causa CIJ",
+    "accepted_jobs": "Pessoas com deficiência contratadas através do nosso sistema",
+    "donated": "Mil reais doados para realizar melhorias de acessibilidade na cidade"
+  },
   "signIn": {
     "welcome": "Bem vindo(a)!",
     "signInToContinue": "Insira suas credencias para acessar sua conta",

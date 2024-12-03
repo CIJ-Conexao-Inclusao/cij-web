@@ -1,4 +1,11 @@
 {
+  "supporters": {
+    "title": "PARTNERS AND SUPPORTERS",
+    "text": "Our partners and supporters play a key role in achieving our mission of promoting accessibility in the city and the inclusion of people with disabilities in the workforce. We are deeply grateful for your trust and commitment in this journey.",
+    "companies": "Companies that are partners and support the CIJ cause",
+    "accepted_jobs": "People with disabilities hired through our system",
+    "donated": "One thousand reais donated to make accessibility improvements in the city"
+  },
   "signIn": {
     "welcome": "Welcome!",
     "signInToContinue": "Enter your credentials to access your account",
@@ -243,7 +250,7 @@
     "company": "Company",
     "area": "Area",
     "vacancy": "Vacancy",
-    "type": "Tipo",
+    "type": "Type",
     "disability": "Disability",
     "noDisability": "No disability"
   },
